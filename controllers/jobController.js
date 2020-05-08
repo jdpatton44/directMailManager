@@ -16,7 +16,7 @@ exports.jobList = async (req, res) => {
         const pages = Math.ceil(count / limit);
         if (!jobs.length && skip) {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
-                res.redirect(`/stores/page/${pages}`);
+                res.redirect(`/jobs/page/${pages}`);
         }
         res.render('jobList', { jobs, pages, page, title: 'Current Mailings' });
 };

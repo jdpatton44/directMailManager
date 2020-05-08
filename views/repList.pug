@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .inner
+    h2 Reps
+    table.table
+      thead
+        th Rep Name
+        th Phone Number
+        th Address
+        th CSZ
+        th Jobs
+      each rep, i in reps
+        tr 
+          td= rep.repName
+          td= rep.repPhoneNumber
+          td= rep.address
+          if rep.city
+            td #{rep.city} #{rep.state}, #{rep.zipcode}
+          else
+            td
+          td link to jobs with rep in search 
+

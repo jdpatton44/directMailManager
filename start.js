@@ -13,6 +13,8 @@ mongoose.connection.on('error', err => {
 // READY?! Let's go!
 require('./models/Job');
 require('./models/Client');
+require('./models/Agency');
+require('./models/Rep');
 
 // Start our app!
 const app = require('./app');

@@ -14,11 +14,11 @@ const clientSchema = new mongoose.Schema({
                 trim: true,
                 // required: "Please select the client's Agency",
         },
-        mailerCRID: {
+        clientCRID: {
                 type: String,
                 trim: true,
         },
-        mailerMID: {
+        clientMID: {
                 type: String,
                 trim: true,
         },

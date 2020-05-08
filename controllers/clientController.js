@@ -15,7 +15,7 @@ exports.clientList = async (req, res) => {
         const pages = Math.ceil(count / limit);
         if (!clients.length && skip) {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
-                res.redirect(`/stores/page/${pages}`);
+                res.redirect(`/clients/page/${pages}`);
         }
         res.render('clientList', { clients, pages, page, title: 'Clients' });
 };

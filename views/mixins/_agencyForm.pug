@@ -1,0 +1,18 @@
+mixin agencyForm(agency = {})
+  form(action=`/addAgency/${agency._id || ''}` method="POST" class="card")
+    label(for="agencyName") Agency Name
+    input(type="text" name="agencyName" value=agency.agencyName)
+    label(for="agencyPhoneNumber") Agency Phone Number
+    input(type="text" name="agencyPhoneNumber" value=agency.agencyPhoneNumber)
+    label(for="agencyAddress") Street Address
+    input(type="text" name="agencyAddress" value=agency.agencyAddress)
+    label(for="agencyCity") City
+    input(type="text" name="agencyCity" value=agency.agencyCity)
+    label(for="agencyState") State
+    input(type="text" name="agencyState" value=agency.agencyState)
+    label(for="agencyZip") Zip Code
+    input(type="text" name="agencyZip" value=agency.agencyZip)
+    label(for="agencyNotes") Agency Notes
+    textarea(name="agencyNotes")=agency.agencyNotes
+    p
+    input(type="submit" value="Create agency -<", class="button")  

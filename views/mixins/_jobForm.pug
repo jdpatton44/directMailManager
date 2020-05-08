@@ -1,5 +1,5 @@
 mixin jobForm(job = {})
-  form(action=`/add/${job._id || ''}` method="POST" class="card")
+  form(action=`/addJob/${job._id || ''}` method="POST" class="card")
     label(for="jobName") Name
     input(type="text" name="jobName" value=job.jobName)
     label(for="jobMailDate") Mail Date

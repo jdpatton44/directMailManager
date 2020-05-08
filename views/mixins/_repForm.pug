@@ -1,0 +1,18 @@
+mixin repForm(rep = {})
+  form(action=`/addRep/${rep._id || ''}` method="POST" class="card")
+    label(for="repName") Rep Name
+    input(type="text" name="repName" value=rep.repName)
+    label(for="repPhoneNumber") Rep Phone Number
+    input(type="text" name="repPhoneNumber" value=rep.repPhoneNumber)
+    label(for="repAddress") Street Address
+    input(type="text" name="repAddress" value=rep.repAddress)
+    label(for="repCity") City
+    input(type="text" name="repCity" value=rep.repCity)
+    label(for="repState") State
+    input(type="text" name="repState" value=rep.repState)
+    label(for="repZip") Zip Code
+    input(type="text" name="repZip" value=rep.repZip)
+    label(for="repNotes") Rep Notes
+    textarea(name="repNotes")=rep.repNotes
+    p
+    input(type="submit" value="Create Rep -<", class="button")  

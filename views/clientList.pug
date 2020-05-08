@@ -16,13 +16,13 @@ block content
       each client, i in clients
         tr 
           td= client.clientName
-          td= client.crid
-          td= client.mid
-          td= client.permit
-          td= client.nonProfit
-          td= client.address
-          if client.city
-            td #{client.city} #{client.state}, #{client.zipcode}
+          td= client.clientCrid
+          td= client.clientMid
+          td= client.clientPermitNumber
+          td= client.clientNonProfitNumber
+          td= client.clientAddress
+          if client.clientCity
+            td #{client.clientCity} #{client.clientState}, #{client.clientZipcode}
           else
             td
           td link to jobs with client in search

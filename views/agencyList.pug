@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .inner
+    h2 Agencies
+    table.table
+      thead
+        th Agency Name
+        th Phone Number
+        th Address
+        th CSZ
+        th Jobs
+      each agency, i in agencies
+        tr 
+          td= agency.agencyName
+          td= agency.agencyPhoneNumber
+          td= agency.address
+          if agency.city
+            td #{agency.city} #{agency.state}, #{agency.zipcode}
+          else
+            td
+          td link to jobs with agency in search 
+
