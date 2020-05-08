@@ -1,6 +1,6 @@
 ## What is this?
 
-Just you wait folks!
+Manage all your Mailshop Needs!
 
 ## Sample Data
 
