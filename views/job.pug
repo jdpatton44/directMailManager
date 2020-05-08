@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .single
+    .single__hero
+      h2.title.title__single
+        p=job.jobName
+        p=h.moment(job.jobMailDate).format("MM-DD-YYYY")
+        p=job.jobMailingMethod
+        p=job.jobQuantity
+        p=job.jobSize
+        p=job.jobNotes

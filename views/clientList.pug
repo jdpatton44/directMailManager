@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  .inner
+    h2 Clients
+    table.table
+      thead
+        th Client Name
+        th CRID
+        th MID
+        th Permit #
+        th Non Profit #
+        th Address
+        th CSZ
+        th Jobs
+      each client, i in clients
+        tr 
+          td= client.clientName
+          td= client.crid
+          td= client.mid
+          td= client.permit
+          td= client.nonProfit
+          td= client.address
+          if client.city
+            td #{client.city} #{client.state}, #{client.zipcode}
+          else
+            td
+          td link to jobs with client in search
+

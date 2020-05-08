@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .inner
+    h2 Mailings
+    table.table
+      thead
+        th Mail Date
+        th Client
+        th Mailing Name
+        th Quantity
+        th Package Sizes
+        th Rep
+        th Mailing Method
+      each job, i in jobs
+        tr 
+          td= h.moment(job.jobMailDate).format("MM-DD-YYYY")
+          td= job.jobClient
+          td= job.jobName
+          td= job.jobQuantity.toLocaleString()
+          td= job.jobSize
+          td= job.jobRep
+          td= job.jobMailingMethod
+

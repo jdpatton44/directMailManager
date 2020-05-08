@@ -1,0 +1,23 @@
+mixin clientForm(client = {})
+  form(action=`/addClient/${client._id || ''}` method="POST" class="card")
+    label(for="clientName") Client Name
+    input(type="text" name="clientName" value=client.clientName)
+    //- input(type="select" name="clientAgency" id='')
+      //each agency in agencies
+        //option(value=agency._id) #{agency.agencyName}
+    label(for="mailerCrid") Client CRID
+    input(type="text" name="mailerCrid" value=client.mailerCrid)
+    label(for="mailerMid") Mailer MID
+    input(type="number" name="mailerMid" value=client.mailerMid)
+    label(for="clientAddress") Street Address
+    input(type="text" name="clientAddress" value=client.clientAddress)
+    label(for="clientCity") City
+    input(type="text" name="clientCity" value=client.clientCity)
+    label(for="clientState") State
+    input(type="text" name="clientState" value=client.clientState)
+    label(for="clientZip") Zip Code
+    input(type="text" name="clientZip" value=client.clientZip)
+    label(for="clientNotes") Client Notes
+    textarea(name="clientNotes")=client.clientNotes
+    p
+    input(type="submit" value="Create client -<", class="button")  

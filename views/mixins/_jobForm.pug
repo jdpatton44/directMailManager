@@ -1,0 +1,21 @@
+mixin jobForm(job = {})
+  form(action=`/add/${job._id || ''}` method="POST" class="card")
+    label(for="jobName") Name
+    input(type="text" name="jobName" value=job.jobName)
+    label(for="jobMailDate") Mail Date
+    input(type="date" name="jobMailDate" value=job.jobMailDate)
+    label(for="jobMailingMethod") Mailing Method
+    input(type="text" name="jobMailingMethod" value=job.jobMailingMethod)
+    label(for="jobQuantity") Mailing Quantity
+    input(type="number" name="jobQuantity" value=job.jobQuantity)
+    label(for="jobSize") Mailing Package Size
+    input(type="text" name="jobSize" value=job.jobSize)
+    label(for="scitex") Scitex?   
+    label(for="true") Yes   
+    input(type="radio" name="jobScitex" id="true" value='true')
+    label(for="false") No   
+    input(type="radio" name="jobScitex" id="false" value='false')
+    label(for="jobNotes") Mailing Notes
+    textarea(name="jobNotes")=job.jobNotes
+    p
+    input(type="submit" value="Create Job -<", class="button")  
