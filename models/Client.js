@@ -4,15 +4,19 @@ mongoose.Promise = global.Promise;
 const slug = require('slugs');
 
 const clientSchema = new mongoose.Schema({
+        created: {
+                type: Date,
+                default: Date.now
+        },
         clientName: {
                 type: String,
                 trim: true,
                 required: "Please enter the client's Name",
         },
         clientAgency: {
-                type: String,
+                type: mongoose.Schema.ObjectId,
                 trim: true,
-                // required: "Please select the client's Agency",
+                required: "Please select the client's Agency",
         },
         clientCRID: {
                 type: String,
@@ -51,7 +55,12 @@ const clientSchema = new mongoose.Schema({
                 trim: true,
         },
         clientSlug: String,
-});
+        },
+        {
+                toJSON: { virtuals: true },
+                toObject: { virtuals: true },
+        }
+);
 
 clientSchema.pre('save', async function(next) {
         if (!this.isModified('clientName')) {

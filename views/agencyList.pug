@@ -13,10 +13,10 @@ block content
       each agency, i in agencies
         tr 
           td= agency.agencyName
-          td= agency.agencyPhoneNumber
-          td= agency.address
-          if agency.city
-            td #{agency.city} #{agency.state}, #{agency.zipcode}
+          td= h.formatPhoneNumber(agency.agencyPhoneNumber)
+          td= agency.agencyAddress
+          if agency.agencyCity
+            td #{agency.agencyCity}, #{agency.agencyState} #{agency.agencyZipcode}
           else
             td
           td link to jobs with agency in search 

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Client = mongoose.model('Client');
+const Agency = mongoose.model('Agency');
 
 exports.clientList = async (req, res) => {
         const page = req.params.page || 1;
@@ -20,9 +21,10 @@ exports.clientList = async (req, res) => {
         res.render('clientList', { clients, pages, page, title: 'Clients' });
 };
 
-exports.addClient = (req, res) => {
+exports.addClient = async (req, res) => {
         console.log(req.body);
-        res.render('editClient', { title: 'Add New Client' });
+        const agencies = await Agency.find();
+        res.render('editClient', { agencies, title: 'Add New Client' });
 };
 
 exports.createClient = async (req, res) => {

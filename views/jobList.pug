@@ -15,10 +15,17 @@ block content
       each job, i in jobs
         tr 
           td= h.moment(job.jobMailDate).format("MM-DD-YYYY")
-          td= job.jobClient
-          td= job.jobName
+          if job.jobClient
+            td= job.jobClient.clientName
+          else
+            td
+          td 
+            a(href=`/job/${job.slug}`) #{job.jobName}
           td= job.jobQuantity.toLocaleString()
           td= job.jobSize
-          td= job.jobRep
+          if job.jobRep
+            td= job.jobRep.repName
+          else
+            td
           td= job.jobMailingMethod
 

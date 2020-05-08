@@ -2,12 +2,28 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
+const validator = require('validator');
 
 const repSchema = new mongoose.Schema({
+        created: {
+                type: Date,
+                default: Date.now
+        },
         repName: {
                 type: String,
                 trim: true,
                 required: "Please enter the Rep's name",
+        },
+        repAgency: {
+                type: mongoose.Schema.ObjectId,
+                ref: 'Agency',
+                required: 'Please enter the Agency the Rep works for.'
+        },
+        repEmail: {
+                type: String,
+                trim: true,
+                validate: [validator.isEmail, 'Invalid Email Address'],
+                required: 'Please Supply an email address',
         },
         repAddress: {
                 type: String,
@@ -37,7 +53,12 @@ const repSchema = new mongoose.Schema({
                 trim: true,
         },
         repSlug: String,
-});
+        },
+        {
+                toJSON: { virtuals: true },
+                toObject: { virtuals: true },
+        }
+);
 
 repSchema.pre('save', async function(next) {
         if (!this.isModified('repName')) {

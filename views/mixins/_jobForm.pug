@@ -2,6 +2,14 @@ mixin jobForm(job = {})
   form(action=`/addJob/${job._id || ''}` method="POST" class="card")
     label(for="jobName") Name
     input(type="text" name="jobName" value=job.jobName)
+    label(for="jobClient") Client
+    select(name="jobClient" placeholder="Client" id="jobClient")
+      for client in clients
+        option(value=client._id) #{client.clientName}
+    label(for="jobRep") Rep
+    select(name="jobRep" placeholder="Rep" id="jobRep")
+      for rep in reps
+        option(value=rep._id) #{rep.repName}
     label(for="jobMailDate") Mail Date
     input(type="date" name="jobMailDate" value=job.jobMailDate)
     label(for="jobMailingMethod") Mailing Method
@@ -12,9 +20,9 @@ mixin jobForm(job = {})
     input(type="text" name="jobSize" value=job.jobSize)
     label(for="scitex") Scitex?   
     label(for="true") Yes   
-    input(type="radio" name="jobScitex" id="true" value='true')
+    input(type="radio" name="jobScitex" id="true" value='true' )
     label(for="false") No   
-    input(type="radio" name="jobScitex" id="false" value='false')
+    input(type="radio" name="jobScitex" id="false" value='false' checked)
     label(for="jobNotes") Mailing Notes
     textarea(name="jobNotes")=job.jobNotes
     p

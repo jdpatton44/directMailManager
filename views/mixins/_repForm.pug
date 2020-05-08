@@ -2,6 +2,12 @@ mixin repForm(rep = {})
   form(action=`/addRep/${rep._id || ''}` method="POST" class="card")
     label(for="repName") Rep Name
     input(type="text" name="repName" value=rep.repName)
+    label(for="repAgency") Agency
+    select(name="repAgency" placeholder="Agency" id="repAgency")
+      for agency in agencies
+        option(value=agency._id) #{agency.agencyName}
+    label(for="repEmail") Rep Email Address
+    input(type="text" name="repEmail" value=rep.repEmail)
     label(for="repPhoneNumber") Rep Phone Number
     input(type="text" name="repPhoneNumber" value=rep.repPhoneNumber)
     label(for="repAddress") Street Address
@@ -10,8 +16,8 @@ mixin repForm(rep = {})
     input(type="text" name="repCity" value=rep.repCity)
     label(for="repState") State
     input(type="text" name="repState" value=rep.repState)
-    label(for="repZip") Zip Code
-    input(type="text" name="repZip" value=rep.repZip)
+    label(for="repZipcode") Zip Code
+    input(type="text" name="repZipcode" value=rep.repZipcode)
     label(for="repNotes") Rep Notes
     textarea(name="repNotes")=rep.repNotes
     p

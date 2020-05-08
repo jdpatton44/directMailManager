@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-
 const Rep = mongoose.model('Rep');
+const Agency = mongoose.model('Agency');
+
 
 exports.repList = async (req, res) => {
         const page = req.params.page || 1;
@@ -10,6 +11,7 @@ exports.repList = async (req, res) => {
         const repsPromise = Rep.find()
                 .skip(skip)
                 .limit(limit)
+                .populate('repAgency')
                 .sort({ repMailDate: 'desc' });
         const countPromise = Rep.count();
         const [reps, count] = await Promise.all([repsPromise, countPromise]);
@@ -21,9 +23,10 @@ exports.repList = async (req, res) => {
         res.render('repList', { reps, pages, page, title: 'Reps' });
 };
 
-exports.addRep = (req, res) => {
+exports.addRep = async (req, res) => {
         console.log(req.body);
-        res.render('editRep', { title: 'Add Rep' });
+        agencies = await Agency.find();
+        res.render('editRep', { agencies, title: 'Add Rep' });
 };
 
 exports.createRep = async (req, res) => {

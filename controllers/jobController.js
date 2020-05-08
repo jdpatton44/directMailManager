@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Job = mongoose.model('Job');
+const Client = mongoose.model('Client');
+const Rep = mongoose.model('Rep');
 
 exports.jobList = async (req, res) => {
         const page = req.params.page || 1;
@@ -10,6 +12,7 @@ exports.jobList = async (req, res) => {
         const jobsPromise = Job.find()
                 .skip(skip)
                 .limit(limit)
+                .populate('jobClient jobRep')
                 .sort({ jobMailDate: 'desc' });
         const countPromise = Job.count();
         const [jobs, count] = await Promise.all([jobsPromise, countPromise]);
@@ -21,9 +24,11 @@ exports.jobList = async (req, res) => {
         res.render('jobList', { jobs, pages, page, title: 'Current Mailings' });
 };
 
-exports.addJob = (req, res) => {
+exports.addJob = async (req, res) => {
         console.log(req.body);
-        res.render('editJob', { title: 'Create Mailing' });
+        const reps = await Rep.find();
+        const clients = await Client.find();
+        res.render('editJob', { clients, reps, title: 'Create Mailing' });
 };
 
 exports.createJob = async (req, res) => {

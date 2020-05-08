@@ -4,6 +4,10 @@ mongoose.Promise = global.Promise;
 const slug = require('slugs');
 
 const agencySchema = new mongoose.Schema({
+        created: {
+                type: Date,
+                default: Date.now
+        },
         agencyName: {
                 type: String,
                 trim: true,
@@ -32,11 +36,12 @@ const agencySchema = new mongoose.Schema({
                 type: String,
                 trim: true,
         },
+        agencySlug: String,
         agencyNotes: {
                 type: String,
                 trim: true,
         },
-        agencySlug: String,
+        
 });
 
 agencySchema.pre('save', async function(next) {

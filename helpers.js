@@ -18,12 +18,28 @@ exports.staticMap = ([lng, lat]) => `https://maps.googleapis.com/maps/api/static
 exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 
 // Some details about the site
-exports.siteName = `Now That's Delicious!`;
+exports.siteName = `Direct Mail Manager`;
+
+// Format phone numbers
+exports.formatPhoneNumber = (str) => {
+  //Filter only numbers from the input
+  let cleaned = ('' + str).replace(/\D/g, '');
+  //Check if the input is of correct length
+  let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+  };
+  return null
+};
+
 
 exports.menu = [
-  { slug: '/stores', title: 'Stores', icon: 'store', },
-  { slug: '/tags', title: 'Tags', icon: 'tag', },
-  { slug: '/top', title: 'Top', icon: 'top', },
-  { slug: '/add', title: 'Add', icon: 'add', },
-  { slug: '/map', title: 'Map', icon: 'map', },
+  { slug: '/jobList', title: 'Current Jobs', icon: 'newJob', },
+  { slug: '/addJob', title: 'Add Job', icon: 'newJob', },
+  { slug: '/clientList', title: 'Clients', icon: 'client', },
+  { slug: '/addClient', title: 'Add Client', icon: 'add', },
+  { slug: '/repList', title: 'Reps', icon: 'rep', },
+  { slug: '/addRep', title: 'Add Rep', icon: 'add', },
+  { slug: '/agencyList', title: 'Agencies', icon: 'agency', },
+  { slug: '/addAgency', title: 'Add Agency', icon: 'add', },
 ];

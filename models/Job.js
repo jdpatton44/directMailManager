@@ -1,3 +1,4 @@
+const moment = require('moment');
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -35,22 +36,26 @@ const packageSchema = new mongoose.Schema({
 
 const jobSchema = new mongoose.Schema(
         {
+                created: {
+                        type: Date,
+                        default: Date.now
+                },
                 jobName: {
                         type: String,
                         trim: true,
                         required: 'Please enter a name for this job.',
                 },
                 slug: String,
-                // jobClient: {
-                //     type: mongoose.Schema.ObjectId,
-                //     ref: 'Client',
-                //     required: "Please the client for this job.",
-                // },
-                // jobRep: {
-                //     type: mongoose.Schema.ObjectId,
-                //     ref: 'Rep',
-                //     required: "Please the rep for this job.",
-                // },
+                jobClient: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Client',
+                    required: "Please the client for this job.",
+                },
+                jobRep: {
+                    type: mongoose.Schema.ObjectId,
+                    ref: 'Rep',
+                    required: "Please the rep for this job.",
+                },
                 jobMailDate: {
                         type: Date,
                         required: 'Please enter the date this job will mail.',
@@ -88,8 +93,8 @@ jobSchema.pre('save', async function(next) {
                 next(); // skip it
                 return; // stop this function from running
         }
-        this.slug = slug(this.jobName + this.jobMailDate);
-        // find other jobs that have a slug of wes, wes-1, wes-2
+        this.slug = slug(this.jobName + "-" + moment(this.jobMailDate).format("MMMM D YYYY"));
+        // find other jobs that have a similar slug
         const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
         const jobswithSlug = await this.constructor.find({ slug: slugRegEx });
         if (jobswithSlug.length) {
