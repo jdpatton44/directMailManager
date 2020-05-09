@@ -12,6 +12,7 @@ block content
         th Package Sizes
         th Rep
         th Mailing Method
+        th Edit Job
       each job, i in jobs
         tr 
           td= h.moment(job.jobMailDate).format("MM-DD-YYYY")
@@ -28,4 +29,7 @@ block content
           else
             td
           td= job.jobMailingMethod
+          td(style='width: 4em')
+            a(href=`/jobs/${job._id}/edit`) 
+              != h.icon('pencil') 
 

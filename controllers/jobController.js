@@ -44,3 +44,20 @@ exports.getJobBySlug = async (req, res, next) => {
         if (!job) return next();
         res.render('job', { job, title: job.jobName });
 };
+
+exports.editJob = async (req, res, next) => {
+        const job = await Job.findOne({ _id: req.params.id });
+        res.render('editJob', { title: `Edit ${job.jobName}`, job });
+};
+
+exports.updateJob = async (req, res, next) => {
+        const job = await Job.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully updated <strong>${job.jobName}</strong>. <a href="/jobs/${job.slug}">View Job -<</a>`
+        );
+        res.redirect(`/jobs/${job._id}/edit`);
+};
