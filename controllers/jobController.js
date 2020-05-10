@@ -39,7 +39,7 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobBySlug = async (req, res, next) => {
-        const job = await Job.findOne({ slug: req.params.slug });
+        const job = await Job.findOne({ slug: req.params.jobSlug });
         console.log(req.params);
         if (!job) return next();
         res.render('job', { job, title: job.jobName });
@@ -47,7 +47,9 @@ exports.getJobBySlug = async (req, res, next) => {
 
 exports.editJob = async (req, res, next) => {
         const job = await Job.findOne({ _id: req.params.id });
-        res.render('editJob', { title: `Edit ${job.jobName}`, job });
+        const clients = await Client.find().sort({ clientName: 'asc' });
+        const reps = await Rep.find().sort({ repName: 'asc' });
+        res.render('editJob', { title: `Edit ${job.jobName}`, job, clients, reps });
 };
 
 exports.updateJob = async (req, res, next) => {

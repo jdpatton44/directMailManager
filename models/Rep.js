@@ -4,55 +4,56 @@ mongoose.Promise = global.Promise;
 const slug = require('slugs');
 const validator = require('validator');
 
-const repSchema = new mongoose.Schema({
-        created: {
-                type: Date,
-                default: Date.now
-        },
-        repName: {
-                type: String,
-                trim: true,
-                required: "Please enter the Rep's name",
-        },
-        repAgency: {
-                type: mongoose.Schema.ObjectId,
-                ref: 'Agency',
-                required: 'Please enter the Agency the Rep works for.'
-        },
-        repEmail: {
-                type: String,
-                trim: true,
-                validate: [validator.isEmail, 'Invalid Email Address'],
-                required: 'Please Supply an email address',
-        },
-        repAddress: {
-                type: String,
-                trim: true,
-        },
-        repState: {
-                type: String,
-                trim: true,
-                maxlength: 2,
-        },
-        repCity: {
-                type: String,
-                trim: true,
-        },
-        repZipcode: {
-                type: String,
-                trim: true,
-                minlength: 7,
-                maxlength: 10,
-        },
-        repPhoneNumber: {
-                type: String,
-                trim: true,
-        },
-        repNotes: {
-                type: String,
-                trim: true,
-        },
-        repSlug: String,
+const repSchema = new mongoose.Schema(
+        {
+                created: {
+                        type: Date,
+                        default: Date.now,
+                },
+                repName: {
+                        type: String,
+                        trim: true,
+                        required: "Please enter the Rep's name",
+                },
+                repAgency: {
+                        type: mongoose.Schema.ObjectId,
+                        ref: 'Agency',
+                        required: 'Please enter the Agency the Rep works for.',
+                },
+                repEmail: {
+                        type: String,
+                        trim: true,
+                        validate: [validator.isEmail, 'Invalid Email Address'],
+                        required: 'Please Supply an email address',
+                },
+                repAddress: {
+                        type: String,
+                        trim: true,
+                },
+                repState: {
+                        type: String,
+                        trim: true,
+                        maxlength: 2,
+                },
+                repCity: {
+                        type: String,
+                        trim: true,
+                },
+                repZipcode: {
+                        type: String,
+                        trim: true,
+                        minlength: 5,
+                        maxlength: 10,
+                },
+                repPhoneNumber: {
+                        type: String,
+                        trim: true,
+                },
+                repNotes: {
+                        type: String,
+                        trim: true,
+                },
+                repSlug: String,
         },
         {
                 toJSON: { virtuals: true },
@@ -65,11 +66,11 @@ repSchema.pre('save', async function(next) {
                 next(); // skip it
                 return; // stop this function from running
         }
-        this.slug = slug(this.repName);
-        const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
+        this.repSlug = slug(this.repName);
+        const slugRegEx = new RegExp(`^(${this.repSlug})((-[0-9]*$)?)$`, 'i');
         const repsWithSlug = await this.constructor.find({ slug: slugRegEx });
         if (repsWithSlug.length) {
-                this.slug = `${this.slug}-${repsWithSlug.length + 1}`;
+                this.repSlug = `${this.repSlug}-${repsWithSlug.length + 1}`;
         }
         next();
 });

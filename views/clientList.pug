@@ -15,7 +15,8 @@ block content
         th Jobs
       each client, i in clients
         tr 
-          td= client.clientName
+          td
+            a(href=`/client/${client.clientSlug}`) #{client.clientName}
           td= client.clientCrid
           td= client.clientMid
           td= client.clientPermitNumber

@@ -38,7 +38,7 @@ const jobSchema = new mongoose.Schema(
         {
                 created: {
                         type: Date,
-                        default: Date.now
+                        default: Date.now,
                 },
                 jobName: {
                         type: String,
@@ -47,14 +47,14 @@ const jobSchema = new mongoose.Schema(
                 },
                 slug: String,
                 jobClient: {
-                    type: mongoose.Schema.ObjectId,
-                    ref: 'Client',
-                    required: "Please the client for this job.",
+                        type: mongoose.Schema.ObjectId,
+                        ref: 'Client',
+                        required: 'Please the client for this job.',
                 },
                 jobRep: {
-                    type: mongoose.Schema.ObjectId,
-                    ref: 'Rep',
-                    required: "Please the rep for this job.",
+                        type: mongoose.Schema.ObjectId,
+                        ref: 'Rep',
+                        required: 'Please the rep for this job.',
                 },
                 jobMailDate: {
                         type: Date,
@@ -93,7 +93,7 @@ jobSchema.pre('save', async function(next) {
                 next(); // skip it
                 return; // stop this function from running
         }
-        this.slug = slug(this.jobName + "-" + moment(this.jobMailDate).format("MMMM D YYYY"));
+        this.slug = slug(`${this.jobName}-${moment(this.jobMailDate).format('MMMM D YYYY')}`);
         // find other jobs that have a similar slug
         const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
         const jobswithSlug = await this.constructor.find({ slug: slugRegEx });

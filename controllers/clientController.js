@@ -35,8 +35,7 @@ exports.createClient = async (req, res) => {
 };
 
 exports.getClientBySlug = async (req, res, next) => {
-        const client = await Client.findOne({ slug: req.params.slug });
-        console.log(req.params);
+        const client = await Client.findOne({ clientSlug: req.params.clientSlug });
         if (!client) return next();
         res.render('client', { client, title: client.ClientName });
 };

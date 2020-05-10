@@ -5,13 +5,16 @@ mixin jobForm(job = {})
     label(for="jobClient") Client
     select(name="jobClient" placeholder="Client" id="jobClient")
       for client in clients
-        option(value=client._id) #{client.clientName}
+        if job.client === client._id
+          option(value=client._id selected="selected") #{client.clientName}
+        else
+          option(value=client._id) #{client.clientName}
     label(for="jobRep") Rep
     select(name="jobRep" placeholder="Rep" id="jobRep")
       for rep in reps
         option(value=rep._id) #{rep.repName}
     label(for="jobMailDate") Mail Date
-    input(type="date" name="jobMailDate" value=job.jobMailDate)
+    input(type="date" name="jobMailDate" value=h.moment(job.jobMailDate).format("YYYY-MM-DD"))
     label(for="jobMailingMethod") Mailing Method
     input(type="text" name="jobMailingMethod" value=job.jobMailingMethod)
     label(for="jobQuantity") Mailing Quantity

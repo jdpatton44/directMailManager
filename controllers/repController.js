@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
+
 const Rep = mongoose.model('Rep');
 const Agency = mongoose.model('Agency');
-
 
 exports.repList = async (req, res) => {
         const page = req.params.page || 1;
@@ -37,7 +37,8 @@ exports.createRep = async (req, res) => {
 };
 
 exports.getRepBySlug = async (req, res, next) => {
-        const rep = await Rep.findOne({ slug: req.params.slug });
+        const rep = await Rep.findOne({ repSlug: req.params.repSlug });
+        console.log(rep);
         console.log(req.params);
         if (!rep) return next();
         res.render('rep', { rep, title: rep.repName });

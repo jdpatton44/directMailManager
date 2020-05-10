@@ -14,7 +14,8 @@ block content
         th Jobs
       each rep, i in reps
         tr 
-          td= rep.repName
+          td
+            a(href=`/rep/${rep.repSlug}`) #{rep.repName} 
           if rep.repAgency
             td= rep.repAgency.agencyName
           else

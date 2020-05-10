@@ -34,8 +34,7 @@ exports.createAgency = async (req, res) => {
 };
 
 exports.getAgencyBySlug = async (req, res, next) => {
-        const agency = await Agency.findOne({ slug: req.params.slug });
-        console.log(req.params);
+        const agency = await Agency.findOne({ agencySlug: req.params.agencySlug });
         if (!agency) return next();
         res.render('agency', { agency, title: agency.agencyName });
 };

@@ -12,7 +12,8 @@ block content
         th Jobs
       each agency, i in agencies
         tr 
-          td= agency.agencyName
+          td
+            a(href=`/agency/${agency.agencySlug}`) #{agency.agencyName}
           td= h.formatPhoneNumber(agency.agencyPhoneNumber)
           td= agency.agencyAddress
           if agency.agencyCity
