@@ -37,9 +37,9 @@ exports.createRep = async (req, res) => {
 };
 
 exports.getRepBySlug = async (req, res, next) => {
+        console.log(req.params);
         const rep = await Rep.findOne({ repSlug: req.params.repSlug });
         console.log(rep);
-        console.log(req.params);
         if (!rep) return next();
         res.render('rep', { rep, title: rep.repName });
 };

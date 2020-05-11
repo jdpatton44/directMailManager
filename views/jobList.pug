@@ -17,7 +17,8 @@ block content
         tr 
           td= h.moment(job.jobMailDate).format("MM-DD-YYYY")
           if job.jobClient
-            td= job.jobClient.clientName
+            td
+              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
           else
             td
           td 
@@ -25,7 +26,8 @@ block content
           td= job.jobQuantity.toLocaleString()
           td= job.jobSize
           if job.jobRep
-            td= job.jobRep.repName
+            td
+              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
           else
             td
           td= job.jobMailingMethod

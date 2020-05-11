@@ -4,9 +4,9 @@ block content
   .single
     .single__hero
       h2.title.title__single
-        p=job.jobName
-        p=h.moment(job.jobMailDate).format("MM-DD-YYYY")
-        p=job.jobMailingMethod
-        p=job.jobQuantity
-        p=job.jobSize
-        p=job.jobNotes
+        p Job Name #{job.jobName}
+        p Mail Date #{h.moment(job.jobMailDate).format("MM-DD-YYYY")}
+        p Mailing Method #{job.jobMailingMethod}
+        p Quantity #{job.jobQuantity}
+        p Package Size #{job.jobSize}
+        p Notes #{job.jobNotes}
