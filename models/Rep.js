@@ -48,6 +48,8 @@ const repSchema = new mongoose.Schema(
                 repPhoneNumber: {
                         type: String,
                         trim: true,
+                        maxlength: 18,
+                        minlength: 7,
                 },
                 repNotes: {
                         type: String,

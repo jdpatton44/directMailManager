@@ -11,7 +11,6 @@ const agencySchema = new mongoose.Schema({
         },
         agencyName: {
                 type: String,
-                unique: true,
                 trim: true,
                 required: "Please enter the agency's Name",
         },
@@ -38,7 +37,7 @@ const agencySchema = new mongoose.Schema({
                 type: String,
                 trim: true,
                 minlength: 7,
-                maxlength: 10,
+                maxlength: 14,
         },
         agencySlug: String,
         agencyNotes: {
@@ -47,7 +46,6 @@ const agencySchema = new mongoose.Schema({
         },
 });
 
-agencySchema.plugin(uniqueValidator);
 
 agencySchema.pre('save', async function(next) {
         if (!this.isModified('agencyName')) {

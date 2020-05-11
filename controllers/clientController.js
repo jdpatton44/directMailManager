@@ -31,7 +31,7 @@ exports.createClient = async (req, res) => {
         console.log(req.body);
         const client = await new Client(req.body).save();
         req.flash('success', `Successfully Created ${client.clientName}.`);
-        res.redirect(`/client/${client.slug}`);
+        res.redirect(`/client/${client.clientSlug}`);
 };
 
 exports.getClientBySlug = async (req, res, next) => {

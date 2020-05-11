@@ -1,12 +1,19 @@
 extends layout
 
 block content
-  .single
-    .single__hero
-      h2.title.title__single
-        p Job Name #{job.jobName}
-        p Mail Date #{h.moment(job.jobMailDate).format("MM-DD-YYYY")}
-        p Mailing Method #{job.jobMailingMethod}
-        p Quantity #{job.jobQuantity}
-        p Package Size #{job.jobSize}
-        p Notes #{job.jobNotes}
+  h4 #{job.jobName}
+    h2.title
+      table.table
+        thead
+          th Mail Date
+          th Quantity 
+          th Package Sizes
+          th Mailing Methods
+          th Mailing Options
+        tr
+          td #{h.moment(job.jobMailDate).format("MM-DD-YYYY")}
+          td #{job.jobQuantity}
+          td #{job.jobSize}
+          td #{job.jobMailingMethod}
+          td #{job.jobTags}
+      textarea(name="Notes", cols="30", rows="10") #{job.jobNotes}

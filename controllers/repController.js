@@ -33,7 +33,7 @@ exports.createRep = async (req, res) => {
         console.log(req.body);
         const rep = await new Rep(req.body).save();
         req.flash('success', `Successfully Created ${rep.repName}.`);
-        res.redirect(`/rep/${rep.slug}`);
+        res.redirect(`/rep/${rep.repSlug}`);
 };
 
 exports.getRepBySlug = async (req, res, next) => {

@@ -6,8 +6,10 @@ mongoose.connect(process.env.DATABASE);
 mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
 
 // import all of our models - they need to be imported only once
-const Store = require('../models/Store');
-const Review = require('../models/Review');
+const Job = require('../models/Job');
+const Agency = require('../models/Agency');
+const Client = require('../models/Client');
+const Rep = require('../models/Rep');
 const User = require('../models/User');
 
 
@@ -17,8 +19,10 @@ const users = JSON.parse(fs.readFileSync(__dirname + '/users.json', 'utf-8'));
 
 async function deleteData() {
   console.log('😢😢 Goodbye Data...');
-  await Store.remove();
-  await Review.remove();
+  await Job.remove();
+  await Client.remove();
+  await Agency.remove();
+  await Rep.remove();
   await User.remove();
   console.log('Data Deleted. To load sample data, run\n\n\t npm run sample\n\n');
   process.exit();
@@ -26,8 +30,10 @@ async function deleteData() {
 
 async function loadData() {
   try {
-    await Store.insertMany(stores);
-    await Review.insertMany(reviews);
+    await Agency.insertMany(agencies);
+    await Rep.insertMany(reps);
+    await Client.insertMany(clients);
+    await Job.insertMany(jobs);
     await User.insertMany(users);
     console.log('👍👍👍👍👍👍👍👍 Done!');
     process.exit();

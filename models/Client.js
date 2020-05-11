@@ -14,6 +14,11 @@ const clientSchema = new mongoose.Schema(
                         trim: true,
                         required: "Please enter the client's Name",
                 },
+                clientAbrv: {
+                        type: String,
+                        trim: true,
+                        required: "Please enter a abbreviation for the client."
+                },
                 clientAgency: {
                         type: mongoose.Schema.ObjectId,
                         trim: true,

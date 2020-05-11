@@ -30,7 +30,7 @@ exports.createAgency = async (req, res) => {
         console.log(req.body);
         const agency = await new Agency(req.body).save();
         req.flash('success', `Successfully Created ${agency.agencyName}.`);
-        res.redirect(`/agency/${agency.slug}`);
+        res.redirect(`/agency/${agency.agencySlug}`);
 };
 
 exports.getAgencyBySlug = async (req, res, next) => {

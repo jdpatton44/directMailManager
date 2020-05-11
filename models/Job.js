@@ -60,10 +60,7 @@ const jobSchema = new mongoose.Schema(
                         type: Date,
                         required: 'Please enter the date this job will mail.',
                 },
-                jobMailingMethod: {
-                        type: String,
-                        required: 'Please enter the mailing method for this job, (Commingle, 1st Class Presort, ect.',
-                },
+                jobMailingMethod: [String],
                 jobQuantity: {
                         type: Number,
                         required: 'Please enter the aproximate number of piecess for this job.',
@@ -72,9 +69,11 @@ const jobSchema = new mongoose.Schema(
                         type: String,
                         required: 'Please enter the packages sizes for this job.',
                 },
-                jobScitex: {
-                        type: Boolean,
-                        required: 'Does this job have Scitext?',
+                jobTags: [String],
+                jobMatch: {
+                        type: Number,
+                        min: 0,
+                        max: 10,
                 },
                 jobNotes: {
                         type: String,

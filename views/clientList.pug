@@ -17,8 +17,8 @@ block content
         tr 
           td
             a(href=`/client/${client.clientSlug}`) #{client.clientName}
-          td= client.clientCrid
-          td= client.clientMid
+          td= client.clientCRID
+          td= client.clientMID
           td= client.clientPermitNumber
           td= client.clientNonProfitNumber
           td= client.clientAddress
@@ -26,5 +26,6 @@ block content
             td #{client.clientCity} #{client.clientState}, #{client.clientZipcode}
           else
             td
-          td link to jobs with client in search
+          td 
+            a(href=`/jobList/${client.clientSlug}`) #{client.clientAbrv} Jobs
 

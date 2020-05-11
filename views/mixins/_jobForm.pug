@@ -16,16 +16,27 @@ mixin jobForm(job = {})
     label(for="jobMailDate") Mail Date
     input(type="date" name="jobMailDate" value=h.moment(job.jobMailDate).format("YYYY-MM-DD"))
     label(for="jobMailingMethod") Mailing Method
-    input(type="text" name="jobMailingMethod" value=job.jobMailingMethod)
+    - const mailingOptions = ['Straight 1st', '1st Presort', 'Standard Rate', 'SCF', 'Non Profit', 'Midwest Commingle', 'PSI Commingle']
+    - const methods = job.jobMailingMethod || []
+    ul.tags
+      each option in mailingOptions
+        .tag.tag__choice
+          input(type="checkbox" id=option value=option name="jobMailingMethod" checked=(methods.includes(option)))
+          label(for=option) #{option}
+    label(for="jobMatch") Match
+    input(type="number" name="jobMatch" value=job.jobMatch)
     label(for="jobQuantity") Mailing Quantity
     input(type="number" name="jobQuantity" value=job.jobQuantity)
     label(for="jobSize") Mailing Package Size
     input(type="text" name="jobSize" value=job.jobSize)
-    label(for="scitex") Scitex?   
-    label(for="true") Yes   
-    input(type="radio" name="jobScitex" id="true" value='true' )
-    label(for="false") No   
-    input(type="radio" name="jobScitex" id="false" value='false' checked)
+    label(for="jobTags") Mailing Options
+    - const choices = ['Scitex', 'Meter', 'Labels', 'Self Mailer', 'Stamp', 'Indicia', 'Postcard', 'Cancelation']
+    - const tags = job.jobTags || []
+    ul.tags
+      each choice in choices
+        .tag.tag__choice
+          input(type="checkbox" id=choice value=choice name="jobTags" checked=(tags.includes(choice)))
+          label(for=choice) #{choice}
     label(for="jobNotes") Mailing Notes
     textarea(name="jobNotes")=job.jobNotes
     p

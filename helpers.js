@@ -36,7 +36,7 @@ exports.formatPhoneNumber = str => {
 };
 
 exports.menu = [
-        { slug: '/jobList', title: 'Current Jobs', icon: 'newJob' },
+        { slug: '/jobList', title: 'Current Jobs', icon: 'mailbox' },
         { slug: '/addJob', title: 'Add Job', icon: 'newJob' },
         { slug: '/clientList', title: 'Clients', icon: 'client' },
         { slug: '/addClient', title: 'Add Client', icon: 'add' },

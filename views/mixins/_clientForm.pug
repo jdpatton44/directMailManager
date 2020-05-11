@@ -2,14 +2,16 @@ mixin clientForm(client = {})
   form(action=`/addClient/${client._id || ''}` method="POST" class="card")
     label(for="clientName") Client Name
     input(type="text" name="clientName" value=client.clientName)
+    label(for="clientAbrv") Client Abbreviation
+    input(type="text" name="clientAbrv" value=client.clientAbrv)
     label(for="clientAgency") Agency
     select(name="clientAgency" placeholder="Agency" id="clientAgency")
       for agency in agencies
         option(value=agency._id) #{agency.agencyName}
-    label(for="mailerCrid") Client CRID
-    input(type="text" name="mailerCrid" value=client.mailerCrid)
-    label(for="mailerMid") Mailer MID
-    input(type="number" name="mailerMid" value=client.mailerMid)
+    label(for="clientCRID") Client CRID
+    input(type="text" name="clientCRID" value=client.clientCRID)
+    label(for="clientMID") Client MID
+    input(type="number" name="clientMID" value=client.clientMID)
     label(for="clientPermitNumber") Permit Number
     input(type="text" name="clientPermitNumber" value=client.clientPermitNumber)
     label(for="clientNonProfitNumber") Non Profit Number
@@ -20,8 +22,8 @@ mixin clientForm(client = {})
     input(type="text" name="clientCity" value=client.clientCity)
     label(for="clientState") State
     input(type="text" name="clientState" value=client.clientState)
-    label(for="clientZip") Zip Code
-    input(type="text" name="clientZip" value=client.clientZip)
+    label(for="clientZipcode") Zip Code
+    input(type="text" name="clientZipcode" value=client.clientZipcode)
     label(for="clientNotes") Client Notes
     textarea(name="clientNotes")=client.clientNotes
     p
