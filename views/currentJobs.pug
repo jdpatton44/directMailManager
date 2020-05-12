@@ -1,0 +1,100 @@
+extends layout
+
+block content
+  .inner
+    h2 Mailing This Week - ✉
+    table.table
+      thead
+        th Mail Date
+        th Client
+        th Mailing Name
+        th Quantity
+        th Package Sizes
+        th Rep
+        th Mailing Method
+        th Edit Job
+      each job, i in thisWeeksJobs
+        tr 
+          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+          if job.jobClient
+            td
+              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+          else
+            td
+          td 
+            a(href=`/job/${job.jobSlug}`) #{job.jobName}
+          td= job.jobQuantity.toLocaleString()
+          td= job.jobSize
+          if job.jobRep
+            td
+              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+          else
+            td
+          td= job.jobMailingMethod
+          td(style='width: 4em')
+            a(href=`/jobs/${job._id}/edit`) 
+              != h.icon('pencil') 
+    h2 Mailing Next Week - 🔥
+    table.table
+      thead
+        th Mail Date
+        th Client
+        th Mailing Name
+        th Quantity
+        th Package Sizes
+        th Rep
+        th Mailing Method
+        th Edit Job
+      each job, i in nextWeeksJobs
+        tr 
+          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+          if job.jobClient
+            td
+              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+          else
+            td
+          td 
+            a(href=`/job/${job.jobSlug}`) #{job.jobName}
+          td= job.jobQuantity.toLocaleString()
+          td= job.jobSize
+          if job.jobRep
+            td
+              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+          else
+            td
+          td= job.jobMailingMethod
+          td(style='width: 4em')
+            a(href=`/jobs/${job._id}/edit`) 
+              != h.icon('pencil')
+    h2 Mailed Last Week - 📬
+    table.table
+      thead
+        th Mail Date
+        th Client
+        th Mailing Name
+        th Quantity
+        th Package Sizes
+        th Rep
+        th Mailing Method
+        th Edit Job
+      each job, i in lastWeeksJobs
+        tr 
+          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+          if job.jobClient
+            td
+              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+          else
+            td
+          td 
+            a(href=`/job/${job.jobSlug}`) #{job.jobName}
+          td= job.jobQuantity.toLocaleString()
+          td= job.jobSize
+          if job.jobRep
+            td
+              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+          else
+            td
+          td= job.jobMailingMethod
+          td(style='width: 4em')
+            a(href=`/jobs/${job._id}/edit`) 
+              != h.icon('pencil')

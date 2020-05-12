@@ -5,6 +5,8 @@ const Job = mongoose.model('Job');
 const Client = mongoose.model('Client');
 const Rep = mongoose.model('Rep');
 
+const helpers = require('../helpers');
+
 exports.jobList = async (req, res) => {
         const page = req.params.page || 1;
         const limit = 25;
@@ -130,4 +132,29 @@ exports.searchJobs = async (req, res) => {
                 // return 5 stores at a time
                 .limit(5);
         res.json(jobs);
+};
+
+exports.currentJobs = async (req, res) => {
+        const thisMonday = helpers.getMonday(helpers.moment().startOf('day'));
+        const nextMonday = helpers.moment(thisMonday).add(7, 'days');
+        const lastMonday = helpers.moment(thisMonday).subtract(7, 'days');
+        const mondayAfterNext = helpers.moment(thisMonday).add(14, 'days');
+
+        const thisWeeksJobs = await Job.find({ jobMailDate: { $gte: thisMonday, $lt: nextMonday } })
+                .populate('jobClient jobRep')
+                .sort({
+                        jobMailDate: 'desc',
+                });
+        const lastWeeksJobs = await Job.find({ jobMailDate: { $gte: lastMonday, $lt: thisMonday } })
+                .populate('jobClient jobRep')
+                .sort({
+                        jobMailDate: 'desc',
+                });
+        const nextWeeksJobs = await Job.find({ jobMailDate: { $gte: nextMonday, $lt: mondayAfterNext } })
+                .populate('jobClient jobRep')
+                .sort({
+                        jobMailDate: 'desc',
+                });
+
+        res.render('currentJobs', { thisWeeksJobs, lastWeeksJobs, nextWeeksJobs, title: `Current Mailings` });
 };

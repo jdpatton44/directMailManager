@@ -91,6 +91,11 @@ jobSchema.index({
         jobName: 'text',
 });
 
+jobSchema.pre('save', function(next) {
+        this.jobMailDate = this.jobMailDate + 2.16e7;
+        next();
+});
+
 jobSchema.pre('save', async function(next) {
         if (!this.isModified('jobName')) {
                 next(); // skip it

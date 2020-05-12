@@ -7,6 +7,7 @@ const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
 
+router.get('/currentJobs', catchErrors(jobController.currentJobs));
 router.get('/jobList', catchErrors(jobController.jobList)); // TODO: Change to /jobs after creating homepage
 router.get('/clientJobList/:clientSlug', catchErrors(jobController.jobsByClient));
 router.get('/repJobList/:repSlug', catchErrors(jobController.jobsByRep));
