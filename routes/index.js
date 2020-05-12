@@ -22,8 +22,8 @@ router.post('/addClient', catchErrors(clientController.createClient));
 router.get('/client/:clientSlug', catchErrors(clientController.getClientBySlug));
 
 router.get('/repList', catchErrors(repController.repList));
-router.get('/addrep', repController.addRep);
-router.post('/addrep', catchErrors(repController.createRep));
+router.get('/addRep', repController.addRep);
+router.post('/addRep', catchErrors(repController.createRep));
 router.get('/rep/:repSlug', catchErrors(repController.getRepBySlug));
 
 router.get('/agencyList', catchErrors(agencyController.agencyList));

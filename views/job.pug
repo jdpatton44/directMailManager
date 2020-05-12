@@ -11,7 +11,7 @@ block content
           th Mailing Methods
           th Mailing Options
         tr
-          td #{h.moment(job.jobMailDate).format("MM-DD-YYYY")}
+          td #{h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")}
           td #{job.jobQuantity}
           td #{job.jobSize}
           td #{job.jobMailingMethod}

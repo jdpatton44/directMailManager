@@ -2,7 +2,6 @@ import axios from 'axios';
 import dompurify from 'dompurify';
 
 function searchResultsHTML(jobs) {
-        console.log(jobs);
         return jobs
                 .map(
                         job => `
@@ -34,7 +33,6 @@ function typeAhead(search) {
                 axios.get(`/api/search?q=${this.value}`)
                         .then(res => {
                                 if (res.data.length) {
-                                        console.log('there is some data!');
                                         searchResults.innerHTML = dompurify.sanitize(searchResultsHTML(res.data));
                                         return;
                                 }

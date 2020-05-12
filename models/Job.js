@@ -96,12 +96,12 @@ jobSchema.pre('save', async function(next) {
                 next(); // skip it
                 return; // stop this function from running
         }
-        this.slug = slug(`${this.jobName}-${moment(this.jobMailDate).format('MMMM D YYYY')}`);
+        this.jobSlug = slug(`${this.jobName}-${moment(this.jobMailDate).format('MMMM D YYYY')}`);
         // find other jobs that have a similar slug
-        const slugRegEx = new RegExp(`^(${this.slug})((-[0-9]*$)?)$`, 'i');
-        const jobswithSlug = await this.constructor.find({ slug: slugRegEx });
+        const slugRegEx = new RegExp(`^(${this.jobSlug})((-[0-9]*$)?)$`, 'i');
+        const jobswithSlug = await this.constructor.find({ jobSlug: slugRegEx });
         if (jobswithSlug.length) {
-                this.slug = `${this.slug}-${jobswithSlug.length + 1}`;
+                this.jobSlug = `${this.jobSlug}-${jobswithSlug.length + 1}`;
         }
         next();
         // TODO make more resiliant so slugs are unique

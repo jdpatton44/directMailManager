@@ -15,7 +15,7 @@ block content
         th Edit Job
       each job, i in jobs
         tr 
-          td= h.moment(job.jobMailDate).format("MM-DD-YYYY")
+          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
           if job.jobClient
             td
               a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}

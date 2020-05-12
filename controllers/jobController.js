@@ -27,7 +27,7 @@ exports.jobList = async (req, res) => {
 
 exports.addJob = async (req, res) => {
         const reps = await Rep.find().sort({ repName: 'desc' });
-        const clients = await Client.find().sort({ clientName: 'asc' });
+        const clients = await Client.find().sort({ clientName: 'desc' });
         res.render('editJob', { clients, reps, title: 'Create Mailing' });
 };
 
