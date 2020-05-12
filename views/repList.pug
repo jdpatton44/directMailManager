@@ -27,5 +27,6 @@ block content
             td #{rep.repCity}, #{rep.repState} #{rep.repZipcode}
           else
             td
-          td link to jobs with rep in search 
+          td 
+            a(href=`/repJobList/${rep.repSlug}`) #{rep.repName}'s Jobs
 

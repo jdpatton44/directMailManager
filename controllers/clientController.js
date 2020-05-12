@@ -9,6 +9,7 @@ exports.clientList = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all clients
         const clientsPromise = Client.find()
+                .sort({ clientName: 'desc' })
                 .skip(skip)
                 .limit(limit);
         const countPromise = Client.count();
@@ -22,13 +23,11 @@ exports.clientList = async (req, res) => {
 };
 
 exports.addClient = async (req, res) => {
-        console.log(req.body);
-        const agencies = await Agency.find();
+        const agencies = await Agency.find().sort({ agencyName: 'desc' });
         res.render('editClient', { agencies, title: 'Add New Client' });
 };
 
 exports.createClient = async (req, res) => {
-        console.log(req.body);
         const client = await new Client(req.body).save();
         req.flash('success', `Successfully Created ${client.clientName}.`);
         res.redirect(`/client/${client.clientSlug}`);

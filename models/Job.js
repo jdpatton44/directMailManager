@@ -45,7 +45,7 @@ const jobSchema = new mongoose.Schema(
                         trim: true,
                         required: 'Please enter a name for this job.',
                 },
-                slug: String,
+                jobSlug: String,
                 jobClient: {
                         type: mongoose.Schema.ObjectId,
                         ref: 'Client',
@@ -86,6 +86,10 @@ const jobSchema = new mongoose.Schema(
                 toObject: { virtuals: true },
         }
 );
+
+jobSchema.index({
+        jobName: 'text',
+});
 
 jobSchema.pre('save', async function(next) {
         if (!this.isModified('jobName')) {

@@ -22,7 +22,7 @@ block content
           else
             td
           td 
-            a(href=`/job/${job.slug}`) #{job.jobName}
+            a(href=`/job/${job.jobSlug}`) #{job.jobName}
           td= job.jobQuantity.toLocaleString()
           td= job.jobSize
           if job.jobRep

@@ -46,7 +46,6 @@ const agencySchema = new mongoose.Schema({
         },
 });
 
-
 agencySchema.pre('save', async function(next) {
         if (!this.isModified('agencyName')) {
                 next(); // skip it

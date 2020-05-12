@@ -10,7 +10,7 @@ exports.agencyList = async (req, res) => {
         const agenciesPromise = Agency.find()
                 .skip(skip)
                 .limit(limit)
-                .sort({ agencyMailDate: 'desc' });
+                .sort({ agencyName: 'desc' });
         const countPromise = Agency.count();
         const [agencies, count] = await Promise.all([agenciesPromise, countPromise]);
         const pages = Math.ceil(count / limit);
@@ -22,7 +22,6 @@ exports.agencyList = async (req, res) => {
 };
 
 exports.addAgency = (req, res) => {
-        console.log(req.body);
         res.render('editAgency', { title: 'Add Agency' });
 };
 
