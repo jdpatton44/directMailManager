@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/', catchErrors(jobController.currentJobs));
 router.get('/jobList', catchErrors(jobController.jobList)); // TODO: Change to /jobs after creating homepage
 router.get('/clientJobList/:clientSlug', catchErrors(jobController.jobsByClient));
+router.get('/agencyJobList/:agencySlug', catchErrors(jobController.jobsByAgency));
 router.get('/repJobList/:repSlug', catchErrors(jobController.jobsByRep));
 router.get('/addJob', jobController.addJob);
 router.post('/addJob', catchErrors(jobController.createJob));

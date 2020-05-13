@@ -2,23 +2,26 @@ extends layout
 
 block content
   .inner
-    h2 Agencies
-    table.table
-      thead
-        th Agency Name
-        th Phone Number
-        th Address
-        th CSZ
-        th Jobs
-      each agency, i in agencies
-        tr 
-          td
-            a(href=`/agency/${agency.agencySlug}`) #{agency.agencyName}
-          td= h.formatPhoneNumber(agency.agencyPhoneNumber)
-          td= agency.agencyAddress
-          if agency.agencyCity
-            td #{agency.agencyCity}, #{agency.agencyState} #{agency.agencyZipcode}
-          else
-            td
-          td link to jobs with agency in search 
+    h1.text-6xl.py-4 Agencies
+    div(class="mx-auto ")
+      div(class="bg-white shadow-xl rounded my-6")
+        table(class="text-left w-full border-collapse")
+          thead
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Agency Name
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Phone Number
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Address
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") CSZ
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Jobs
+          each agency, i in agencies
+            tr(class="hover:bg-blue-200")   
+              td(class="py-4 px-6 border-b border-grey-light")
+                a(href=`/agency/${agency.agencySlug}`) #{agency.agencyName}
+              td(class="py-4 px-6 border-b border-grey-light")= h.formatPhoneNumber(agency.agencyPhoneNumber)
+              td(class="py-4 px-6 border-b border-grey-light")= agency.agencyAddress
+              if agency.agencyCity
+                td(class="py-4 px-6 border-b border-grey-light") #{agency.agencyCity}, #{agency.agencyState} #{agency.agencyZipcode}
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light")
+                a(href=`/agencyJobList/${agency.agencySlug}`) #{agency.agencyName} Jobs
 

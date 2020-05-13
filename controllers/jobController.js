@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Job = mongoose.model('Job');
 const Client = mongoose.model('Client');
 const Rep = mongoose.model('Rep');
+const Agency = mongoose.model('Agency');
 
 const helpers = require('../helpers');
 
@@ -87,6 +88,33 @@ exports.jobsByClient = async (req, res) => {
         }
         res.render('jobList', { jobs, pages, page, title: `Mailings for ${client}` });
 };
+exports.jobsByAgency = async (req, res) => {
+        const { agencySlug } = req.params;
+        const page = req.params.page || 1;
+        const limit = 25;
+        const skip = page * limit - limit;
+        // query db for all jobs with reps that are at the agency
+        const agency = await Agency.findOne({ agencySlug });
+        // const reps = await Rep.find({repAgency: agency._id});
+        // const repIds = []
+        // for( let [key, value] of Object.entries(reps)) {
+        //         key === '_id' ? repIds.append(value) : '';
+        // }
+        const jobsPromise = Job.find()
+                .skip(skip)
+                .limit(limit)
+                .populate('jobClient jobRep')
+                .sort({ jobMailDate: 'desc' });
+        const countPromise = Job.count();
+        const [jobs, count] = await Promise.all([jobsPromise, countPromise]);
+        const pages = Math.ceil(count / limit);
+        if (!jobs.length && skip) {
+                req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
+                res.redirect(`/jobs/page/${pages}`);
+        }
+        res.render('jobList', { repIds, jobs, pages, page, title: `Mailings for ${agency.AgencyName}` });
+}
+
 exports.jobsByRep = async (req, res) => {
         const { repSlug } = req.params;
         const page = req.params.page || 1;
@@ -143,20 +171,20 @@ exports.currentJobs = async (req, res) => {
         const thisWeeksJobs = await Job.find({ jobMailDate: { $gte: thisMonday, $lt: nextMonday } })
                 .populate('jobClient jobRep')
                 .sort({
-                        jobMailDate: 'desc',
+                        jobMailDate: 'asc',
                 });
         const thisWeekTotal = Object.values(thisWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         console.log(thisWeekTotal);
         const lastWeeksJobs = await Job.find({ jobMailDate: { $gte: lastMonday, $lt: thisMonday } })
                 .populate('jobClient jobRep')
                 .sort({
-                        jobMailDate: 'desc',
+                        jobMailDate: 'asc',
                 });
         const lastWeekTotal = Object.values(lastWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeeksJobs = await Job.find({ jobMailDate: { $gte: nextMonday, $lt: mondayAfterNext } })
                 .populate('jobClient jobRep')
                 .sort({
-                        jobMailDate: 'desc',
+                        jobMailDate: 'asc',
                 });
         const nextWeekTotal = Object.values(nextWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
 

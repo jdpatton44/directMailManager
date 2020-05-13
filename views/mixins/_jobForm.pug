@@ -5,14 +5,14 @@ mixin jobForm(job = {})
     label(for="jobClient") Client
     select(name="jobClient" placeholder="Client" id="jobClient")
       for client in clients
-        if job.jobClient.equals(client._id)
+        if job.jobClient && job.jobClient.equals(client._id)
           option(value=client._id selected="true") #{client.clientAbrv}
         else
-          option(value=client._id) #{client._id}
+          option(value=client._id) #{client.clientAbrv}
     label(for="jobRep") Rep
     select(name="jobRep" placeholder="Rep" id="jobRep")
       for rep in reps
-        if job.jobRep.equals(rep._id)
+        if job.jobRep && job.jobRep.equals(rep._id)
           option(value=rep._id selected="true") #{rep.repName}
         else
           option(value=rep._id ) #{rep.repName}

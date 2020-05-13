@@ -2,99 +2,105 @@ extends layout
 
 block content
   .inner
-    h2 This Week - ✉ - #{thisWeekTotal.toLocaleString()} pieces
-    table.table
-      thead
-        th Mail Date
-        th Client
-        th Mailing Name
-        th Quantity
-        th Package Sizes
-        th Rep
-        th Mailing Method
-        th Edit Job
-      each job, i in thisWeeksJobs
-        tr 
-          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
-          if job.jobClient
-            td
-              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
-          else
-            td
-          td 
-            a(href=`/job/${job.jobSlug}`) #{job.jobName}
-          td= job.jobQuantity.toLocaleString()
-          td= job.jobSize
-          if job.jobRep
-            td
-              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
-          else
-            td
-          td= job.jobMailingMethod
-          td(style='width: 4em')
-            a(href=`/jobs/${job._id}/edit`) 
-              != h.icon('pencil') 
-    h2 Next Week - 🔥 - #{nextWeekTotal.toLocaleString()} pieces
-    table.table
-      thead
-        th Mail Date
-        th Client
-        th Mailing Name
-        th Quantity
-        th Package Sizes
-        th Rep
-        th Mailing Method
-        th Edit Job
-      each job, i in nextWeeksJobs
-        tr 
-          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
-          if job.jobClient
-            td
-              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
-          else
-            td
-          td 
-            a(href=`/job/${job.jobSlug}`) #{job.jobName}
-          td= job.jobQuantity.toLocaleString()
-          td= job.jobSize
-          if job.jobRep
-            td
-              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
-          else
-            td
-          td= job.jobMailingMethod
-          td(style='width: 4em')
-            a(href=`/jobs/${job._id}/edit`) 
-              != h.icon('pencil')
-    h2 Last Week - 📬 - #{lastWeekTotal.toLocaleString()} pieces
-    table.table
-      thead
-        th Mail Date
-        th Client
-        th Mailing Name
-        th Quantity
-        th Package Sizes
-        th Rep
-        th Mailing Method
-        th Edit Job
-      each job, i in lastWeeksJobs
-        tr 
-          td= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
-          if job.jobClient
-            td
-              a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
-          else
-            td
-          td 
-            a(href=`/job/${job.jobSlug}`) #{job.jobName}
-          td= job.jobQuantity.toLocaleString()
-          td= job.jobSize
-          if job.jobRep
-            td
-              a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
-          else
-            td
-          td= job.jobMailingMethod
-          td(style='width: 4em')
-            a(href=`/jobs/${job._id}/edit`) 
-              != h.icon('pencil')
+    h1.text-6xl.py-4 This Week - ✉ - #{thisWeekTotal.toLocaleString()} pieces
+    div(class="mx-auto ")
+      div(class="bg-white shadow-xl rounded my-6")
+        table(class="text-left w-full border-collapse")
+          thead
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mail Date
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Client
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Name
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Quantity
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Package Sizes
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Rep
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Method
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Actions
+          each job, i in thisWeeksJobs
+            tr(class="hover:bg-blue-200") 
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              if job.jobClient
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light")
+                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobQuantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobSize
+              if job.jobRep
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobMailingMethod
+              td(class="py-4 px-6 border-b border-grey-light")(style='width: 4em')
+                a(href=`/jobs/${job._id}/edit`) 
+                  != h.icon('pencil') 
+    h1.text-6xl.py-4 Next Week - 🔥 - #{nextWeekTotal.toLocaleString()} pieces
+    div(class="mx-auto")
+      div(class="bg-white shadow-xl rounded my-6")
+        table(class="text-left w-full border-collapse")
+          thead
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mail Date
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Client
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Name
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Quantity
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Package Sizes
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Rep
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Method
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Edit Job
+          each job, i in nextWeeksJobs
+            tr(class="hover:bg-blue-200") 
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              if job.jobClient
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light") 
+                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobQuantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobSize
+              if job.jobRep
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobMailingMethod
+              td(class="py-4 px-6 border-b border-grey-light")(style='width: 4em')
+                a(href=`/jobs/${job._id}/edit`) 
+                  != h.icon('pencil')
+    h1.text-6xl.py-4 Last Week - 📬 - #{lastWeekTotal.toLocaleString()} pieces
+    div(class="mx-auto")
+      div(class="bg-white shadow-xl rounded my-6")
+        table(class="text-left w-full border-collapse")
+          thead
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mail Date
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Client
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Name
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Quantity
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Package Sizes
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Rep
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Mailing Method
+            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Edit Job
+          each job, i in lastWeeksJobs
+            tr(class="hover:bg-blue-200") 
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              if job.jobClient
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light") 
+                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobQuantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobSize
+              if job.jobRep
+                td(class="py-4 px-6 border-b border-grey-light")
+                  a(href=`/rep/${job.jobRep.repSlug}`) #{job.jobRep.repName} 
+              else
+                td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light")= job.jobMailingMethod
+              td(class="py-4 px-6 border-b border-grey-light")(style='width: 4em')
+                a(href=`/jobs/${job._id}/edit`) 
+                  != h.icon('pencil')

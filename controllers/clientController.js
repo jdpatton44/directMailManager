@@ -9,7 +9,7 @@ exports.clientList = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all clients
         const clientsPromise = Client.find()
-                .sort({ clientName: 'desc' })
+                .sort({ clientName: 'asc' })
                 .skip(skip)
                 .limit(limit);
         const countPromise = Client.count();
