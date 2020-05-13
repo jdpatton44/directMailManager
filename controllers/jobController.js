@@ -145,16 +145,28 @@ exports.currentJobs = async (req, res) => {
                 .sort({
                         jobMailDate: 'desc',
                 });
+        const thisWeekTotal = Object.values(thisWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
+        console.log(thisWeekTotal);
         const lastWeeksJobs = await Job.find({ jobMailDate: { $gte: lastMonday, $lt: thisMonday } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'desc',
                 });
+        const lastWeekTotal = Object.values(lastWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeeksJobs = await Job.find({ jobMailDate: { $gte: nextMonday, $lt: mondayAfterNext } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'desc',
                 });
+        const nextWeekTotal = Object.values(nextWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
 
-        res.render('currentJobs', { thisWeeksJobs, lastWeeksJobs, nextWeeksJobs, title: `Current Mailings` });
+        res.render('currentJobs', {
+                thisWeeksJobs,
+                thisWeekTotal,
+                lastWeeksJobs,
+                lastWeekTotal,
+                nextWeeksJobs,
+                nextWeekTotal,
+                title: `Current Mailings`,
+        });
 };

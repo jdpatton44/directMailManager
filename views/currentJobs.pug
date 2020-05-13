@@ -2,7 +2,7 @@ extends layout
 
 block content
   .inner
-    h2 Mailing This Week - ✉
+    h2 This Week - ✉ - #{thisWeekTotal.toLocaleString()} pieces
     table.table
       thead
         th Mail Date
@@ -34,7 +34,7 @@ block content
           td(style='width: 4em')
             a(href=`/jobs/${job._id}/edit`) 
               != h.icon('pencil') 
-    h2 Mailing Next Week - 🔥
+    h2 Next Week - 🔥 - #{nextWeekTotal.toLocaleString()} pieces
     table.table
       thead
         th Mail Date
@@ -66,7 +66,7 @@ block content
           td(style='width: 4em')
             a(href=`/jobs/${job._id}/edit`) 
               != h.icon('pencil')
-    h2 Mailed Last Week - 📬
+    h2 Last Week - 📬 - #{lastWeekTotal.toLocaleString()} pieces
     table.table
       thead
         th Mail Date
