@@ -7,21 +7,22 @@ block content
       div(class="bg-white shadow-xl rounded my-6")
         table(class="text-left w-full border-collapse")
           thead
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Agency Name
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Phone Number
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Address
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") CSZ
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Jobs
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Agency Name
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Phone Number
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Address
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") CSZ
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Jobs
           each agency, i in agencies
             tr(class="hover:bg-blue-200")   
-              td(class="py-4 px-6 border-b border-grey-light")
+              td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/agency/${agency.agencySlug}`) #{agency.agencyName}
-              td(class="py-4 px-6 border-b border-grey-light")= h.formatPhoneNumber(agency.agencyPhoneNumber)
-              td(class="py-4 px-6 border-b border-grey-light")= agency.agencyAddress
-              if agency.agencyCity
-                td(class="py-4 px-6 border-b border-grey-light") #{agency.agencyCity}, #{agency.agencyState} #{agency.agencyZipcode}
+              td(class="py-4 px-6 border-b border-grey-light text-center")= h.formatPhoneNumber(agency.agencyPhoneNumber)
+              td(class="py-4 px-6 border-b border-grey-light text-center")= agency.agencyAddress
+              if agency.agencyCity 
+                td(class="py-4 px-6 border-b border-grey-light text-center") #{agency.agencyCity}, #{agency.agencyState} #{agency.agencyZipcode}
               else
-                td(class="py-4 px-6 border-b border-grey-light")
-              td(class="py-4 px-6 border-b border-grey-light")
-                a(href=`/agencyJobList/${agency.agencySlug}`) #{agency.agencyName} Jobs
+                td(class="py-4 px-6 border-b border-grey-light text-center")
+              td(class="py-4 px-6 border-b border-grey-light text-center m-auto")
+                a(href=`/agencyJobList/${agency.agencySlug}`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/5") #{agency.agencyName} Jobs
 

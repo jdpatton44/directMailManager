@@ -94,12 +94,14 @@ exports.jobsByAgency = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all jobs with reps that are at the agency
         const agency = await Agency.findOne({ agencySlug });
-        // const reps = await Rep.find({repAgency: agency._id});
-        // const repIds = []
-        // for( let [key, value] of Object.entries(reps)) {
-        //         key === '_id' ? repIds.append(value) : '';
-        // }
-        const jobsPromise = Job.find()
+        console.log(agency._id);
+        const reps = await Rep.find({ repAgency: agency._id });
+        const repArray = Array.from(reps);
+        const repIds = repArray.map(rep => mongoose.Types.ObjectId(rep._id));
+        console.log(repIds);
+        const jobsPromise = Job.find({
+                jobRep: { $in: repIds },
+        })
                 .skip(skip)
                 .limit(limit)
                 .populate('jobClient jobRep')
@@ -162,29 +164,30 @@ exports.searchJobs = async (req, res) => {
 };
 
 exports.currentJobs = async (req, res) => {
+        // get start date for each section
         const thisMonday = helpers.getMonday(helpers.moment().startOf('day'));
         const nextMonday = helpers.moment(thisMonday).add(7, 'days');
         const lastMonday = helpers.moment(thisMonday).subtract(7, 'days');
         const mondayAfterNext = helpers.moment(thisMonday).add(14, 'days');
-
+        // get data for each section
         const thisWeeksJobs = await Job.find({ jobMailDate: { $gte: thisMonday, $lt: nextMonday } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'asc',
                 });
-        const thisWeekTotal = Object.values(thisWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
-        console.log(thisWeekTotal);
         const lastWeeksJobs = await Job.find({ jobMailDate: { $gte: lastMonday, $lt: thisMonday } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'asc',
                 });
-        const lastWeekTotal = Object.values(lastWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeeksJobs = await Job.find({ jobMailDate: { $gte: nextMonday, $lt: mondayAfterNext } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'asc',
                 });
+        // get totals for each section
+        const thisWeekTotal = Object.values(thisWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
+        const lastWeekTotal = Object.values(lastWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeekTotal = Object.values(nextWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
 
         res.render('currentJobs', {

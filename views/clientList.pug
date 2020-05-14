@@ -7,27 +7,28 @@ block content
       div(class="bg-white shadow-xl rounded my-6")
         table(class="text-left w-full border-collapse")
           thead
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Client Name
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") CRID
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") MID
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Permit #
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Non Profit #
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Address
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") CSZ
-            th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Jobs
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Client Name
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") CRID
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") MID
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Permit #
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Non Profit #
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Address
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") CSZ
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Jobs
           each client, i in clients
             tr(class="hover:bg-blue-200")  
               td(class="py-4 px-6 border-b border-grey-light")
                 a(href=`/client/${client.clientSlug}`) #{client.clientName}
-              td(class="py-4 px-6 border-b border-grey-light")= client.clientCRID
-              td(class="py-4 px-6 border-b border-grey-light")= client.clientMID
-              td(class="py-4 px-6 border-b border-grey-light")= client.clientPermitNumber
-              td(class="py-4 px-6 border-b border-grey-light")= client.clientNonProfitNumber
-              td(class="py-4 px-6 border-b border-grey-light")= client.clientAddress
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientCRID
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientMID
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientPermitNumber
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientNonProfitNumber
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientAddress
               if client.clientCity
-                td(class="py-4 px-6 border-b border-grey-light") #{client.clientCity} #{client.clientState}, #{client.clientZipcode}
+                td(class="py-4 px-6 border-b border-grey-light text-center") #{client.clientCity} #{client.clientState}, #{client.clientZipcode}
               else
-                td(class="py-4 px-6 border-b border-grey-light")
-              td(class="py-4 px-6 border-b border-grey-light") 
-                a(href=`/clientJobList/${client.clientSlug}`) #{client.clientAbrv} Jobs
+                td(class="py-4 px-6 border-b border-grey-light text-center")
+              td(class="py-4 px-6 border-b border-grey-light text-center") 
+                a(href=`/clientJobList/${client.clientSlug}`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") #{client.clientAbrv} Jobs
 
