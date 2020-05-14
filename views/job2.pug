@@ -8,15 +8,15 @@ block content
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-gray-800 uppercase bg-gray-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
           div(class="md:text-3xl") #{h.moment(job.jobMailDate).add(1,"days").format("MMM")}
           div(class="md:text-6xl") #{h.moment(job.jobMailDate).add(1,"days").format("DD")}
-          div(class="md:text-4xl") #{job.jobMailingMethod}
-        div(class="p-4 font-normal text-gray-800 md:w-3/4")
-          h1(class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800") #{job.jobName}
-          p(class="leading-normal") Package Sizes - #{job.jobSize}
-          p(class="leading-normal") Mailing Options - #{job.jobTags} 
-          div(class="flex flex-row items-center mt-4 text-gray-700")
-            div(class="w-1/2 text-black") #{job.jobQuantity.toLocaleString()}
-            div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
-            
+          div(class="md:text-4xl") #{...job.jobMailingMethod}
+      div(class="p-4 font-normal text-gray-800 md:w-3/4")
+        h1(class="mb-4 text-4xl font-bold leading-none tracking-tight text-gray-800") #{job.jobName}
+        p(class="leading-normal") Package Sizes - #{job.jobSize}
+        p(class="leading-normal") Mailing Options - #{...job.jobTags} 
+        div(class="flex flex-row items-center mt-4 text-gray-700")
+          div(class="w-1/2 text-black") #{job.jobQuantity.toLocaleString()}
+          div(class="w-1/2 flex justify-end") Mailing Methods - #{job.jobMailingMethod}
+          
     h2.text-4xl.m-4 Job Notes 📝 
     textarea(name="Notes", cols="20", rows="5") #{job.jobNotes}
     button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-4")

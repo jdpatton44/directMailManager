@@ -17,7 +17,7 @@ block content
             th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Actions
           each job, i in thisWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
@@ -33,7 +33,7 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light")
               td(class="py-4 px-6 border-b border-grey-light")= job.jobMailingMethod
-              td(class="py-4 px-6 border-b border-grey-light")(style='width: 4em')
+              td(class="py-4 px-8 border-b border-grey-light")(style='width: 2em')
                 a(href=`/jobs/${job._id}/edit`) 
                   != h.icon('pencil') 
     h1.text-6xl.py-4 Next Week - 🔥 - #{nextWeekTotal.toLocaleString()} pieces
@@ -51,7 +51,7 @@ block content
             th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Edit Job
           each job, i in nextWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
@@ -85,7 +85,7 @@ block content
             th(class="py-4 px-6 bg-green-400 font-bold uppercase text-xl text-grey-dark border-b border-black") Edit Job
           each job, i in lastWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YYYY")
+              td(class="py-4 px-6 border-b border-grey-light")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}

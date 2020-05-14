@@ -42,7 +42,6 @@ exports.createJob = async (req, res) => {
 
 exports.getJobBySlug = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
-        console.log(req.params);
         if (!job) return next();
         res.render('job', { job, title: job.jobName });
 };
@@ -113,7 +112,7 @@ exports.jobsByAgency = async (req, res) => {
                 res.redirect(`/jobs/page/${pages}`);
         }
         res.render('jobList', { repIds, jobs, pages, page, title: `Mailings for ${agency.AgencyName}` });
-}
+};
 
 exports.jobsByRep = async (req, res) => {
         const { repSlug } = req.params;
