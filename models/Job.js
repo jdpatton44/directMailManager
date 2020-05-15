@@ -11,7 +11,7 @@ const packageSchema = new mongoose.Schema({
                 required: 'Please enter a name for this package.',
         },
         packageQuantity: {
-                type: String,
+                type: Number,
                 required: 'Please enter the quantity for this package.',
         },
         packageMailingMethod: {

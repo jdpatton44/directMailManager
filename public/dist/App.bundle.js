@@ -1035,7 +1035,7 @@ exports.default = typeAhead;
 /* 10 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: ModuleBuildError: Module build failed: Error: Cannot find module 'tailwindcss'\n    at Function.Module._resolveFilename (internal/modules/cjs/loader.js:636:15)\n    at Function.Module._load (internal/modules/cjs/loader.js:562:25)\n    at Module.require (internal/modules/cjs/loader.js:690:17)\n    at require (internal/modules/cjs/helpers.js:25:18)\n    at Object.plugins (C:\\Users\\jdpat\\Projects\\DangV2\\webpack.config.js:34:9)\n    at Object.parseOptions (C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\postcss-loader\\index.js:11:27)\n    at C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\postcss-loader\\index.js:66:33\n    at C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\webpack\\lib\\NormalModule.js:141:35\n    at C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\loader-runner\\lib\\LoaderRunner.js:367:11\n    at C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\loader-runner\\lib\\LoaderRunner.js:233:18\n    at context.callback (C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\loader-runner\\lib\\LoaderRunner.js:111:13)\n    at C:\\Users\\jdpat\\Projects\\DangV2\\node_modules\\postcss-loader\\index.js:148:13");
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 /* 11 */
