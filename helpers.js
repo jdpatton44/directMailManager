@@ -25,6 +25,17 @@ exports.getMonday = d => {
         return new Date(inputDate.setDate(diff));
 };
 
+// Maiiling options
+exports.mailingOptions = [
+        'Straight 1st',
+        '1st Presort',
+        'Standard Rate',
+        'SCF',
+        'Non Profit',
+        'Midwest Commingle',
+        'PSI Commingle',
+];
+
 // Format phone numbers
 exports.formatPhoneNumber = str => {
         // Filter only numbers from the input

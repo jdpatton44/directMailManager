@@ -17,6 +17,9 @@ router.post('/addJob', catchErrors(jobController.createJob));
 router.post('/addJob/:id', catchErrors(jobController.updateJob));
 router.get('/job/:jobSlug', catchErrors(jobController.getJobBySlug));
 router.get('/jobs/:id/edit', catchErrors(jobController.editJob));
+router.get('/addPackage/:id', catchErrors(jobController.addPackage));
+router.post('/createPackage/:id', catchErrors(jobController.createPackage));
+// router.post('/updatePackage/:id', catchErrors(jobController.updatePackage));
 
 router.get('/clientList', catchErrors(clientController.clientList));
 router.get('/addClient', clientController.addClient);

@@ -79,7 +79,10 @@ const jobSchema = new mongoose.Schema(
                         type: String,
                         trim: true,
                 },
-                // packages: [packageSchema],
+                packages: {
+                        type: [packageSchema],
+                        default: [],
+                },
         },
         {
                 toJSON: { virtuals: true },

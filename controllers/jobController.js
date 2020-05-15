@@ -41,6 +41,7 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobBySlug = async (req, res, next) => {
+        console.log(req);
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
         if (!job) return next();
         res.render('job', { job, title: job.jobName });
@@ -199,4 +200,24 @@ exports.currentJobs = async (req, res) => {
                 nextWeekTotal,
                 title: `Current Mailings`,
         });
+};
+
+exports.addPackage = async (req, res, next) => {
+        const job = await Job.findOne({ _id: req.params.id });
+        res.render('addPackage', { job, title: `Add a Package to ${job.jobName}` });
+};
+
+exports.createPackage = async (req, res) => {
+        const job = await Job.findOne({ _id: req.params.id });
+        const newPackage = req.body;
+        console.log(req.body);
+        // console.log('-------------------');
+        Job.updateOne(
+                { _id: req.params.id },
+                { $push: { packages: req.body } },
+                { safe: true, upsert: true },
+                (err, data) => console.log(data)
+        );
+        req.flash('success', `Successfully Created ${newPackage.packageName} in ${job.jobName}.`);
+        res.redirect(`/job/${job.jobSlug}`);
 };
