@@ -1,18 +1,18 @@
 mixin agencyForm(agency = {})
   form(action=`/addAgency/${agency._id || ''}` method="POST" class="card")
     label(for="agencyName") Agency Name
-    input(type="text" name="agencyName" value=agency.agencyName)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyName" value=agency.agencyName)
     label(for="agencyPhoneNumber") Agency Phone Number
-    input(type="text" name="agencyPhoneNumber" value=agency.agencyPhoneNumber)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyPhoneNumber" value=agency.agencyPhoneNumber)
     label(for="agencyAddress") Street Address
-    input(type="text" name="agencyAddress" value=agency.agencyAddress)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyAddress" value=agency.agencyAddress)
     label(for="agencyCity") City
-    input(type="text" name="agencyCity" value=agency.agencyCity)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyCity" value=agency.agencyCity)
     label(for="agencyState") State
-    input(type="text" name="agencyState" value=agency.agencyState)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyState" value=agency.agencyState)
     label(for="agencyZipcode") Zip Code
-    input(type="text" name="agencyZipcode" value=agency.agencyZipcode)
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="agencyZipcode" value=agency.agencyZipcode)
     label(for="agencyNotes") Agency Notes
-    textarea(name="agencyNotes")=agency.agencyNotes
+    textarea(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" name="agencyNotes")=agency.agencyNotes
     p
     input(type="submit" value="Create agency -<", class="button")  

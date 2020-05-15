@@ -15,7 +15,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Rep
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mailing Method
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
-          each job, i in thisWeeksJobs
+          each job in thisWeeksJobs
             tr(class="hover:bg-blue-200") 
               td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
@@ -35,9 +35,9 @@ block content
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-8 border-b border-grey-light")
                 a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") Edit
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
                 a(href=`/job/${job.jobSlug}/`)
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") View 
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
                     
     h1.text-6xl.py-4 🔥 Next Week - #{nextWeekTotal.toLocaleString()} pieces
     div(class="mx-auto")
@@ -52,7 +52,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Rep
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mailing Method
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
-          each job, i in nextWeeksJobs
+          each job in nextWeeksJobs
             tr(class="hover:bg-blue-200") 
               td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
@@ -72,10 +72,10 @@ block content
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") Edit
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
                 a(href=`/job/${job.jobSlug}/`)
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") View 
-    h1.text-6xl.py-4 📬 Last Week - #{lastWeekTotal.toLocaleString()} pieces
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
+    h1.text-6xl.py-4 📬 Last 2 Weeks - #{lastTwoWeeksTotal.toLocaleString()} pieces
     div(class="mx-auto")
       div(class="bg-white shadow-xl rounded my-6")
         table(class="text-left w-full border-collapse")
@@ -88,7 +88,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Rep
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mailing Method
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
-          each job, i in lastWeeksJobs
+          each job in lastTwoWeeksJobs
             tr(class="hover:bg-blue-200") 
               td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
               if job.jobClient
@@ -108,6 +108,6 @@ block content
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") Edit
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
                 a(href=`/job/${job.jobSlug}/`)
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-1/2") View 
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 

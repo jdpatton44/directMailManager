@@ -41,9 +41,14 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobBySlug = async (req, res, next) => {
+        console.log(req);
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
         if (!job) return next();
-        res.render('job', { job, title: job.jobName });
+        let quantity = 0;
+        if (job.packages != []) {
+                quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0);
+        }
+        res.render('job', { job, quantity, title: job.jobName });
 };
 
 exports.editJob = async (req, res, next) => {
@@ -167,7 +172,7 @@ exports.currentJobs = async (req, res) => {
         // get start date for each section
         const thisMonday = helpers.getMonday(helpers.moment().startOf('day'));
         const nextMonday = helpers.moment(thisMonday).add(7, 'days');
-        const lastMonday = helpers.moment(thisMonday).subtract(7, 'days');
+        const mondayBeforeLast = helpers.moment(thisMonday).subtract(14, 'days');
         const mondayAfterNext = helpers.moment(thisMonday).add(14, 'days');
         // get data for each section
         const thisWeeksJobs = await Job.find({ jobMailDate: { $gte: thisMonday, $lt: nextMonday } })
@@ -175,7 +180,7 @@ exports.currentJobs = async (req, res) => {
                 .sort({
                         jobMailDate: 'asc',
                 });
-        const lastWeeksJobs = await Job.find({ jobMailDate: { $gte: lastMonday, $lt: thisMonday } })
+        const lastTwoWeeksJobs = await Job.find({ jobMailDate: { $gte: mondayBeforeLast, $lt: thisMonday } })
                 .populate('jobClient jobRep')
                 .sort({
                         jobMailDate: 'asc',
@@ -187,16 +192,36 @@ exports.currentJobs = async (req, res) => {
                 });
         // get totals for each section
         const thisWeekTotal = Object.values(thisWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
-        const lastWeekTotal = Object.values(lastWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
+        const lastTwoWeeksTotal = Object.values(lastTwoWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeekTotal = Object.values(nextWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
 
         res.render('currentJobs', {
                 thisWeeksJobs,
                 thisWeekTotal,
-                lastWeeksJobs,
-                lastWeekTotal,
+                lastTwoWeeksJobs,
+                lastTwoWeeksTotal,
                 nextWeeksJobs,
                 nextWeekTotal,
                 title: `Current Mailings`,
         });
+};
+
+exports.addPackage = async (req, res, next) => {
+        const job = await Job.findOne({ _id: req.params.id });
+        res.render('addPackage', { job, title: `Add a Package to ${job.jobName}` });
+};
+
+exports.createPackage = async (req, res) => {
+        const job = await Job.findOne({ _id: req.params.id });
+        const newPackage = req.body;
+        console.log(req.body);
+        // console.log('-------------------');
+        Job.updateOne(
+                { _id: req.params.id },
+                { $push: { packages: req.body } },
+                { safe: true, upsert: true },
+                (err, data) => console.log(data)
+        );
+        req.flash('success', `Successfully Created ${newPackage.packageName} in ${job.jobName}.`);
+        res.redirect(`/job/${job.jobSlug}`);
 };
