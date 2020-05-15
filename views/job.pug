@@ -21,7 +21,7 @@ block content
             div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
     div(class="flex flex-col w-full md:flex-row")            
     h2.m-6.text-4xl Job Notes 📝 
-    textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3") #{job.jobNotes}
+    textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3" disabled) #{job.jobNotes}
     if job.packages != []
         div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
           h1.text-3xl.py-2.m-2 Packages 📦
