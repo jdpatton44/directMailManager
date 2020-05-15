@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Rep = mongoose.model('Rep');
+const Job = mongoose.model('Job');
 const Agency = mongoose.model('Agency');
 
 exports.repList = async (req, res) => {
@@ -38,8 +39,9 @@ exports.createRep = async (req, res) => {
 
 exports.getRepBySlug = async (req, res, next) => {
         console.log(req.params);
-        const rep = await Rep.findOne({ repSlug: req.params.repSlug });
+        const rep = await Rep.findOne({ repSlug: req.params.repSlug }).populate('repAgency');
+        const repJobs = await Job.find({ jobRep: rep._id });
         console.log(rep);
         if (!rep) return next();
-        res.render('rep', { rep, title: rep.repName });
+        res.render('rep', { rep, repJobs, title: rep.repName });
 };
