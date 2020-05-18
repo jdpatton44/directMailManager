@@ -227,13 +227,18 @@ exports.editPackage = async (req, res, next) => {
 exports.updatePackage = async (req, res, next) => {
         const p = req.body;
         const pid = req.params.id;
-        const job = await Job.findOne( { jobSlug: req.params.slug} );
-        const op = job.packages.id(req.params.id);
-        res.render('dump', {p, pid, op, job})
-        // req.flash(
-        //         'success',
-        //         `Successfully updated <strong>${job.jobName}</strong>. <a href="/jobs/${job.jobSlug}">View Job -<</a>`
-        // );
-        // res.redirect(`/jobs/${job._id}/edit`);
+        const job = await Job.findOneAndUpdate( { "jobSlug": req.params.slug, "packages._id": req.params.id },
+                {
+                        "$set": {
+                                "packages.$": req.body
+                        }
+                },
+        );
+        
+        req.flash(
+                'success',
+                `Successfully updated <strong>${req.body.packageName} - ${job.jobName}</strong>.`
+        );
+        res.redirect(`/job/${job.jobSlug}`);
 };
 

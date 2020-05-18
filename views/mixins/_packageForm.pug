@@ -11,7 +11,7 @@ mixin packageForm(p = {})
                   select(name="packageMailingMethod" id="packageMailingMethod" )
                     <option value="" selected>Select a Mailing Method</option>
                     for option in h.mailingOptions
-                      if p.packageName && p.packageMailingMethod.equals(option)
+                      if p.packageName && p.packageMailingMethod === option
                         option(value=option selected) #{option}
                       else
                         option(value=option ) #{option}
@@ -19,7 +19,7 @@ mixin packageForm(p = {})
                   select(name="packagePostage" id="packagePostage")
                     <option value="" selected>Select a Postage Type</option>
                     for option2 in h.postageOptions
-                      if p.packageName && p.packagePostage.equals(option2)
+                      if p.packageName && p.packagePostage === option2
                         option(value=option2 selected) #{option2}
                       else
                         option(value=option2 ) #{option2}
