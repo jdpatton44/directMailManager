@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 const Agency = mongoose.model('Agency');
+const Rep = mongoose.model('Rep');
+const Job = mongoose.model('Job');
 
 exports.agencyList = async (req, res) => {
         const page = req.params.page || 1;
@@ -33,7 +35,42 @@ exports.createAgency = async (req, res) => {
 };
 
 exports.getAgencyBySlug = async (req, res, next) => {
-        const agency = await Agency.findOne({ agencySlug: req.params.agencySlug });
+        const { agencySlug } = req.params;
+        const agency = await Agency.findOne({ agencySlug: agencySlug });
         if (!agency) return next();
-        res.render('agency', { agency, title: agency.agencyName });
+        const page = req.params.page || 1;
+        const limit = 25;
+        const skip = page * limit - limit;
+        // query db for all jobs with reps that are at the agency
+        const reps = await Rep.find({ repAgency: agency._id });
+        const repArray = Array.from(reps);
+        const repIds = repArray.map(rep => mongoose.Types.ObjectId(rep._id));
+        const jobsPromise = Job.find({
+                jobRep: { $in: repIds },
+        })
+                .skip(skip)
+                .limit(limit)
+                .populate('jobClient jobRep')
+                .sort({ jobMailDate: 'desc' });
+        const countPromise = Job.count();
+        const [agencyJobs, count] = await Promise.all([jobsPromise, countPromise]);
+        res.render('agency', { agency, agencyJobs, title: agency.agencyName });
+};
+
+exports.editAgency = async (req, res, next) => {
+        const agency = await Agency.findOne({ _id: req.params.id });
+        if (!agency) return next();
+        res.render('editAgency', { agency, title: `Edit ${agency.agencyName}` });
+};
+
+exports.updateAgency = async (req, res, next) => {
+        const agency = await Agency.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully updated <strong>${agency.agencyName}</strong>.`
+        );
+        res.redirect(`/agency/${agency.agencySlug}`);
 };

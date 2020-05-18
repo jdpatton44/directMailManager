@@ -8,19 +8,19 @@ block content
           div(class="md:text-5xl") #{rep.repAgency.agencyName}
           
         div(class="p-4 font-normal text-gray-800 w-full")
-          h1(class="p-4 m-4 text-4xl font-bold  text-gray-800") #{rep.repName}
-          p(class="leading-normal ") Phone Number #{rep.repPhoneNumber}
+          p(class="leading-normal font-bold") #{rep.repName}
+          p(class="leading-normal") Phone Number - #{rep.repPhoneNumber}
           p(class="leading-normal") 
-            a(href=`mailto:${rep.repEmail}`) Email #{rep.repEmail}
+            a(href=`mailto:${rep.repEmail}`) Email - #{rep.repEmail}
           div(class="flex flex-row items-center mt-4 text-black")
             div(class="w-1/2 ") 
             div(class="w-1/2 flex justify-end") 
-    div(class="flex flex-col w-full md:flex-row")            
-    h2.m-6.text-4xl Notes 📝 
-    textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3" disabled) #{rep.repNotes}
+    div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 md:flex-row")            
+      h2.m-6.text-4xl Notes 📝 
+      textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3" disabled) #{rep.repNotes}
 
     div(class="mx-auto")
-      div(class="bg-white shadow-xl rounded my-6")
+      div(class="bg-white shadow-xl w-full rounded m-6")
         table(class="text-left w-full border-collapse")
           thead
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mail Date

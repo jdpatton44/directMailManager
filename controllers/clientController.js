@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const Client = mongoose.model('Client');
 const Agency = mongoose.model('Agency');
+const Job = mongoose.model('Job');
 
 exports.clientList = async (req, res) => {
         const page = req.params.page || 1;
@@ -35,6 +36,27 @@ exports.createClient = async (req, res) => {
 
 exports.getClientBySlug = async (req, res, next) => {
         const client = await Client.findOne({ clientSlug: req.params.clientSlug });
+        const agency = await Agency.findOne({ _id: client.clientAgency});
         if (!client) return next();
-        res.render('client', { client, title: client.ClientName });
+        const clientJobs = await Job.find({ jobClient: client._id }).populate('jobClient jobRep');
+        res.render('client', { client, agency, clientJobs, title: client.clientName });
+};
+
+exports.editClient = async (req, res, next) => {
+        const client = await Client.findOne({ _id: req.params.id });
+        if (!client) return next();
+        const agencies = await Agency.find().sort({ agencyName: 'asc' });
+        res.render('editClient', { agencies, client, title: `Edit ${client.clientName}` });
+};
+
+exports.updateClient = async (req, res, next) => {
+        const client = await Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully updated <strong>${client.clientName}</strong>.`
+        );
+        res.redirect(`/client/${client.clientSlug}`);
 };

@@ -11,7 +11,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Phone Number
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Address
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") CSZ
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Jobs
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Edit
           each agency, i in agencies
             tr(class="hover:bg-blue-200")   
               td(class="py-4 px-6 border-b border-grey-light text-center")
@@ -23,6 +23,6 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center m-auto")
-                a(href=`/agencyJobList/${agency.agencySlug}`) 
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/5") #{agency.agencyName} Jobs
+                a(href=`/agency/${agency._id}/edit`)  
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit
 
