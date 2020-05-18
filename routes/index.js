@@ -25,6 +25,8 @@ router.get('/clientList', catchErrors(clientController.clientList));
 router.get('/addClient', clientController.addClient);
 router.post('/addClient', catchErrors(clientController.createClient));
 router.get('/client/:clientSlug', catchErrors(clientController.getClientBySlug));
+router.get('/clients/:id/edit', catchErrors(clientController.editClient));
+router.post('/addClient/:id', catchErrors(clientController.updateClient));
 
 router.get('/repList', catchErrors(repController.repList));
 router.get('/addRep', repController.addRep);
@@ -35,6 +37,8 @@ router.get('/agencyList', catchErrors(agencyController.agencyList));
 router.get('/addAgency', agencyController.addAgency);
 router.post('/addAgency', catchErrors(agencyController.createAgency));
 router.get('/agency/:agencySlug', catchErrors(agencyController.getAgencyBySlug));
+router.get('/agency/:id/edit', catchErrors(agencyController.editAgency));
+router.post('/addAgency/:id', catchErrors(agencyController.updateAgency));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
