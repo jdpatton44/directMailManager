@@ -19,6 +19,11 @@ const packageSchema = new mongoose.Schema({
                 enum: ['1st Class Presort', 'Midwest Commingle', 'PSI Commingle', 'Standard', 'SCF'],
                 required: 'Please enter the mailing method for this package, (Commingle, 1st Class Presort, ect.)',
         },
+        packagePostage: {
+                type: String,
+                enum: ['NP Indicia', 'NP Stamp', 'NP Meter', 'Standard Stamp', 'Standard Meter', 'Standard Indicia'],
+                required: 'Please enter the postage type.',
+        },
         packageMaildate: {
                 type: Date,
                 required: 'Please enter the mail date for this package.',
