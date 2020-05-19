@@ -21,7 +21,7 @@ exports.siteName = `Direct Mail Manager`;
 exports.getMonday = d => {
         const inputDate = new Date(d);
         const day = inputDate.getDay();
-        const diff = inputDate.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        const diff = inputDate.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
         return new Date(inputDate.setDate(diff));
 };
 
@@ -36,14 +36,7 @@ exports.mailingOptions = [
         'PSI Commingle',
 ];
 
-exports.postageOptions = [
-        'NP Indicia', 
-        'NP Stamp', 
-        'NP Meter', 
-        'Standard Stamp', 
-        'Standard Meter', 
-        'Standard Indicia',
-]
+exports.postageOptions = ['NP Indicia', 'NP Stamp', 'NP Meter', 'Standard Stamp', 'Standard Meter', 'Standard Indicia'];
 
 // Format phone numbers
 exports.formatPhoneNumber = str => {
@@ -66,4 +59,5 @@ exports.menu = [
         { slug: '/addRep', title: 'Add Rep', icon: 'addRep' },
         { slug: '/agencyList', title: 'Agencies', icon: 'agency' },
         { slug: '/addAgency', title: 'Add Agency', icon: 'add' },
+        { slug: '/rateList', title: 'Rates', icon: 'rate' },
 ];

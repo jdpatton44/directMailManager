@@ -1,6 +1,5 @@
 mixin packageForm(p = {})
-    form(action=(p._id ? `/updatePackage/${job.jobSlug}/${p._id}` : `createPackage/${job._id}`) method="POST")
-                  p= p._id ? p._id : 'no id'
+    form(action=(p._id ? `/updatePackage/${job.jobSlug}/${p._id}` : `../createPackage/${job._id}`) method="POST")
                   label(for="packageName") Package Name
                   input(type="text" name="packageName" value=p.packageName)
                   label(for="packageQuantity") Quantity
@@ -28,5 +27,6 @@ mixin packageForm(p = {})
                   label(for="packageNotes") Notes
                   textarea(name="packageNotes" value=p.packageNotes)
                   div(class="ml-auto")
-                    button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4") Add
-                    button(class="package__close bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-2/5 m-4") Close
+                    button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4") #{p.packageName ? "Update" : "Add" }
+                    a(href="job/${job.jobSlug}")
+                      button(type="button" class="package__close bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-2/5 m-4") Close

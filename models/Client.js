@@ -61,6 +61,10 @@ const clientSchema = new mongoose.Schema(
                         trim: true,
                 },
                 clientSlug: String,
+                clientPhoto: String,
+                clientCommingleRate: {
+                        type: Number,
+                },
         },
         {
                 toJSON: { virtuals: true },

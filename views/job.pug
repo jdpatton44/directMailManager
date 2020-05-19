@@ -20,11 +20,14 @@ block content
               div(class="w-1/2 ") #{job.jobQuantity.toLocaleString()} Pieces
             div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
     div(class="flex flex-col w-full md:flex-row")            
-    h2.m-6.text-4xl Job Notes 📝 
+    h2.m-6.text-5xl Job Notes 📝 
     textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3" disabled) #{job.jobNotes}
     if job.packages != []
         div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
-          h1.text-3xl.py-2.m-2 Packages 📦
+          div(class="flex flex-row justify-between")
+            h1.text-5xl.py-2.m-2 Packages 📦
+            button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-1/5")
+              a(href=`/addPackage/${job._id}`) Add Package
           div(class="flex flex-col w-full md:flex-row")
             table(class="text-left w-full border-collapse")
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Package Name
@@ -45,6 +48,9 @@ block content
                   td(class="py-4 px-6 border-b border-grey-light text-center") 
                     a(href=`/editPackage/${job.jobSlug}/${p._id}`)
                       button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit
+                    a(href=`/deletePackage/${job.jobSlug}/${p._id}`)
+                      button(class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Delete
 
-    button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6")
-      a(href=`/addPackage/${job._id}`) Add Package
+    
+    button(class="bg-red-500 hover:bg-red-400 text-white font-bold py-4 px-6 border-b-4 border-red-700 hover:border-red-500 rounded m-6")
+      a(href=`/deleteJob/${job._id}`) Delete Job

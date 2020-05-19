@@ -1,5 +1,5 @@
 mixin clientForm(client = {})
-  form(action=`/addClient/${client._id || ''}` method="POST" class="card")
+  form(action=`/addClient/${client._id || ''}` method="POST" class="card" enctype="multipart/form-data")
     label(for="clientName") Client Name
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="clientName" value=client.clientName)
     label(for="clientAbrv") Client Abbreviation
@@ -12,6 +12,10 @@ mixin clientForm(client = {})
           option(value=agency._id selected="true") #{agency.agencyName}
         else
           option(value=agency._id) #{agency.agencyName}
+    //- label(for="clientPhoto") Client Photo
+        input(type="file" name="clientPhoto" id="clientPhoto" accept="image/gif, image/png, image/jepg")
+        if client.clientPhoto
+          img(src=`/uploads/${client.clientPhoto}`, alt=client.clientName width=200)
     label(for="clientCRID") Client CRID
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="clientCRID" value=client.clientCRID)
     label(for="clientMID") Client MID
