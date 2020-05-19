@@ -1,0 +1,12 @@
+mixin rateForm(rate = {})
+  form(action=`/addRate/${rate._id || ''}` method="POST" class="card")
+    label(for="rateName") Rate Name
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="rateName" value=(rate.rateName ? rate.rateName : ''))
+    label(for="rateAmount") Amount
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="float" name="rateAmount" value=(rate.rateAmount ? rate.rateAmount : '') )        
+    label(for="rateNotes") Notes
+    textarea(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" name="rateNotes" value=rate.rateNotes)
+    div(class="ml-auto")
+      button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4") #{rate.rateName ? "Update" : "Add" }
+      a(href="/rateList")
+        button(type="button" class="rate__close bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-2/5 m-4") Close

@@ -44,7 +44,7 @@ exports.getJobBySlug = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
         if (!job) return next();
         let quantity = 0;
-        if (job.packages != []) {
+        if (job.packages !== []) {
                 quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0);
         }
         res.render('job', { job, quantity, title: job.jobName });
@@ -207,6 +207,7 @@ exports.addPackage = async (req, res, next) => {
 };
 
 exports.createPackage = async (req, res) => {
+        console.log(req.body);
         const job = await Job.findOne({ _id: req.params.id });
         Job.updateOne(
                 { _id: req.params.id },
@@ -219,26 +220,40 @@ exports.createPackage = async (req, res) => {
 };
 
 exports.editPackage = async (req, res, next) => {
-        const job = await Job.findOne( { jobSlug: req.params.slug } );
+        const job = await Job.findOne({ jobSlug: req.params.slug });
         const p = job.packages.id(req.params.id);
         res.render('editPackage', { title: `Edit ${job.jobName} - ${p.packageName}`, p, job });
 };
 
 exports.updatePackage = async (req, res, next) => {
-        const p = req.body;
-        const pid = req.params.id;
-        const job = await Job.findOneAndUpdate( { "jobSlug": req.params.slug, "packages._id": req.params.id },
+        const job = await Job.findOneAndUpdate(
+                { jobSlug: req.params.slug, 'packages._id': req.params.id },
                 {
-                        "$set": {
-                                "packages.$": req.body
-                        }
-                },
+                        $set: {
+                                'packages.$': req.body,
+                        },
+                }
         );
-        
-        req.flash(
-                'success',
-                `Successfully updated <strong>${req.body.packageName} - ${job.jobName}</strong>.`
-        );
+
+        req.flash('success', `Successfully updated <strong>${req.body.packageName} - ${job.jobName}</strong>.`);
         res.redirect(`/job/${job.jobSlug}`);
 };
 
+exports.deleteJob = async (req, res, next) => {
+        const job = await Job.findByIdAndDelete(req.params.id);
+        req.flash('success', `Successfully deleted <strong>${job.jobName}</strong>.`);
+        res.redirect(`/jobList/`);
+};
+
+exports.deletePackage = async (req, res, next) => {
+  const job = await Job.findOne( {jobSlug: req.params.slug} );
+  const package = await Job.findOneAndUpdate( { jobSlug: req.params.slug}, {
+    '$pull': {
+      'packages': {'_id': req.params.id}
+    }
+  });
+  req.flash('success', `Successfully deleted package from <strong>${job.jobName}</strong>.`);
+  res.redirect(`/job/${job.jobSlug}/`);
+
+
+}

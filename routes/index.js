@@ -3,13 +3,14 @@ const jobController = require('../controllers/jobController');
 const clientController = require('../controllers/clientController');
 const agencyController = require('../controllers/agencyController');
 const repController = require('../controllers/repController');
+const rateController = require('../controllers/rateController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
 
 // Job Routes
 router.get('/', catchErrors(jobController.currentJobs));
-router.get('/jobList', catchErrors(jobController.jobList)); 
+router.get('/jobList', catchErrors(jobController.jobList));
 router.get('/clientJobList/:clientSlug', catchErrors(jobController.jobsByClient));
 router.get('/agencyJobList/:agencySlug', catchErrors(jobController.jobsByAgency));
 router.get('/repJobList/:repSlug', catchErrors(jobController.jobsByRep));
@@ -18,20 +19,32 @@ router.post('/addJob', catchErrors(jobController.createJob));
 router.post('/addJob/:id', catchErrors(jobController.updateJob));
 router.get('/job/:jobSlug', catchErrors(jobController.getJobBySlug));
 router.get('/jobs/:id/edit', catchErrors(jobController.editJob));
+router.get('/deleteJob/:id', jobController.deleteJob);
 
 // Package Routes
 router.get('/addPackage/:id', catchErrors(jobController.addPackage));
 router.post('/createPackage/:id', catchErrors(jobController.createPackage));
 router.get('/editPackage/:slug/:id', catchErrors(jobController.editPackage));
 router.post('/updatePackage/:slug/:id', catchErrors(jobController.updatePackage));
+router.get('/deletePackage/:slug/:id', jobController.deletePackage);
 
 // Client Routes
 router.get('/clientList', catchErrors(clientController.clientList));
 router.get('/addClient', clientController.addClient);
-router.post('/addClient', catchErrors(clientController.createClient));
+router.post(
+        '/addClient',
+        clientController.upload,
+        catchErrors(clientController.resize),
+        catchErrors(clientController.createClient)
+);
 router.get('/client/:clientSlug', catchErrors(clientController.getClientBySlug));
 router.get('/clients/:id/edit', catchErrors(clientController.editClient));
-router.post('/addClient/:id', catchErrors(clientController.updateClient));
+router.post(
+        '/addClient/:id',
+        clientController.upload,
+        catchErrors(clientController.resize),
+        catchErrors(clientController.updateClient)
+);
 
 // Rep Routes
 router.get('/repList', catchErrors(repController.repList));
@@ -46,6 +59,13 @@ router.post('/addAgency', catchErrors(agencyController.createAgency));
 router.get('/agency/:agencySlug', catchErrors(agencyController.getAgencyBySlug));
 router.get('/agency/:id/edit', catchErrors(agencyController.editAgency));
 router.post('/addAgency/:id', catchErrors(agencyController.updateAgency));
+
+// Rate Routes
+router.get('/rateList', catchErrors(rateController.rateList));
+router.get('/addRate', rateController.addRate);
+router.post('/addRate', catchErrors(rateController.createRate));
+router.get('/rate/:id/edit', catchErrors(rateController.editRate));
+router.post('/addRate/:id', catchErrors(rateController.updateRate));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
