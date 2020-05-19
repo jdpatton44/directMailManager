@@ -36,6 +36,15 @@ exports.mailingOptions = [
         'PSI Commingle',
 ];
 
+exports.postageOptions = [
+        'NP Indicia', 
+        'NP Stamp', 
+        'NP Meter', 
+        'Standard Stamp', 
+        'Standard Meter', 
+        'Standard Indicia',
+]
+
 // Format phone numbers
 exports.formatPhoneNumber = str => {
         // Filter only numbers from the input

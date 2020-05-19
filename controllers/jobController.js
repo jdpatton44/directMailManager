@@ -41,7 +41,6 @@ exports.createJob = async (req, res) => {
 };
 
 exports.getJobBySlug = async (req, res, next) => {
-        console.log(req);
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
         if (!job) return next();
         let quantity = 0;
@@ -77,7 +76,6 @@ exports.jobsByClient = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all jobs
         const client = await Client.findOne({ clientSlug });
-        console.log(client.clientName, client._id);
         const jobsPromise = Job.find({ jobClient: client._id })
                 .skip(skip)
                 .limit(limit)
@@ -99,11 +97,9 @@ exports.jobsByAgency = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all jobs with reps that are at the agency
         const agency = await Agency.findOne({ agencySlug });
-        console.log(agency._id);
         const reps = await Rep.find({ repAgency: agency._id });
         const repArray = Array.from(reps);
         const repIds = repArray.map(rep => mongoose.Types.ObjectId(rep._id));
-        console.log(repIds);
         const jobsPromise = Job.find({
                 jobRep: { $in: repIds },
         })
@@ -128,7 +124,6 @@ exports.jobsByRep = async (req, res) => {
         const skip = page * limit - limit;
         // query db for all jobs
         const rep = await Rep.findOne({ repSlug });
-        console.log(rep.repName, rep._id);
         const jobsPromise = Job.find({ jobRep: rep._id })
                 .skip(skip)
                 .limit(limit)
@@ -208,20 +203,42 @@ exports.currentJobs = async (req, res) => {
 
 exports.addPackage = async (req, res, next) => {
         const job = await Job.findOne({ _id: req.params.id });
-        res.render('addPackage', { job, title: `Add a Package to ${job.jobName}` });
+        res.render('editPackage', { job, title: `Add a Package to ${job.jobName}` });
 };
 
 exports.createPackage = async (req, res) => {
         const job = await Job.findOne({ _id: req.params.id });
-        const newPackage = req.body;
-        console.log(req.body);
-        // console.log('-------------------');
         Job.updateOne(
                 { _id: req.params.id },
                 { $push: { packages: req.body } },
                 { safe: true, upsert: true },
                 (err, data) => console.log(data)
         );
-        req.flash('success', `Successfully Created ${newPackage.packageName} in ${job.jobName}.`);
+        req.flash('success', `Successfully Created ${req.body.packageName} in ${job.jobName}.`);
         res.redirect(`/job/${job.jobSlug}`);
 };
+
+exports.editPackage = async (req, res, next) => {
+        const job = await Job.findOne( { jobSlug: req.params.slug } );
+        const p = job.packages.id(req.params.id);
+        res.render('editPackage', { title: `Edit ${job.jobName} - ${p.packageName}`, p, job });
+};
+
+exports.updatePackage = async (req, res, next) => {
+        const p = req.body;
+        const pid = req.params.id;
+        const job = await Job.findOneAndUpdate( { "jobSlug": req.params.slug, "packages._id": req.params.id },
+                {
+                        "$set": {
+                                "packages.$": req.body
+                        }
+                },
+        );
+        
+        req.flash(
+                'success',
+                `Successfully updated <strong>${req.body.packageName} - ${job.jobName}</strong>.`
+        );
+        res.redirect(`/job/${job.jobSlug}`);
+};
+

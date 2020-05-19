@@ -1,0 +1,32 @@
+mixin packageForm(p = {})
+    form(action=(p._id ? `/updatePackage/${job.jobSlug}/${p._id}` : `createPackage/${job._id}`) method="POST")
+                  p= p._id ? p._id : 'no id'
+                  label(for="packageName") Package Name
+                  input(type="text" name="packageName" value=p.packageName)
+                  label(for="packageQuantity") Quantity
+                  input(type="number" name="packageQuantity" value=p.packageQuantity )
+                  label(for="packageMaildate") Mail Date
+                  input(type="date" name="packageMaildate" value=(p.packageMaildate ? p.packageMaildate : job.jobMailDate))
+                  label(for="packageMailingMethod") Mailing Method
+                  select(name="packageMailingMethod" id="packageMailingMethod" )
+                    <option value="" selected>Select a Mailing Method</option>
+                    for option in h.mailingOptions
+                      if p.packageName && p.packageMailingMethod === option
+                        option(value=option selected) #{option}
+                      else
+                        option(value=option ) #{option}
+                  label(for="packagePostage") Postage
+                  select(name="packagePostage" id="packagePostage")
+                    <option value="" selected>Select a Postage Type</option>
+                    for option2 in h.postageOptions
+                      if p.packageName && p.packagePostage === option2
+                        option(value=option2 selected) #{option2}
+                      else
+                        option(value=option2 ) #{option2}
+                  label(for="packageSize")
+                  input(type="text" value=job.jobSize name="packageSize" placeholder=job.jobSize )
+                  label(for="packageNotes") Notes
+                  textarea(name="packageNotes" value=p.packageNotes)
+                  div(class="ml-auto")
+                    button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4") Add
+                    button(class="package__close bg-transparent hover:bg-gray-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded w-2/5 m-4") Close

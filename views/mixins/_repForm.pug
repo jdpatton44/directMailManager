@@ -6,7 +6,10 @@ mixin repForm(rep = {})
     select(class="block appearance-none w-full bg-gray-200 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="repAgency" placeholder="Agency" id="repAgency")
       <option value="" selected>Select an Agency</option>
       for agency in agencies
-        option(value=agency._id) #{agency.agencyName}
+        if rep.repAgency && rep.repAgency.equals(agency._id)
+          option(value=agency._id selected="true") #{agency.agencyName}
+        else
+          option(value=agency._id) #{agency.agencyName}
     label(for="repEmail") Rep Email Address
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="repEmail" value=rep.repEmail)
     label(for="repPhoneNumber") Rep Phone Number
@@ -22,4 +25,7 @@ mixin repForm(rep = {})
     label(for="repNotes") Rep Notes
     textarea(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" name="repNotes")=rep.repNotes
     p
-    input(type="submit" value="Create Rep -<", class="button")  
+    input(type="submit" value=(rep.repName ? "Update Rep -<" : "Create Rep -<"), class="button")  
+
+
+    
