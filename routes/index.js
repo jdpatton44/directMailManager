@@ -4,6 +4,7 @@ const clientController = require('../controllers/clientController');
 const agencyController = require('../controllers/agencyController');
 const repController = require('../controllers/repController');
 const rateController = require('../controllers/rateController');
+const commingleController = require('../controllers/commingleController')
 const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
@@ -27,6 +28,7 @@ router.post('/createPackage/:id', catchErrors(jobController.createPackage));
 router.get('/editPackage/:slug/:id', catchErrors(jobController.editPackage));
 router.post('/updatePackage/:slug/:id', catchErrors(jobController.updatePackage));
 router.get('/deletePackage/:slug/:id', jobController.deletePackage);
+
 
 // Client Routes
 router.get('/clientList', catchErrors(clientController.clientList));
@@ -68,6 +70,11 @@ router.get('/rate/:id/edit', catchErrors(rateController.editRate));
 router.post('/addRate/:id', catchErrors(rateController.updateRate));
 router.get('/setAgencyRate/', catchErrors(rateController.editAgencyRate));
 router.post('/updateAgencyRate/', catchErrors(rateController.updateAgencyRate));
+router.get('/editClientRate/:slug', rateController.editClientRate);
+router.post('/updateClientRate/:id', rateController.updateClientRate);
+
+// Commingle Routes
+router.get('/commingle/:slug', catchErrors(commingleController.createCommingleSheet))
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));

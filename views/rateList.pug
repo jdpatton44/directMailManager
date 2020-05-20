@@ -2,9 +2,30 @@ extends layout
 
 block content
   .inner.py-8
-    a(class="content-end" href="/addRate")
-      button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-1/8") Add a Rate
-    h1.text-6xl.py2 Our Rates
+    h1.text-6xl.py-2 Client Commingle Rates 
+    div(class="mx-auto ")
+      div(class="bg-white shadow-xl rounded my-2")
+        table(class="text-left w-full border-collapse")
+          thead
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Client
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Midwest Rate
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") 
+          each client in clients
+            tr(class="hover:bg-blue-200")  
+              td(class="py-4 px-6 border-b border-grey-light ")= client.clientName
+              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientCommingleRate
+              td(class="py-4 px-6 border-b border-grey-light text-center")
+                a(href=`/editClientRate/${client.clientSlug}`) 
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") Update Rate
+
+    div(class="flex flex-row justify-between")
+      button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-1/3")
+        a(href=`/setAgencyRate/`) Set Rates for an Agency
+      button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-1/3")
+        a(href=`/setAgencyRep/`) Set Rates for a Rep
+
+    h1.text-6xl.py2 Postage Rates
+    
     div(class="mx-auto ")
       div(class="bg-white shadow-xl rounded my-2")
         table(class="text-left w-full border-collapse")
@@ -19,25 +40,5 @@ block content
               td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/rate/${rate._id}/edit`) 
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-2/5") Update Rate
-
-    h1.text-6xl.py-2 Client Commingle Rates 
-    div(class="mx-auto ")
-      div(class="bg-white shadow-xl rounded my-2")
-        table(class="text-left w-full border-collapse")
-          thead
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Client
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Midwest Rate
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") 
-          each client in clients
-            tr(class="hover:bg-blue-200")  
-              td(class="py-4 px-6 border-b border-grey-light ")= client.clientName
-              td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientCommingleRate
-              td(class="py-4 px-6 border-b border-grey-light text-center")
-                a(href=`/rates/${client._id}/edit`) 
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") Update Rate
-
-    div(class="flex flex-row justify-between")
-      button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-1/3")
-        a(href=`/setAgencyRate/`) Set Rates for an Agency
-      button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-1/3")
-        a(href=`/setAgencyRep/`) Set Rates for a Rep
+      a(class="" href="/addRate")
+        button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-1/8") Add a Rate
