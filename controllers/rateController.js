@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 
 const Rate = mongoose.model('Rate');
 const Client = mongoose.model('Client');
+const Agency = mongoose.model('Agency');
+const Rep = mongoose.model('Rep');
 
 exports.rateList = async (req, res) => {
         const rates = await Rate.find().sort({ rateName: 'desc' });
@@ -45,3 +47,40 @@ exports.updateRate = async (req, res, next) => {
         req.flash('success', `Succesfully updated ${rate.rateName}`);
         res.redirect('/rateList');
 };
+
+exports.updateClientRate = async (req, res, next) => {
+        const client = Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully updated <strong>${client.clientName}</strong> commingle rate to ${
+                        client.clientCommingleRate
+                }`
+        );
+        res.redirect(`/rateList`);
+};
+
+exports.editAgencyRate = async (req, res, next) => {
+        const agencies = await Agency.find();
+        res.render('agencyRateUpdate', { agencies, title: 'Update Rates' });
+};
+
+exports.updateAgencyRate = async (req, res, next) => {
+        console.log(req.body.agencyId);
+        const clients = await Client.updateMany(
+                {
+                        clientAgency: req.body.agencyId,
+                },
+                { $set: { clientCommingleRate: req.body.rateAmount } }
+        );
+        console.log(clients);
+        req.flash(
+                'success',
+                `Successfully updated ${clients.nModified} clients' commingle rate to ${req.body.rateAmount}`
+        );
+        res.redirect(`/rateList`);
+};
+
+exports.updateRepRate = async (req, res, next) => {};
