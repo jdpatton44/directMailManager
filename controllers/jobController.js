@@ -207,7 +207,6 @@ exports.addPackage = async (req, res, next) => {
 };
 
 exports.createPackage = async (req, res) => {
-        console.log(req.body);
         const job = await Job.findOne({ _id: req.params.id });
         Job.updateOne(
                 { _id: req.params.id },

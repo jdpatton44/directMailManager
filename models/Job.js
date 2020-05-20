@@ -37,7 +37,24 @@ const packageSchema = new mongoose.Schema({
                 default: false,
                 required: 'Does this package require scitex?',
         },
-});
+        packagePickupDate: {
+                type: Date,
+                default: null
+        },
+        commingleQuantity: {
+                type: Number,
+                default: 0,
+        },
+        comminglePostageDue: {
+                type: Number,
+                default: 0
+        }
+        },
+        {
+                toJSON: { virtuals: true },
+                toObject: { virtuals: true },
+        }
+);
 
 const jobSchema = new mongoose.Schema(
         {

@@ -48,11 +48,16 @@ exports.updateRate = async (req, res, next) => {
         res.redirect('/rateList');
 };
 
+exports.editClientRate = async (req, res, next) => {
+        const client = await Client.findOne( { clientSlug: req.params.slug} );
+        res.render('editClientRate', {client, title: `Update Rate for ${client.clientName}`} )
+}
+
 exports.updateClientRate = async (req, res, next) => {
-        const client = Client.findOneAndUpdate({ _id: req.params.id }, req.body, {
+        const client = await Client.findOneAndUpdate({ _id: req.params.id }, { $set: { clientCommingleRate: req.body.rateAmount } }, {
                 new: true,
                 runValidators: true,
-        }).exec();
+        });
         req.flash(
                 'success',
                 `Successfully updated <strong>${client.clientName}</strong> commingle rate to ${
@@ -64,23 +69,20 @@ exports.updateClientRate = async (req, res, next) => {
 
 exports.editAgencyRate = async (req, res, next) => {
         const agencies = await Agency.find();
-        res.render('agencyRateUpdate', { agencies, title: 'Update Rates' });
+        res.render('agencyRateUpdate', { agencies, title: `Update Rates` });
 };
 
 exports.updateAgencyRate = async (req, res, next) => {
-        console.log(req.body.agencyId);
+        const agency = await Agency.findOne({ _id: req.body.agencyId });
         const clients = await Client.updateMany(
                 {
                         clientAgency: req.body.agencyId,
                 },
                 { $set: { clientCommingleRate: req.body.rateAmount } }
         );
-        console.log(clients);
         req.flash(
                 'success',
-                `Successfully updated ${clients.nModified} clients' commingle rate to ${req.body.rateAmount}`
+                `Successfully updated ${clients.nModified} of ${agency.agencyName} clients' commingle rate to ${req.body.rateAmount}`
         );
         res.redirect(`/rateList`);
 };
-
-exports.updateRepRate = async (req, res, next) => {};
