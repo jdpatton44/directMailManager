@@ -66,6 +66,8 @@ router.get('/addRate', rateController.addRate);
 router.post('/addRate', catchErrors(rateController.createRate));
 router.get('/rate/:id/edit', catchErrors(rateController.editRate));
 router.post('/addRate/:id', catchErrors(rateController.updateRate));
+router.get('/setAgencyRate/', catchErrors(rateController.editAgencyRate));
+router.post('/updateAgencyRate/', catchErrors(rateController.updateAgencyRate));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
