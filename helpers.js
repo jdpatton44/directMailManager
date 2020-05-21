@@ -25,6 +25,13 @@ exports.getMonday = d => {
         return new Date(inputDate.setDate(diff));
 };
 
+// Format Money
+exports.formatCurrency = n =>
+        new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+        }).format(n);
+
 // Maiiling options
 exports.mailingOptions = [
         'Straight 1st',
@@ -36,7 +43,15 @@ exports.mailingOptions = [
         'PSI Commingle',
 ];
 
-exports.postageOptions = ['NP Indicia', 'NP Stamp', 'NP Meter', 'Standard Stamp', 'Standard Meter', 'Standard Indicia'];
+exports.postageOptions = [
+        'NP Indicia',
+        'NP Stamp',
+        'NP Meter',
+        'Standard Stamp',
+        'Standard Meter',
+        'Standard Indicia',
+        '1st Class Stamp',
+];
 
 // Format phone numbers
 exports.formatPhoneNumber = str => {

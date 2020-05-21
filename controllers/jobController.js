@@ -64,9 +64,9 @@ exports.updateJob = async (req, res, next) => {
         }).exec();
         req.flash(
                 'success',
-                `Successfully updated <strong>${job.jobName}</strong>. <a href="/jobs/${job.jobSlug}">View Job -<</a>`
+                `Successfully updated <strong>${job.jobName}</strong>.</a>`
         );
-        res.redirect(`/jobs/${job._id}/edit`);
+        res.redirect(`/job/${job.jobSlug}`);
 };
 
 exports.jobsByClient = async (req, res) => {

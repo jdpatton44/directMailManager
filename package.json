@@ -35,6 +35,7 @@
     "juice": "4.0.2",
     "md5": "2.2.1",
     "moment": "2.17.1",
+    "moment-timezone": "^0.5.31",
     "mongoose": "5.3.1",
     "mongoose-mongodb-errors": "0.0.2",
     "mongoose-unique-validator": "^2.0.3",

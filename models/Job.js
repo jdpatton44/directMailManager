@@ -4,51 +4,62 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
 
-const packageSchema = new mongoose.Schema({
-        packageName: {
-                type: String,
-                trim: true,
-                required: 'Please enter a name for this package.',
-        },
-        packageQuantity: {
-                type: Number,
-                required: 'Please enter the quantity for this package.',
-        },
-        packageMailingMethod: {
-                type: String,
-                enum: ['1st Class Presort', 'Midwest Commingle', 'PSI Commingle', 'Standard', 'SCF'],
-                required: 'Please enter the mailing method for this package, (Commingle, 1st Class Presort, ect.)',
-        },
-        packagePostage: {
-                type: String,
-                enum: ['NP Indicia', 'NP Stamp', 'NP Meter', 'Standard Stamp', 'Standard Meter', 'Standard Indicia'],
-                required: 'Please enter the postage type.',
-        },
-        packageMaildate: {
-                type: Date,
-                required: 'Please enter the mail date for this package.',
-        },
-        packageSize: {
-                type: String,
-                required: 'Please enter the size for this package.',
-        },
-        packageScitex: {
-                type: Boolean,
-                default: false,
-                required: 'Does this package require scitex?',
-        },
-        packagePickupDate: {
-                type: Date,
-                default: null
-        },
-        commingleQuantity: {
-                type: Number,
-                default: 0,
-        },
-        comminglePostageDue: {
-                type: Number,
-                default: 0
-        }
+const packageSchema = new mongoose.Schema(
+        {
+                packageName: {
+                        type: String,
+                        trim: true,
+                        required: 'Please enter a name for this package.',
+                },
+                packageQuantity: {
+                        type: Number,
+                        required: 'Please enter the quantity for this package.',
+                },
+                packageMailingMethod: {
+                        type: String,
+                        enum: ['1st Class Presort', 'Midwest Commingle', 'PSI Commingle', 'Standard', 'SCF'],
+                        required:
+                                'Please enter the mailing method for this package, (Commingle, 1st Class Presort, ect.)',
+                },
+                packagePostage: {
+                        type: String,
+                        enum: [
+                                'NP Indicia',
+                                'NP Stamp',
+                                'NP Meter',
+                                'Standard Stamp',
+                                'Standard Meter',
+                                'Standard Indicia',
+                                '1st Class Stamp',
+                                '1st Class Meter',
+                        ],
+                        required: 'Please enter the postage type.',
+                },
+                packageMaildate: {
+                        type: Date,
+                        required: 'Please enter the mail date for this package.',
+                },
+                packageSize: {
+                        type: String,
+                        required: 'Please enter the size for this package.',
+                },
+                packageScitex: {
+                        type: Boolean,
+                        default: false,
+                        required: 'Does this package require scitex?',
+                },
+                packagePickupDate: {
+                        type: Date,
+                        default: null,
+                },
+                commingleQuantity: {
+                        type: Number,
+                        default: 0,
+                },
+                comminglePostageDue: {
+                        type: Number,
+                        default: 0,
+                },
         },
         {
                 toJSON: { virtuals: true },

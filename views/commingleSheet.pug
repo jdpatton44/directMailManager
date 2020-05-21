@@ -14,14 +14,14 @@ block content
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage 
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Pick Up Date
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage Due
-                            each p in job.packages
-                                if(p.mailingMethod === 'Midwest Commingle' || 'SCF')
+                            - const comminglePackages = job.packages.filter(p => p.packageMailingMethod === ('Midwest Commingle' || 'SCF') )
+                            each p in comminglePackages
                                     tr(class="hover:bg-blue-200") 
                                         td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageName
                                         td(class="py-4 px-6 border-b border-grey-light text-center")
                                             input(type="number" name="commingleQuantity" value=p.commingleQuantity)
                                         td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage
                                         td(class="py-4 px-6 border-b border-grey-light text-center") 
-                                            input(type="date" name="packagePickupDate" value=h.moment(p.packagePickupDate).add(1,"days").format("YYYY-MM-DD"))
-                                        td(class="py-4 px-6 border-b border-grey-light text-center")= p.comminglePostageDue
+                                            input(type="date" name="packagePickupDate" value=h.moment(p.packagePickupDate).add(8,"hours").format("YYYY-MM-DD"))
+                                        td(class="py-4 px-6 border-b border-grey-light text-center") #{h.formatCurrency(p.comminglePostageDue)}
                 button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") Save

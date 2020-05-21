@@ -17,7 +17,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
           each job in thisWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
+              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(9,"hours").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light text-center")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
@@ -54,7 +54,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
           each job in nextWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
+              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(9,"hours").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light text-center")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
@@ -90,7 +90,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
           each job in lastTwoWeeksJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")
+              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(job.jobMailDate).add(9,"hours").format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light text-center")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
@@ -98,7 +98,9 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center") 
                 a(href=`/job/${job.jobSlug}`) #{job.jobName}
-              td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobQuantity.toLocaleString()
+              - let quantity = job.jobQuantity;
+              - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
+              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
                 td(class="py-4 px-6 border-b border-grey-light text-center")
