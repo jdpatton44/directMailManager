@@ -4,6 +4,7 @@ const clientController = require('../controllers/clientController');
 const agencyController = require('../controllers/agencyController');
 const repController = require('../controllers/repController');
 const rateController = require('../controllers/rateController');
+const skidController = require('../controllers/skidController');
 const commingleController = require('../controllers/commingleController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
@@ -76,6 +77,14 @@ router.post('/updateClientRate/:id', rateController.updateClientRate);
 router.get('/commingle/:slug', catchErrors(commingleController.createCommingleSheet));
 router.post('/commingle/:slug', catchErrors(commingleController.recalculateCommingleSheet));
 router.post('/updateCommingle/:id', catchErrors(commingleController.updateCommingleSheet));
+
+// Skid Routes
+router.get('/shipping/:slug', catchErrors(skidController.jobShipping));
+router.get('/addSkid/:id', catchErrors(skidController.addSkid));
+router.get('/createSkid/:id', catchErrors(skidController.createSkid));
+router.get('/editSkid/:id', catchErrors(skidController.editSkid));
+router.get('/updateSkid/:id', catchErrors(skidController.updateSkid));
+router.get('/deleteSkid/:id', catchErrors(skidController.deleteSkid));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
