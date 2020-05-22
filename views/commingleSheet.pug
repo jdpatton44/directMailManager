@@ -4,7 +4,7 @@ block content
     .inner
         h1.text-5xl.py-4 #{job.jobName} - 🚚 First Pickup - #{h.moment(job.jobMailDate).add(1,"days").format("MM-DD-YY")} 
         div(class="mx-auto ")
-            form(action=`/updateCommingle/${job.jobSlug}` method="POST")
+          form(action=`/updateCommingle/${job._id}` method="POST")
                 div
                 div(class="bg-white shadow-xl rounded my-6")
                     table(class="text-left w-full border-collapse")
@@ -14,14 +14,24 @@ block content
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage 
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Pick Up Date
                             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage Due
-                            - const comminglePackages = job.packages.filter(p => p.packageMailingMethod === ('Midwest Commingle' || 'SCF') )
+                            - const comminglePackages = job.packages.filter(p => (p.packageMailingMethod === 'Midwest Commingle') || (p.packageMailingMethod === 'SCF') )
                             each p in comminglePackages
                                     tr(class="hover:bg-blue-200") 
+                                        input(type="hidden" name="_id" value=p._id)
+                                        input(type="hidden" name="packageMailingMethod" value=p.packageMailingMethod)
+                                        input(type="hidden" name="packageQuantity" value=p.packageQuantity)
+                                        input(type="hidden" name="packageMaildate" value=p.packageMaildate)
+                                        input(type="hidden" name="packagePostage" value=p.packagePostage)
+                                        input(type="hidden" id="comminglePostageDue" name="comminglePostageDue" value=p.comminglePostageDue)
                                         td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageName
                                         td(class="py-4 px-6 border-b border-grey-light text-center")
                                             input(type="number" name="commingleQuantity" value=p.commingleQuantity)
                                         td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage
                                         td(class="py-4 px-6 border-b border-grey-light text-center") 
                                             input(type="date" name="packagePickupDate" value=h.moment(p.packagePickupDate).add(8,"hours").format("YYYY-MM-DD"))
-                                        td(class="py-4 px-6 border-b border-grey-light text-center") #{h.formatCurrency(p.comminglePostageDue)}
-                button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") Save
+                                        td(class="py-4 px-6 border-b border-grey-light text-center")  #{h.formatCurrency(p.comminglePostageDue)}
+                div(class="flex flex-row justify-between")
+                  button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") Update
+                  button(type="button" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") Print Sheet
+                  button(type="button" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") 
+                    a(href=`/job/${job.jobSlug}`) Return to Job

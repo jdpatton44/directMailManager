@@ -69,10 +69,10 @@ exports.menu = [
         { slug: '/jobList', title: 'All Jobs', icon: 'mailbox' },
         { slug: '/addJob', title: 'Add Job', icon: 'newJob' },
         { slug: '/clientList', title: 'Clients', icon: 'client' },
-        { slug: '/addClient', title: 'Add Client', icon: 'add' },
+        { slug: '/addClient', title: 'Add Client', icon: 'addClient' },
         { slug: '/repList', title: 'Reps', icon: 'reps' },
         { slug: '/addRep', title: 'Add Rep', icon: 'addRep' },
         { slug: '/agencyList', title: 'Agencies', icon: 'agency' },
-        { slug: '/addAgency', title: 'Add Agency', icon: 'add' },
+        { slug: '/addAgency', title: 'Add Agency', icon: 'addAgency' },
         { slug: '/rateList', title: 'Rates', icon: 'rate' },
 ];

@@ -74,7 +74,8 @@ router.post('/updateClientRate/:id', rateController.updateClientRate);
 
 // Commingle Routes
 router.get('/commingle/:slug', catchErrors(commingleController.createCommingleSheet));
-router.post('/updateCommingle/:slug', catchErrors(commingleController.updateCommingleSheet));
+router.post('/commingle/:slug', catchErrors(commingleController.recalculateCommingleSheet));
+router.post('/updateCommingle/:id', catchErrors(commingleController.updateCommingleSheet));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
