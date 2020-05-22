@@ -25,6 +25,13 @@ exports.getMonday = d => {
         return new Date(inputDate.setDate(diff));
 };
 
+// Format Money
+exports.formatCurrency = n =>
+        new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+        }).format(n);
+
 // Maiiling options
 exports.mailingOptions = [
         'Straight 1st',
@@ -36,7 +43,15 @@ exports.mailingOptions = [
         'PSI Commingle',
 ];
 
-exports.postageOptions = ['NP Indicia', 'NP Stamp', 'NP Meter', 'Standard Stamp', 'Standard Meter', 'Standard Indicia'];
+exports.postageOptions = [
+        'NP Indicia',
+        'NP Stamp',
+        'NP Meter',
+        'Standard Stamp',
+        'Standard Meter',
+        'Standard Indicia',
+        '1st Class Stamp',
+];
 
 // Format phone numbers
 exports.formatPhoneNumber = str => {
@@ -54,10 +69,10 @@ exports.menu = [
         { slug: '/jobList', title: 'All Jobs', icon: 'mailbox' },
         { slug: '/addJob', title: 'Add Job', icon: 'newJob' },
         { slug: '/clientList', title: 'Clients', icon: 'client' },
-        { slug: '/addClient', title: 'Add Client', icon: 'add' },
+        { slug: '/addClient', title: 'Add Client', icon: 'addClient' },
         { slug: '/repList', title: 'Reps', icon: 'reps' },
         { slug: '/addRep', title: 'Add Rep', icon: 'addRep' },
         { slug: '/agencyList', title: 'Agencies', icon: 'agency' },
-        { slug: '/addAgency', title: 'Add Agency', icon: 'add' },
+        { slug: '/addAgency', title: 'Add Agency', icon: 'addAgency' },
         { slug: '/rateList', title: 'Rates', icon: 'rate' },
 ];

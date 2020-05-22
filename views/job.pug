@@ -5,19 +5,18 @@ block content
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
       div(class="flex flex-col w-full md:flex-row")
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
-          div(class="md:text-5xl") #{h.moment(job.jobMailDate).add(1,"days").format("MMMM")}
-          div(class="md:text-6xl") #{h.moment(job.jobMailDate).add(1,"days").format("DD")}
-          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate).add(1,"days").format("dddd")}
+          div(class="md:text-5xl") #{h.moment(job.jobMailDate).add(9,"hours").format("MMMM")}
+          div(class="md:text-6xl") #{h.moment(job.jobMailDate).add(9,"hours").format("DD")}
+          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate).add(9,"hours").format("dddd")}
           
         div(class="p-4 font-normal text-gray-800 md:w-3/4")
           p(class="leading-normal font-bold text-3xl") #{job.jobName}
           p(class="leading-normal") Package Sizes - #{job.jobSize}
           p(class="leading-normal") #{job.jobTags} 
           div(class="flex flex-row items-center mt-4 text-black")
-            if job.packages != []
-              div(class="w-1/2 ") #{quantity.toLocaleString()} Pieces
-            else
-              div(class="w-1/2 ") #{job.jobQuantity.toLocaleString()} Pieces
+            - let quantity = job.jobQuantity;
+            - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
+            div(class="w-1/2 ") #{quantity ? quantity.toLocaleString() : ''} Pieces
             div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
     div(class="flex flex-col w-full md:flex-row")            
     h2.m-6.text-5xl Job Notes 📝 
@@ -34,6 +33,7 @@ block content
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mail Date
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Quantity
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mailing Method
+              th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Size
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Notes
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
@@ -43,6 +43,7 @@ block content
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMaildate ? h.moment(p.packageMaildate).add(1,"days").format("MM-DD-YY") : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageQuantity ? p.packageQuantity.toLocaleString('en') : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMailingMethod ? p.packageMailingMethod : ''
+                  td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage ? p.packagePostage : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageSize ? p.packageSize : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageNotes
                   td(class="py-4 px-6 border-b border-grey-light text-center") 
@@ -51,7 +52,7 @@ block content
                     a(href=`/deletePackage/${job.jobSlug}/${p._id}` onclick="return confirm('Are you sure you want to delete this item?');")
                       button(class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Delete
     div(class="flex flex-row justify-between")
-      button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6")
-        a(href=`/commingle/${job.jobSlug}`) Create Commingle Sheet
-      button(class="bg-red-500 hover:bg-red-400 text-white font-bold py-4 px-6 border-b-4 border-red-700 hover:border-red-500 rounded m-6")
-        a(href=`/deleteJob/${job._id}` onclick="return confirm('Are you sure you want to delete this item?');") Delete Job
+      a(href=`/commingle/${job.jobSlug}`) 
+        button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6") Create Commingle Sheet
+      a(href=`/deleteJob/${job._id}` onclick="return confirm('Are you sure you want to delete this item?');") 
+        button(class="bg-red-500 hover:bg-red-400 text-white font-bold py-4 px-6 border-b-4 border-red-700 hover:border-red-500 rounded m-6") Delete Job
