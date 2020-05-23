@@ -7,7 +7,7 @@ const rateSchema = new mongoose.Schema(
         {
                 rateName: {
                         type: String,
-                        trim: true,
+                        trim: true,     
                         required: true,
                 },
                 rateAmount: {
