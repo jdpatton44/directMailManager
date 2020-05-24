@@ -17,6 +17,7 @@ require('./models/Client');
 require('./models/Agency');
 require('./models/Rep');
 require('./models/Rate');
+require('./models/Skid');
 
 // Start our app!
 const app = require('./app');

@@ -1,0 +1,8 @@
+extends layout
+
+include mixins/_skidForm
+
+block content
+    .inner
+      h1.text-6xl.py-4 #{title}
+      +skidForm(skid, job)

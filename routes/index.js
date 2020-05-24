@@ -81,10 +81,10 @@ router.post('/updateCommingle/:id', catchErrors(commingleController.updateCommin
 // Skid Routes
 router.get('/shipping/:slug', catchErrors(skidController.jobShipping));
 router.get('/addSkid/:id', catchErrors(skidController.addSkid));
-router.get('/createSkid/:id', catchErrors(skidController.createSkid));
+router.post('/addSkid/', catchErrors(skidController.createSkid));
 router.get('/editSkid/:id', catchErrors(skidController.editSkid));
-router.get('/updateSkid/:id', catchErrors(skidController.updateSkid));
-router.get('/deleteSkid/:id', catchErrors(skidController.deleteSkid));
+router.post('/addSkid/:id', catchErrors(skidController.updateSkid));
+router.get('/deleteSkid/:slug/:id', catchErrors(skidController.deleteSkid));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
