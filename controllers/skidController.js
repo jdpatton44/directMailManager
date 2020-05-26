@@ -6,7 +6,10 @@ const Skid = mongoose.model('Skid');
 exports.jobShipping = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const skids = await Skid.find({ skidJob: job._id }).sort({ skidDate: 'desc' });
-
+        const jobPackages = job.packages.map(p =>  (p.packageName, p.packageQuantity));
+        debugger;
+        console.log('jobPackages');
+        console.table(jobPackages);
         res.render('jobSkids', { job, skids, title: `${job.jobName} Shipping` });
 };
 

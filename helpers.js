@@ -65,6 +65,8 @@ exports.formatPhoneNumber = str => {
         return null;
 };
 
+
+// Create the items in the nav bar 
 exports.menu = [
         { slug: '/jobList', title: 'All Jobs', icon: 'mailbox' },
         { slug: '/addJob', title: 'Add Job', icon: 'newJob' },
