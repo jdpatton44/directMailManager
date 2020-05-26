@@ -46,4 +46,17 @@ const skidSchema = new mongoose.Schema(
         }
 );
 
+// skidSchema.statics.getSkidCounts = function() {
+//         return this.aggregate([
+//                 {$unwind: 'skidDate'},
+//                 { $group: { "_id": "skidPackage",
+//                         "total": {
+//                                 "$sum": "skidCount.amount"
+//                         } 
+//                 }
+//         }
+//         ])
+// }
+
+
 module.exports = mongoose.model('Skid', skidSchema);

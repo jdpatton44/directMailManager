@@ -19,6 +19,28 @@ block content
             div(class="w-1/2 ") #{quantity ? quantity.toLocaleString() : ''} Pieces
             div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
 
+    div(class="flex flex-row justify-center")
+      each p in job.packages
+        div(class="rounded h-full flex flex-row justify-center items-center p-4 bg-gray-200")
+          div(class="rounded bg-white shadow-md p-6 flex flex-col justify-around")
+            div
+              p(class="text-2xl text-orange-600")=p.packageName
+            div 
+              p(class="text-lg") Pkg Quantity
+              p(class="text-2xl text-gray-700 font-bold")=p.packageQuantity.toLocaleString()
+            div
+              p(class="text-lg") Skids Shipped
+              - const numSkids = skids.filter(s => s.skidPackage.equals(p._id))
+              p(class="text-2xl text-gray-700 font-bold")=numSkids.length
+            div 
+              p(class="text-lg") Pieces Shipped
+              - function sum(total, num) { return total + num }
+              - const count = numSkids.map(s => s.skidCount).reduce(sum, 0)
+              p(class="text-2xl text-gray-700 font-bold") #{count}
+                span(class="text-lg") - (#{((count/p.packageQuantity) * 100).toFixed(2)}%)  
+              
+    
+
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
       div(class="flex flex-row justify-between")
         h1.text-5xl.py-2.m-2 🚚 Skids 🚚 
