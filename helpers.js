@@ -76,5 +76,6 @@ exports.menu = [
         { slug: '/addRep', title: 'Add Rep', icon: 'addRep' },
         { slug: '/agencyList', title: 'Agencies', icon: 'agency' },
         { slug: '/addAgency', title: 'Add Agency', icon: 'addAgency' },
+        { slug: '/shipping/', title: 'Shipping', icon: 'truck'},
         { slug: '/rateList', title: 'Rates', icon: 'rate' },
 ];

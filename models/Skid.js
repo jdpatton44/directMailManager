@@ -35,10 +35,14 @@ const skidSchema = new mongoose.Schema(
                         type: Number,
                         required: true,
                 },
-                skidDate: {
+                skidCreatedDate: {
                         type: Date,
                         default: Date.now,
                 },
+                skidShipDate: {
+                        type: Date,
+                        required: true,
+                }
         },
         {
                 toJSON: { virtuals: true },
@@ -46,17 +50,10 @@ const skidSchema = new mongoose.Schema(
         }
 );
 
-// skidSchema.statics.getSkidCounts = function() {
-//         return this.aggregate([
-//                 {$unwind: 'skidDate'},
-//                 { $group: { "_id": "skidPackage",
-//                         "total": {
-//                                 "$sum": "skidCount.amount"
-//                         } 
-//                 }
-//         }
-//         ])
-// }
+skidSchema.pre('save', function(next) {
+        this.skidShipDate = this.skidShipDate + 2.16e7;
+        next();
+});
 
 
 module.exports = mongoose.model('Skid', skidSchema);
