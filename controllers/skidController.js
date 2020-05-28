@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const Job = mongoose.model('Job');
 const Skid = mongoose.model('Skid');
 
+const helpers = require('../helpers');
+
 exports.jobShipping = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const skids = await Skid.find({ skidJob: job._id }).sort({ skidDate: 'desc' });
         const jobPackages = job.packages.map(p =>  (p.packageName, p.packageQuantity));
-        debugger;
+        
         console.log('jobPackages');
         console.table(jobPackages);
         res.render('jobSkids', { job, skids, title: `${job.jobName} Shipping` });
@@ -41,9 +43,19 @@ exports.updateSkid = async (req, res, next) => {
         req.flash('success', `Successfully updated skid for ${job.jobName}.`);
         res.redirect(`/shipping/${job.jobSlug}`);
 };
+
 exports.deleteSkid = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const skid = await Skid.findByIdAndDelete(req.params.id);
+        if(!job || !skid) {return next;}
         req.flash('success', `Successfully deleted skid from ${job.jobName}.`);
         res.redirect(`/shipping/${job.jobSlug}`);
+};
+
+exports.daysShipping = async (req, res, next) => {
+        // get date and subtract a day to account for UTC time 
+        const today = helpers.moment().startOf('day').subtract(1,"days").toISOString();
+        const tomorrow = helpers.moment(today).startOf('day').add(1,"days").toISOString();
+        const skids = await Skid.find( {"skidShipDate": {"$gte": today, "$lte": tomorrow}} ).populate("skidJob"); 
+        res.render('shipping', {skids, title: `Shipping out ${helpers.moment(req.params.date).format("YYYY-MM-DD")}`});
 };

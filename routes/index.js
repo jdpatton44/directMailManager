@@ -85,6 +85,7 @@ router.post('/addSkid/', catchErrors(skidController.createSkid));
 router.get('/editSkid/:id', catchErrors(skidController.editSkid));
 router.post('/addSkid/:id', catchErrors(skidController.updateSkid));
 router.get('/deleteSkid/:slug/:id', catchErrors(skidController.deleteSkid));
+router.get('/shipping/', catchErrors(skidController.daysShipping));
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
