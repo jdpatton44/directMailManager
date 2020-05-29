@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 const slug = require('slugs');
+const moment = require('moment')
 
 const skidSchema = new mongoose.Schema(
         {
@@ -50,7 +51,7 @@ const skidSchema = new mongoose.Schema(
         }
 );
 
-skidSchema.pre('save', function(next) {
+skidSchema.pre('save', async function(next) {
         this.skidShipDate = this.skidShipDate + 2.16e7;
         next();
 });

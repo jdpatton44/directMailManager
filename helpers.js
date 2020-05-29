@@ -6,6 +6,7 @@
 const fs = require('fs');
 
 // moment.js is a handy library for displaying dates. We need this in our templates to display things like "Posted 5 minutes ago"
+const moment = require('moment');
 exports.moment = require('moment');
 
 // Dump is a handy debugging function we can use to sort of "console.log" our data
@@ -65,6 +66,7 @@ exports.formatPhoneNumber = str => {
         return null;
 };
 
+const today = moment(new Date()).format('YYYY-MM-DD');
 
 // Create the items in the nav bar 
 exports.menu = [
@@ -76,6 +78,6 @@ exports.menu = [
         { slug: '/addRep', title: 'Add Rep', icon: 'addRep' },
         { slug: '/agencyList', title: 'Agencies', icon: 'agency' },
         { slug: '/addAgency', title: 'Add Agency', icon: 'addAgency' },
-        { slug: '/shipping/', title: 'Shipping', icon: 'truck'},
+        { slug: `/shippingToday/${today}`, title: 'Shipping', icon: 'truck'},
         { slug: '/rateList', title: 'Rates', icon: 'rate' },
 ];

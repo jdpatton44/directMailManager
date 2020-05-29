@@ -208,6 +208,8 @@ exports.addPackage = async (req, res, next) => {
 
 exports.createPackage = async (req, res) => {
         const job = await Job.findOne({ _id: req.params.id });
+        console.table(req.body)
+        if(req.body.packageScitex === 'on') {req.body.packageScitex = true;}
         Job.updateOne(
                 { _id: req.params.id },
                 { $push: { packages: req.body } },
@@ -225,6 +227,7 @@ exports.editPackage = async (req, res, next) => {
 };
 
 exports.updatePackage = async (req, res, next) => {
+        if(req.body.packageScitex === 'on') {req.body.packageScitex = true;}
         const job = await Job.findOneAndUpdate(
                 { jobSlug: req.params.slug, 'packages._id': req.params.id },
                 {

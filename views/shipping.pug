@@ -4,16 +4,25 @@ block content
   .inner.py-8
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
       div(class="flex flex-row justify-between")
-        h1.text-5xl.py-2.m-2 🚚 Shipping out #{h.moment().format("MMM DD")} 📦
+        h1.text-5xl.py-2.m-2 🚚 Shipping out #{h.moment(shipDate).format("MMM DD")} 📦
+        form(action=`/shippingByDate/` method="POST" class="flex flex-column")
+          input(class="bg-transparent border-b m-auto block border-gray-500 w-full mb-6 text-gray-700 pb-1" type="date" name="shippingDate" value=h.moment(shipDate).format("YYYY-MM-DD"))
+          button(id="__shipDate" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4" type="submit") Change Date
       div(class="flex flex-col w-full md:flex-row")
         table(class="text-left w-full border-collapse")
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Job
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Package
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Skid Count
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Action
           if skid !== []
             each s in skids  
               tr(class="hover:bg-blue-200") 
-                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidJob.jobName
+                td(class="py-4 px-6 border-b border-grey-light text-center")
+                  a(href=`/shipping/${s.skidJob.jobSlug}`)= s.skidJob.jobName
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidJob.packages.find( p => p._id.equals(s.skidPackage)).packageName  
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidCount
+                td(class="py-2 px-2 border-b border-grey-light" style='width: 4em')
+                  a(href=`/shipping/${s.skidJob.jobSlug}`)
+                    button(class="bg-orange-500 hover:bg-orange-700 text-lg text-white font-bold py-1 px-2 rounded m-1 w-4/5") View Job Shipping
+    p=packageSkids[packages[0]]
           
