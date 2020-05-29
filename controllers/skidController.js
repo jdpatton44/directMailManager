@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 const Job = mongoose.model('Job');
 const Skid = mongoose.model('Skid');
@@ -8,8 +9,8 @@ const helpers = require('../helpers');
 exports.jobShipping = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const skids = await Skid.find({ skidJob: job._id }).sort({ skidDate: 'desc' });
-        const jobPackages = job.packages.map(p =>  (p.packageName, p.packageQuantity));
-        
+        const jobPackages = job.packages.map(p => (p.packageName, p.packageQuantity));
+
         console.log('jobPackages');
         console.table(jobPackages);
         res.render('jobSkids', { job, skids, title: `${job.jobName} Shipping` });
@@ -47,15 +48,31 @@ exports.updateSkid = async (req, res, next) => {
 exports.deleteSkid = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const skid = await Skid.findByIdAndDelete(req.params.id);
-        if(!job || !skid) {return next;}
+        if (!job || !skid) {
+                return next;
+        }
         req.flash('success', `Successfully deleted skid from ${job.jobName}.`);
         res.redirect(`/shipping/${job.jobSlug}`);
 };
 
 exports.daysShipping = async (req, res, next) => {
-        // get date and subtract a day to account for UTC time 
-        const today = helpers.moment().startOf('day').subtract(1,"days").toISOString();
-        const tomorrow = helpers.moment(today).startOf('day').add(1,"days").toISOString();
-        const skids = await Skid.find( {"skidShipDate": {"$gte": today, "$lte": tomorrow}} ).populate("skidJob"); 
-        res.render('shipping', {skids, title: `Shipping out ${helpers.moment(req.params.date).format("YYYY-MM-DD")}`});
+        // get date and subtract a day to account for UTC tinpmme
+        const shipDate = helpers
+                .moment()
+                .startOf('day')
+                .subtract(1, 'days')
+                .toISOString();
+        const tomorrow = helpers
+                .moment(shipDate)
+                .startOf('day')
+                .add(1, 'days')
+                .toISOString();
+        const skids = await Skid.find({ skidShipDate: { $gte: shipDate, $lte: tomorrow } }).populate('skidJob');
+        const packageSkids = _.groupBy(skids, 'skidPackage');
+        console.table(packageSkids);
+        res.render('shipping', {
+                skids,
+                shipDate,
+                title: `Shipping out ${helpers.moment(shipDate).format('YYYY-MM-DD')}`,
+        });
 };
