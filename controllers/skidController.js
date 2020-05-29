@@ -57,10 +57,15 @@ exports.deleteSkid = async (req, res, next) => {
 
 exports.daysShipping = async (req, res, next) => {
         // get date and subtract a day to account for UTC tinpmme
-        const shipDate = helpers
-                .moment()
+        let date;
+        if(req.body.shippingDate) {
+                date = helpers.moment(req.body.shippingDate).subtract(4,"hours") //.add(1,"days");
+        } else {
+                date = helpers.moment(new Date()).startOf("day").subtract(4,"hours");
+        }
+        let shipDate = helpers
+                .moment(date)
                 .startOf('day')
-                .subtract(1, 'days')
                 .toISOString();
         const tomorrow = helpers
                 .moment(shipDate)
@@ -68,9 +73,12 @@ exports.daysShipping = async (req, res, next) => {
                 .add(1, 'days')
                 .toISOString();
         const skids = await Skid.find({ skidShipDate: { $gte: shipDate, $lte: tomorrow } }).populate('skidJob');
+        shipDate = helpers.moment(shipDate).add(1,"days");
         const packageSkids = _.groupBy(skids, 'skidPackage');
-        console.table(packageSkids);
+        const packages = Object.keys(packageSkids);
         res.render('shipping', {
+                packages,
+                packageSkids,
                 skids,
                 shipDate,
                 title: `Shipping out ${helpers.moment(shipDate).format('YYYY-MM-DD')}`,

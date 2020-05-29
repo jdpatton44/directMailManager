@@ -1,4 +1,5 @@
 mixin packageForm(p = {})
+    p=p._id
     form(action=(p._id ? `/updatePackage/${job.jobSlug}/${p._id}` : `../createPackage/${job._id}`) method="POST")
                   label(for="packageName") Package Name
                   input(type="text" name="packageName" value=p.packageName)
@@ -22,8 +23,11 @@ mixin packageForm(p = {})
                         option(value=option2 selected) #{option2}
                       else
                         option(value=option2 ) #{option2}
-                  label(for="packageSize")
-                  input(type="text" value=job.jobSize name="packageSize" placeholder=job.jobSize )
+                  label(for="packageSize") Package Size
+                  input(type="text" value=p.packageSize name="packageSize" placeholder=job.jobSize )
+                  .flex.flex-row
+                    label(for="packageScitex") Scitex
+                      input(type="checkbox" id="packageScitex" name="packageScitex" value=p.packageScitex )
                   label(for="packageNotes") Notes
                   textarea(name="packageNotes" value=p.packageNotes)
                   div(class="ml-auto")
