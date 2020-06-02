@@ -43,6 +43,13 @@ const skidSchema = new mongoose.Schema(
                 skidShipDate: {
                         type: Date,
                         required: true,
+                },
+                skidNumber: {
+                        type: Number,
+                },
+                shipped: {
+                        type: Boolean,
+                        default: false,
                 }
         },
         {

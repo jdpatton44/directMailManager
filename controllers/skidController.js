@@ -18,7 +18,8 @@ exports.jobShipping = async (req, res, next) => {
 
 exports.addSkid = async (req, res, next) => {
         const job = await Job.findOne({ _id: req.params.id });
-        res.render('editSkid', { job, title: `Create a skid for ${job.jobName}` });
+        const count = req.params.count;
+        res.render('editSkid', { job, count, title: `Create a skid for ${job.jobName}` });
 };
 
 exports.createSkid = async (req, res, next) => {
@@ -26,7 +27,7 @@ exports.createSkid = async (req, res, next) => {
         const skid = await new Skid(req.body).save();
         const job = await Job.findOne({ _id: req.body.skidJob });
         const p = job.packages.filter(p => p._id === req.body.skidPacakge);
-        req.flash('success', `🚚 Shipping out ${skid.skidCount} pieces of ${job.jobName}.`);
+        req.flash('success', `Skid ${skid.skidNumber} with ${skid.skidCount} pieces for ${job.jobName} created.`);
         res.redirect(`/shipping/${job.jobSlug}`);
 };
 exports.editSkid = async (req, res, next) => {
@@ -75,9 +76,9 @@ exports.daysShipping = async (req, res, next) => {
         const skids = await Skid.find({ skidShipDate: { $gte: shipDate, $lte: tomorrow } }).populate('skidJob');
         shipDate = helpers.moment(shipDate).add(1,"days");
         const packageSkids = _.groupBy(skids, 'skidPackage');
-        const packages = Object.keys(packageSkids);
+        const ps = Object.keys(packageSkids);
         res.render('shipping', {
-                packages,
+                ps,
                 packageSkids,
                 skids,
                 shipDate,

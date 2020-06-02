@@ -80,7 +80,7 @@ router.post('/updateCommingle/:id', catchErrors(commingleController.updateCommin
 
 // Skid Routes
 router.get('/shipping/:slug', catchErrors(skidController.jobShipping));
-router.get('/addSkid/:id', catchErrors(skidController.addSkid));
+router.get('/addSkid/:id/:count', catchErrors(skidController.addSkid));
 router.post('/addSkid/', catchErrors(skidController.createSkid));
 router.get('/editSkid/:id', catchErrors(skidController.editSkid));
 router.post('/addSkid/:id', catchErrors(skidController.updateSkid));
