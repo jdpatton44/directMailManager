@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    .inner
+    div(class="flex justify-center flex-wrap p-10")
+     form(action=(truck._id ? `/editTruck/${truck._id}` : `../createTruck/`) method="POST")
+        each job in jobSkids 
+        div(class="relative w-48 h-64 m-5 bg-white shadow-lg")
+        div(class="flex items-center w-48 h-20 bg-orange-500")
+            p=ASPCA
+        p(class="mx-2 py-2 border-b-2 text-center text-gray-700 font-semibold uppercase") #{job.jobName}
+        each p in job.packages
+            input()
+        

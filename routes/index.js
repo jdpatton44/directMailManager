@@ -6,6 +6,7 @@ const repController = require('../controllers/repController');
 const rateController = require('../controllers/rateController');
 const skidController = require('../controllers/skidController');
 const commingleController = require('../controllers/commingleController');
+const TruckController = require('../controllers/commingleController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
@@ -87,6 +88,15 @@ router.post('/addSkid/:id', catchErrors(skidController.updateSkid));
 router.get('/deleteSkid/:slug/:id', catchErrors(skidController.deleteSkid));
 router.get('/shippingToday/:date', catchErrors(skidController.daysShipping));
 router.post('/shippingByDate/', catchErrors(skidController.daysShipping));
+
+// Truck Routes
+router.get('/truck/:id', catchErrors(truckController.viewTruck))
+router.get('/truck/createTruck', catchErrors(truckController.createTruck))
+router.post('/truck/createTruck', catchErrors(truckController.addTruck))
+router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
+router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
+
+
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
