@@ -3,15 +3,17 @@ extends layout
 block content
     .inner
     div(class="flex justify-center flex-wrap")
-        h4 Total Weight
-            h6(id="totalWeight")
-    div(class="flex justify-center flex-wrap")
+        h4(class="text-5xl") Total Weight 
+            span(id="totalWeight") 
+            span  lbs
+    div(id='truck__boxes' class="truck__boxes flex justify-center flex-wrap")
         for key in Object.keys(jobSkids)
             div(class="card w-1/4")
                 - const skids = jobSkids[key]
                 for s in skids
                     div(class="flex flex-row")
-                        input(type="checkbox" class="w-1/8 ")
+                        div(class="p-2")
+                            input(type="checkbox" class="truck__check w-1/8" name="skid" value=s._id data-Weight=s.skidWeight)
                         div(class="p-3") ##{s.skidNumber}
                         div(class="p-3") #{s.skidTrays} Trays
                         div(class="p-3") #{s.skidWeight} Lbs. 

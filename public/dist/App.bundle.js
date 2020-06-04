@@ -951,7 +951,7 @@ exports.$$ = $$;
 
 
 Object.defineProperty(exports, "__esModule", {
-        value: true
+  value: true
 });
 
 var _axios = __webpack_require__(11);
@@ -965,68 +965,68 @@ var _dompurify2 = _interopRequireDefault(_dompurify);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function searchResultsHTML(jobs) {
-        return jobs.map(function (job) {
-                return '\n            <a href="/job/' + job.jobSlug + '" class="search__result">\n                <strong>' + job.jobName + '</strong>\n            </a>\n        ';
-        }).join('');
+  return jobs.map(function (job) {
+    return '\n            <a href="/job/' + job.jobSlug + '" class="search__result">\n                <strong>' + job.jobName + '</strong>\n            </a>\n        ';
+  }).join('');
 }
 
 function typeAhead(search) {
-        if (!search) return;
+  if (!search) return;
 
-        var searchInput = search.querySelector('input[name="search"]');
-        var searchResults = search.querySelector('.search__results');
+  var searchInput = search.querySelector('input[name="search"]');
+  var searchResults = search.querySelector('.search__results');
 
-        // on is add event listener in bling.js
-        searchInput.on('input', function () {
-                var _this = this;
+  // on is add event listener in bling.js
+  searchInput.on('input', function () {
+    var _this = this;
 
-                // if there is no value quit!
-                if (!this.value) {
-                        searchResults.style.display = 'none';
-                        return;
-                }
+    // if there is no value quit!
+    if (!this.value) {
+      searchResults.style.display = 'none';
+      return;
+    }
 
-                // show search results
-                searchResults.style.display = 'block';
-                searchResults.innerHTML = '';
-                _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
-                        if (res.data.length) {
-                                searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(res.data));
-                                return;
-                        }
-                        // tell them nothing came back
-                        searchResults.innerHTML = _dompurify2.default.sanitize('<div class="search__result">No results for ' + _this.value + ' found~ </div>');
-                }).catch(function (err) {
-                        console.log(err);
-                });
-        });
+    // show search results
+    searchResults.style.display = 'block';
+    searchResults.innerHTML = '';
+    _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
+      if (res.data.length) {
+        searchResults.innerHTML = _dompurify2.default.sanitize(searchResultsHTML(res.data));
+        return;
+      }
+      // tell them nothing came back
+      searchResults.innerHTML = _dompurify2.default.sanitize('<div class="search__result">No results for ' + _this.value + ' found~ </div>');
+    }).catch(function (err) {
+      console.log(err);
+    });
+  });
 
-        // handle keyboard inputs only up down enter 38,40,13
+  // handle keyboard inputs only up down enter 38,40,13
 
-        searchInput.on('keyup', function (e) {
-                if (![38, 40, 13].includes(e.keyCode)) {
-                        return;
-                }
-                var activeClass = 'search__result--active';
-                var current = search.querySelector('.' + activeClass);
-                var items = search.querySelectorAll('.search__result');
-                var next = void 0;
-                if (e.keyCode === 40 && current) {
-                        next = current.nextElementSibling || items[0];
-                } else if (e.keyCode === 40) {
-                        next = items[0];
-                } else if (e.keyCode === 38 && current) {
-                        next = current.previousElementSibling || items[items.length - 1];
-                } else if (e.keyCode === 38) {
-                        next = items[items.length - 1];
-                } else if (e.keyCode === 13 && current.href) {
-                        window.location = current.href;
-                }
-                if (current) {
-                        current.classList.remove(activeClass);
-                }
-                next.classList.add(activeClass);
-        });
+  searchInput.on('keyup', function (e) {
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return;
+    }
+    var activeClass = 'search__result--active';
+    var current = search.querySelector('.' + activeClass);
+    var items = search.querySelectorAll('.search__result');
+    var next = void 0;
+    if (e.keyCode === 40 && current) {
+      next = current.nextElementSibling || items[0];
+    } else if (e.keyCode === 40) {
+      next = items[0];
+    } else if (e.keyCode === 38 && current) {
+      next = current.previousElementSibling || items[items.length - 1];
+    } else if (e.keyCode === 38) {
+      next = items[items.length - 1];
+    } else if (e.keyCode === 13 && current.href) {
+      window.location = current.href;
+    }
+    if (current) {
+      current.classList.remove(activeClass);
+    }
+    next.classList.add(activeClass);
+  });
 }
 
 exports.default = typeAhead;
@@ -2665,6 +2665,23 @@ var _typeAhead2 = _interopRequireDefault(_typeAhead);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 (0, _typeAhead2.default)((0, _bling.$)('.search'));
+
+var checkWeight = function checkWeight() {
+  var total = Array.from((0, _bling.$$)('input.truck__check')).filter(function (el) {
+    return el.checked;
+  }).map(function (w) {
+    return w.attributes['data-weight'].value;
+  }).reduce(function (acc, w) {
+    return acc + parseInt(w);
+  }, 0);
+
+  var totalWeightEl = document.getElementById('totalWeight');
+
+  totalWeightEl.innerHTML = total;
+};
+checkWeight();
+var boxes = document.getElementById('truck__boxes');
+boxes.addEventListener('change', checkWeight);
 
 /***/ })
 /******/ ]);
