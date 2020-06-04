@@ -23,7 +23,7 @@ exports.addSkid = async (req, res, next) => {
 };
 
 exports.createSkid = async (req, res, next) => {
-        console.table(req.body);
+        // console.table(req.body);
         const skid = await new Skid(req.body).save();
         const job = await Job.findOne({ _id: req.body.skidJob });
         const p = job.packages.filter(p => p._id === req.body.skidPacakge);
