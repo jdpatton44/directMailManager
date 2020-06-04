@@ -6,7 +6,7 @@ const repController = require('../controllers/repController');
 const rateController = require('../controllers/rateController');
 const skidController = require('../controllers/skidController');
 const commingleController = require('../controllers/commingleController');
-const TruckController = require('../controllers/commingleController');
+const truckController = require('../controllers/truckController');
 const { catchErrors } = require('../handlers/errorHandlers');
 
 const router = express.Router();
@@ -90,11 +90,11 @@ router.get('/shippingToday/:date', catchErrors(skidController.daysShipping));
 router.post('/shippingByDate/', catchErrors(skidController.daysShipping));
 
 // Truck Routes
-router.get('/truck/:id', catchErrors(truckController.viewTruck))
-router.get('/truck/createTruck', catchErrors(truckController.createTruck))
-router.post('/truck/createTruck', catchErrors(truckController.addTruck))
-router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
-router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
+//router.get('/truck/:id', catchErrors(truckController.viewTruck))
+router.get('/truck/createTruck/', catchErrors(truckController.createTruck))
+// router.post('/truck/createTruck', catchErrors(truckController.addTruck))
+// router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
+// router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
 
 
 

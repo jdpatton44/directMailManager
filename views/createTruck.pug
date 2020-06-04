@@ -2,13 +2,19 @@ extends layout
 
 block content
     .inner
-    div(class="flex justify-center flex-wrap p-10")
-     form(action=(truck._id ? `/editTruck/${truck._id}` : `../createTruck/`) method="POST")
-        each job in jobSkids 
-        div(class="relative w-48 h-64 m-5 bg-white shadow-lg")
-        div(class="flex items-center w-48 h-20 bg-orange-500")
-            p=ASPCA
-        p(class="mx-2 py-2 border-b-2 text-center text-gray-700 font-semibold uppercase") #{job.jobName}
-        each p in job.packages
-            input()
+    div(class="flex justify-center flex-wrap")
+        h4 Total Weight
+            h6(id="totalWeight")
+    div(class="flex justify-center flex-wrap")
+        for key in Object.keys(jobSkids)
+            div(class="card w-1/4")
+                - const skids = jobSkids[key]
+                for s in skids
+                    div(class="flex flex-row")
+                        input(type="checkbox" class="w-1/8 ")
+                        div(class="p-3") ##{s.skidNumber}
+                        div(class="p-3") #{s.skidTrays} Trays
+                        div(class="p-3") #{s.skidWeight} Lbs. 
+                        div(class="p-3") #{s.skidCount} Pieces
+                        
         
