@@ -35,18 +35,18 @@ router.get('/deletePackage/:slug/:id', jobController.deletePackage);
 router.get('/clientList', catchErrors(clientController.clientList));
 router.get('/addClient', clientController.addClient);
 router.post(
-        '/addClient',
-        clientController.upload,
-        catchErrors(clientController.resize),
-        catchErrors(clientController.createClient)
+  '/addClient',
+  clientController.upload,
+  catchErrors(clientController.resize),
+  catchErrors(clientController.createClient)
 );
 router.get('/client/:clientSlug', catchErrors(clientController.getClientBySlug));
 router.get('/clients/:id/edit', catchErrors(clientController.editClient));
 router.post(
-        '/addClient/:id',
-        clientController.upload,
-        catchErrors(clientController.resize),
-        catchErrors(clientController.updateClient)
+  '/addClient/:id',
+  clientController.upload,
+  catchErrors(clientController.resize),
+  catchErrors(clientController.updateClient)
 );
 
 // Rep Routes
@@ -90,13 +90,11 @@ router.get('/shippingToday/:date', catchErrors(skidController.daysShipping));
 router.post('/shippingByDate/', catchErrors(skidController.daysShipping));
 
 // Truck Routes
-//router.get('/truck/:id', catchErrors(truckController.viewTruck))
-router.get('/truck/createTruck/', catchErrors(truckController.createTruck))
-// router.post('/truck/createTruck', catchErrors(truckController.addTruck))
+router.get('/truck/viewTruck/:id', catchErrors(truckController.viewTruck));
+router.get('/truck/newTruck/', catchErrors(truckController.newTruck));
+router.post('/truck/createTruck/', catchErrors(truckController.addTruck));
 // router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
 // router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
-
-
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
