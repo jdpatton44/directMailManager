@@ -3,6 +3,7 @@ const skidSchema = require('./Skid');
 
 mongoose.Promise = global.Promise;
 
+
 const truckSchema = new mongoose.Schema({
   truckCreatedDate: {
     type: Date,

@@ -8,7 +8,9 @@ const Truck = mongoose.model('Truck');
 exports.viewTruck = async (req, res, next) => {
   const truck = await Truck.findOne({ _id: req.params.id });
   const skids = await Skid.find({ _id: { $in: truck.truckSkids.map(s => mongoose.Types.ObjectId(s)) } });
-  res.render('viewTruck', { truck, skids, title: 'View Truck' });
+  const jobSkids = skids.map(skid => skid.skidJob);
+  const jobs = await Job.find({ _id: { $in: jobSkids.map(j => mongoose.Types.ObjectId(j)) } });
+  res.render('viewTruck', { truck, jobs, skids, title: 'View Truck' });
 };
 
 exports.newTruck = async (req, res, next) => {
@@ -21,18 +23,19 @@ exports.newTruck = async (req, res, next) => {
 };
 
 exports.addTruck = async (req, res, next) => {
-  const truckData = [req.body.truckSkids];
-  console.log(truckData);
+  // const truckData = [req.body.truckSkids];
+  // console.log(truckData);
+  const truckSkids = req.body.truckSkids.map(s => mongoose.Types.ObjectId(s));
   // Update skids to shipped
   const skids = await Skid.updateMany(
-    { _id: { $in: truckData.map(s => mongoose.Types.ObjectId(s)) } },
+    { _id: { $in: truckSkids } },
     { shipped: true }
   );
-  console.log(truckData);
+  console.log(truckSkids);
   console.log(skids);
   // Create Truck
   const truck = await new Truck(req.body).save();
-  req.flash('success', `Successfully loaded a truck with ${skids}.`);
+  req.flash('success', `Successfully loaded a truck with ${truckSkids.length < 2 ? '1 Skid' : truckSkids.length + ' skids'}.`);
   res.redirect(`/truck/viewTruck/${truck._id}`);
 };
 

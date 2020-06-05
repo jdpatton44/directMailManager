@@ -2,6 +2,37 @@ extends layout
 
 block content
   .inner.py-8
-    p=h.dump(truck)
-    p skids =========
+    div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
+      div(class="flex flex-col w-full md:flex-row")
+        div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
+          div(class="md:text-5xl") Truck
+          div(class="md:text-6xl") 
+          div(class="md:text-4xl py-2") 
+          
+        div(class="p-4 font-normal text-gray-800 md:w-3/4")
+          div(class="flex flex-row items-center mt-4 text-black justify-between")
+            p(class="leading-normal font-bold text-3xl justify-start") Loaded #{h.moment(truck.truckCreatedDate).format("MMM D YYYY [at] h:mm a")} 
+          p(class="leading-normal") #{skids.length > 1 ? skids.length + 'Skids' : '1 Skid'}
+          p(class="leading-normal") #{skids.map(s => s.skidTrays).reduce((total, count) => total + count, 0)} Trays 
+          p(class="leading-normal") #{skids.map(s => s.skidCount).reduce((total, count) => total + count, 0)} Pieces 
+          p(class="leading-normal") #{skids.map(s => s.skidWeight).reduce((total, count) => total + count, 0)} Lbs 
+          
+    div(class="flex flex-row justify-center")
+      each j in jobs
+        div(class="rounded h-full flex flex-row justify-center items-center p-4 bg-gray-200")
+          div(class="rounded bg-white shadow-md p-6 flex flex-col justify-around")
+            div
+              p(class="text-2xl text-orange-600")=j.jobName
+              -const skidPackages = skids.map(s => s.skidPackage)
+              p=skidPackages
+                each p in j.packages
+                  p=p._id
+                  if skidPackages.includes(p._id)
+                    p=p.packageName
+
+
+
+    p ========= skids =========
     p=h.dump(skids)
+    p ========= jobs =========
+    p=h.dump(jobs)
