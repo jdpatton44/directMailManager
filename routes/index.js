@@ -91,8 +91,10 @@ router.post('/shippingByDate/', catchErrors(skidController.daysShipping));
 
 // Truck Routes
 router.get('/truck/viewTruck/:id', catchErrors(truckController.viewTruck));
+router.get('/truck/viewTruck/truckList', catchErrors(truckController.listTrucks));
 router.get('/truck/newTruck/', catchErrors(truckController.newTruck));
 router.post('/truck/createTruck/', catchErrors(truckController.addTruck));
+
 // router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
 // router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
 
