@@ -34,10 +34,12 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-8 border-b border-grey-light")
-                a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
+                a(href=`/shipping/${job.jobSlug}`) 
+                  button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Shipping
                 a(href=`/job/${job.jobSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
+                a(href=`/jobs/${job._id}/edit`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
                     
     h1.text-6xl.py-4 🔥 Next Week - #{nextWeekTotal.toLocaleString()} pieces
     div(class="mx-auto")
@@ -71,10 +73,12 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-6 border-b border-grey-light text-center")
-                a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
+                a(href=`/shipping/${job.jobSlug}`) 
+                  button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Shipping
                 a(href=`/job/${job.jobSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
+                a(href=`/jobs/${job._id}/edit`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
     h1.text-6xl.py-4 📬 Last 2 Weeks - #{lastTwoWeeksTotal.toLocaleString()} pieces
     div(class="mx-auto")
       div(class="bg-white shadow-xl rounded my-6")
@@ -109,7 +113,9 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-6 border-b border-grey-light text-center")
-                a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
+                a(href=`/shipping/${job.jobSlug}`) 
+                  button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Shipping
                 a(href=`/job/${job.jobSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
+                a(href=`/jobs/${job._id}/edit`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit

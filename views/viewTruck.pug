@@ -12,27 +12,28 @@ block content
         div(class="p-4 font-normal text-gray-800 md:w-3/4")
           div(class="flex flex-row items-center mt-4 text-black justify-between")
             p(class="leading-normal font-bold text-3xl justify-start") Loaded #{h.moment(truck.truckCreatedDate).format("MMM D YYYY [at] h:mm a")} 
-          p(class="leading-normal") #{skids.length > 1 ? skids.length + 'Skids' : '1 Skid'}
-          p(class="leading-normal") #{skids.map(s => s.skidTrays).reduce((total, count) => total + count, 0)} Trays 
-          p(class="leading-normal") #{skids.map(s => s.skidCount).reduce((total, count) => total + count, 0)} Pieces 
-          p(class="leading-normal") #{skids.map(s => s.skidWeight).reduce((total, count) => total + count, 0)} Lbs 
+          p(class="leading-normal") #{skids.length > 1 ? skids.length + ' Skids' : '1 Skid'}
+          p(class="leading-normal") #{skids.map(s => s.skidTrays).reduce((total, count) => total + count, 0).toLocaleString()} Trays 
+          p(class="leading-normal") #{skids.map(s => s.skidCount).reduce((total, count) => total + count, 0).toLocaleString()} Pieces 
+          p(class="leading-normal") #{skids.map(s => s.skidWeight).reduce((total, count) => total + count, 0).toLocaleString()} Lbs 
           
-    div(class="flex flex-row justify-center")
-      each j in jobs
-        div(class="rounded h-full flex flex-row justify-center items-center p-4 bg-gray-200")
-          div(class="rounded bg-white shadow-md p-6 flex flex-col justify-around")
-            div
-              p(class="text-2xl text-orange-600")=j.jobName
-              -const skidPackages = skids.map(s => s.skidPackage)
-              p=skidPackages
-                each p in j.packages
-                  p=p._id
-                  if skidPackages.includes(p._id)
-                    p=p.packageName
 
-
-
-    p ========= skids =========
-    p=h.dump(skids)
-    p ========= jobs =========
-    p=h.dump(jobs)
+  div(class="flex flex-row justify-center")
+    each group in skidsByGroup 
+      div(class="rounded bg-white shadow-md p-6 flex flex-col justify-around m-4")
+        each j in jobs
+          if j._id.equals(group[0].skidJob)
+            h3(class="text-4xl") #{j.jobName}
+            -const jobTrays = group.map(g => g.skidTrays).reduce((trays, total) => trays + total, 0)
+            -const jobPieces = group.map(g => g.skidCount).reduce((pieces, total) => pieces + total, 0)
+            -const jobWeight = group.map(g => g.skidWeight).reduce((lbs, total) => lbs + total, 0)
+            p Total Trays: #{jobTrays.toLocaleString()}
+            p Total Pieces: #{jobPieces.toLocaleString()}
+            p Total Lbs: #{jobWeight.toLocaleString()}
+            each s, index in group
+              each p in j.packages 
+                if p._id.equals(group[0].skidPackage)
+                  h5 skid ##{index + 1}
+                  p Package: #{p.packageName}
+                  p #{s.skidCount.toLocaleString()} pieces
+                  p #{s.skidTrays.toLocaleString()} trays

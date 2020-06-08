@@ -3,7 +3,10 @@ extends layout
 block content
   
 block content
-  .inner.py-8
+  .inner.py-2
+    div(class='flex flex-row justify-end py-2')
+      a(href=`/agency/${agency._id}/edit`) 
+        button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Edit Agency
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
       div(class="flex flex-col w-full md:flex-row")
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
