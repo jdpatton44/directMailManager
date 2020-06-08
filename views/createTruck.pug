@@ -14,8 +14,9 @@ block content
                     - const skids = jobSkids[key]
                     for s in skids
                         div(class="flex flex-row")
-                            div(class="p-2")
-                                input(type="checkbox" class="truck__check w-1/8" name="truckSkids" value=s._id data-Weight=s.skidWeight)
+                            label(class="")
+                                input(type="checkbox" class="truck__check center-items align-middle justify-around tag w-1/8" name="truckSkids" value=s._id data-Weight=s.skidWeight)
+                                <span class="checkmark"></span>
                             div(class="p-3") ##{s.skidNumber}
                             div(class="p-3") #{s.skidTrays} Trays
                             div(class="p-3") #{s.skidWeight} Lbs. 

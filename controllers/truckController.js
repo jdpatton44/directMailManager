@@ -6,12 +6,23 @@ const Skid = mongoose.model('Skid');
 const Truck = mongoose.model('Truck');
 
 exports.viewTruck = async (req, res, next) => {
+  // find the truck using the params from the url
   const truck = await Truck.findOne({ _id: req.params.id });
+  // find the skids using the list of skids in the truck object
   const skids = await Skid.find({ _id: { $in: truck.truckSkids.map(s => mongoose.Types.ObjectId(s)) } });
+  const skidsByGroup = _.groupBy(skids, 'skidJob')
+  // get a list of jobs from the skids on the truck and find those jobs
   const jobSkids = skids.map(skid => skid.skidJob);
   const jobs = await Job.find({ _id: { $in: jobSkids.map(j => mongoose.Types.ObjectId(j)) } });
-  res.render('viewTruck', { truck, jobs, skids, title: 'View Truck' });
+
+  res.render('viewTruck', { truck, jobs, skids, skidsByGroup, title: 'View Truck' });
 };
+
+exports.truckList = async (req, res, next) => {
+  // get all trucks, sort by created date, descending
+  const trucks = await Truck.find().sort({truckCreatedDate: 'desc'})
+  res.render('truckList', {trucks, title: 'Trucks'})
+}
 
 exports.newTruck = async (req, res, next) => {
   const skids = await Skid.find({ shipped: false });
