@@ -20,6 +20,7 @@ require('./models/Rep');
 require('./models/Rate');
 require('./models/Skid');
 require('./models/Truck');
+require('./models/User');
 
 // Start our app!
 const app = require('./app');

@@ -5,6 +5,8 @@ const agencyController = require('../controllers/agencyController');
 const repController = require('../controllers/repController');
 const rateController = require('../controllers/rateController');
 const skidController = require('../controllers/skidController');
+const userController = require('../controllers/userController');
+const authController = require('../controllers/authController');
 const commingleController = require('../controllers/commingleController');
 const truckController = require('../controllers/truckController');
 const { catchErrors } = require('../handlers/errorHandlers');
@@ -97,6 +99,28 @@ router.post('/truck/createTruck/', catchErrors(truckController.addTruck));
 
 // router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
 // router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
+
+// User / Auth routes
+router.get('/login', userController.loginForm);
+router.post('/login', authController.login);
+router.get('/register', userController.registerForm);
+router.post('/register',
+  userController.validateRegister,
+  userController.register,
+  authController.login
+);
+
+router.get('/logout', authController.logout);
+
+router.get('/account', authController.isLoggedIn, userController.account);
+router.post('/account', catchErrors(userController.updateAccount));
+router.post('/account/forgot', catchErrors(authController.forgot));
+router.get('/account/reset/:token', catchErrors(authController.reset));
+router.post('/account/reset/:token',
+  authController.confirmedPasswords,
+  catchErrors(authController.update)
+);
+
 
 // API Endpoints
 router.get('/api/search', catchErrors(jobController.searchJobs));
