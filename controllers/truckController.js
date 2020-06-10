@@ -8,7 +8,7 @@ const Truck = mongoose.model('Truck');
 exports.viewTruck = async (req, res, next) => {
   // find the truck using the params from the url
   const truck = await Truck.findOne({ _id: req.params.id });
-  // find the skids using the list of skids in the truck object
+  // find the skids using the list of skids in the truck object then group them by job
   const skids = await Skid.find({ _id: { $in: truck.truckSkids.map(s => mongoose.Types.ObjectId(s)) } });
   const skidsByGroup = _.groupBy(skids, 'skidJob')
   // get a list of jobs from the skids on the truck and find those jobs
@@ -25,28 +25,35 @@ exports.truckList = async (req, res, next) => {
 }
 
 exports.newTruck = async (req, res, next) => {
+  // get all the skids that have not been shipped yet
   const skids = await Skid.find({ shipped: false });
+  // group them by job
   const jobSkids = _.groupBy(skids, 'skidJob');
   const jobIds = Object.keys(jobSkids);
+  // get all the jobs that have skids that have not been shipped yet
   const jobs = await Job.find({ _id: { $in: jobIds.map(j => mongoose.Types.ObjectId(j)) } });
-  const truckData = 'ok';
   res.render('createTruck', { jobSkids, skids, jobs, title: 'Loading Truck...' });
 };
 
 exports.addTruck = async (req, res, next) => {
-  // const truckData = [req.body.truckSkids];
-  // console.log(truckData);
-  const truckSkids = req.body.truckSkids.map(s => mongoose.Types.ObjectId(s));
-  // Update skids to shipped
-  const skids = await Skid.updateMany(
-    { _id: { $in: truckSkids } },
-    { shipped: true }
-  );
-  console.log(truckSkids);
-  console.log(skids);
+  let numSkids = 0;
+  // if only 1 skid is on the truck trcukSkids comes as the _id in a string
+  if (typeof(req.body.truckSkids) === 'string') { 
+    const truckskids = await Skid.findByIdAndUpdate(req.body.truckSkids, {shipped: true } );
+  }
+  // if there are multiple skids truckSkids is an array
+  else {
+    const truckSkids = req.body.truckSkids.map(s => mongoose.Types.ObjectId(s));
+    // Update skids to shipped
+    const skids = await Skid.updateMany(
+      { _id: { $in: truckSkids } },
+      { shipped: true }
+    );
+    numSkids = truckSkids.length 
+  }
   // Create Truck
   const truck = await new Truck(req.body).save();
-  req.flash('success', `Successfully loaded a truck with ${truckSkids.length < 2 ? '1 Skid' : truckSkids.length + ' skids'}.`);
+  req.flash('success', `Successfully loaded a truck with ${numSkids < 2 ? '1 Skid' : numSkids + ' skids'}.`);
   res.redirect(`/truck/viewTruck/${truck._id}`);
 };
 

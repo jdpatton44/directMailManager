@@ -59,6 +59,7 @@ block content
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Tare
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Count
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Initials
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Status
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
           if (skids)
             each s in skids  
@@ -71,6 +72,7 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidTare
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidCount
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidInitials
+                td(class="py-4 px-6 border-b border-grey-light text-center text-green-600")= s.shipped ? 'Shipped' : ''
                 td(class="py-4 px-6 border-b border-grey-light text-center") 
                   a(href=`/editskid/${s._id}`)
                     button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit

@@ -8,6 +8,7 @@ const Agency = mongoose.model('Agency');
 
 const helpers = require('../helpers');
 
+// list all the jobs in the system
 exports.jobList = async (req, res) => {
         const page = req.params.page || 1;
         const limit = 25;
@@ -18,9 +19,12 @@ exports.jobList = async (req, res) => {
                 .limit(limit)
                 .populate('jobClient jobRep')
                 .sort({ jobMailDate: 'desc' });
+        // pagination - get total number of jobs
         const countPromise = Job.count();
         const [jobs, count] = await Promise.all([jobsPromise, countPromise]);
+        // calculate number of pages with limit number of jobs per page
         const pages = Math.ceil(count / limit);
+        // error if a page number is requested that is not available 
         if (!jobs.length && skip) {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
@@ -28,21 +32,26 @@ exports.jobList = async (req, res) => {
         res.render('jobList', { jobs, pages, page, title: 'Current Mailings' });
 };
 
+// new job form 
 exports.addJob = async (req, res) => {
+        // get reps and clients for drop downs
         const reps = await Rep.find().sort({ repName: 'desc' });
         const clients = await Client.find().sort({ clientName: 'desc' });
         res.render('editJob', { clients, reps, title: 'Create Mailing' });
 };
 
+// create a new job
 exports.createJob = async (req, res) => {
         const job = await new Job(req.body).save();
         req.flash('success', `Successfully Created ${job.jobName}.`);
         res.redirect(`/job/${job.jobSlug}`);
 };
 
+// page to show the job 
 exports.getJobBySlug = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.jobSlug });
         if (!job) return next();
+        // calculate job quantity be totaling package counts
         let quantity = 0;
         if (job.packages !== []) {
                 quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0);
@@ -50,13 +59,18 @@ exports.getJobBySlug = async (req, res, next) => {
         res.render('job', { job, quantity, title: job.jobName });
 };
 
+// edit an existing job
 exports.editJob = async (req, res, next) => {
+        // get the job to edit
         const job = await Job.findOne({ _id: req.params.id });
+        // get all clients for the drop down
         const clients = await Client.find().sort({ clientName: 'asc' });
+        // get all reps for the drop down
         const reps = await Rep.find().sort({ repName: 'asc' });
         res.render('editJob', { title: `Edit ${job.jobName}`, job, clients, reps });
 };
 
+// process edits and redirect to job page 
 exports.updateJob = async (req, res, next) => {
         const job = await Job.findOneAndUpdate({ _id: req.params.id }, req.body, {
                 new: true,
@@ -69,6 +83,20 @@ exports.updateJob = async (req, res, next) => {
         res.redirect(`/job/${job.jobSlug}`);
 };
 
+// update only the job Notes from the job display page 
+exports.updateJobNotes = async (req, res, next) => {
+        const job = await Job.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully add notes to <strong>${job.jobName}</strong>.</a>`
+        );
+        res.redirect(`/job/${job.jobSlug}`); 
+};
+
+// display a list of jobs for a certain client same paganation 
 exports.jobsByClient = async (req, res) => {
         const { clientSlug } = req.params;
         const page = req.params.page || 1;
@@ -90,6 +118,8 @@ exports.jobsByClient = async (req, res) => {
         }
         res.render('jobList', { jobs, pages, page, title: `Mailings for ${client}` });
 };
+
+// get a list of jobs for a certain agency
 exports.jobsByAgency = async (req, res) => {
         const { agencySlug } = req.params;
         const page = req.params.page || 1;
@@ -117,6 +147,7 @@ exports.jobsByAgency = async (req, res) => {
         res.render('jobList', { repIds, jobs, pages, page, title: `Mailings for ${agency.AgencyName}` });
 };
 
+// get a list of jobs for a certain rep
 exports.jobsByRep = async (req, res) => {
         const { repSlug } = req.params;
         const page = req.params.page || 1;
@@ -139,6 +170,7 @@ exports.jobsByRep = async (req, res) => {
         res.render('jobList', { jobs, pages, page, title: `Mailings for ${rep.repName}` });
 };
 
+// search for a job by job name
 exports.searchJobs = async (req, res) => {
         const jobs = await Job
                 // find stores that match using index
@@ -163,6 +195,7 @@ exports.searchJobs = async (req, res) => {
         res.json(jobs);
 };
 
+// display current jobs this week, next week, and the past 2 weeks
 exports.currentJobs = async (req, res) => {
         // get start date for each section
         const thisMonday = helpers.getMonday(helpers.moment().startOf('day'));
@@ -201,14 +234,15 @@ exports.currentJobs = async (req, res) => {
         });
 };
 
+// form to add a package to a job
 exports.addPackage = async (req, res, next) => {
         const job = await Job.findOne({ _id: req.params.id });
         res.render('editPackage', { job, title: `Add a Package to ${job.jobName}` });
 };
 
+// add a new package to a job
 exports.createPackage = async (req, res) => {
         const job = await Job.findOne({ _id: req.params.id });
-        console.table(req.body)
         if(req.body.packageScitex === 'on') {req.body.packageScitex = true;}
         Job.updateOne(
                 { _id: req.params.id },
@@ -220,12 +254,14 @@ exports.createPackage = async (req, res) => {
         res.redirect(`/job/${job.jobSlug}`);
 };
 
+// form to edit an existing package in a job
 exports.editPackage = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const p = job.packages.id(req.params.id);
         res.render('editPackage', { title: `Edit ${job.jobName} - ${p.packageName}`, p, job });
 };
 
+// update an existing package in a job
 exports.updatePackage = async (req, res, next) => {
         if(req.body.packageScitex === 'on') {req.body.packageScitex = true;}
         const job = await Job.findOneAndUpdate(
@@ -241,12 +277,14 @@ exports.updatePackage = async (req, res, next) => {
         res.redirect(`/job/${job.jobSlug}`);
 };
 
+// delete a job
 exports.deleteJob = async (req, res, next) => {
         const job = await Job.findByIdAndDelete(req.params.id);
         req.flash('success', `Successfully deleted <strong>${job.jobName}</strong>.`);
         res.redirect(`/jobList/`);
 };
 
+// delete a package from a job
 exports.deletePackage = async (req, res, next) => {
   const job = await Job.findOne( {jobSlug: req.params.slug} );
   const package = await Job.findOneAndUpdate( { jobSlug: req.params.slug}, {
