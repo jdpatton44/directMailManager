@@ -18,7 +18,8 @@ block content
           each client, i in clients
             tr(class="hover:bg-blue-200")  
               td(class="py-4 px-6 border-b border-grey-light")
-                a(href=`/client/${client.clientSlug}`) #{client.clientName}
+                a(href=`/client/${client.clientSlug}`) 
+                  strong #{client.clientName}
               td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientCRID
               td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientMID
               td(class="py-4 px-6 border-b border-grey-light text-center")= client.clientPermitNumber

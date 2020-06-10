@@ -24,7 +24,8 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")
-                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+                a(href=`/job/${job.jobSlug}`) 
+                  strong #{job.jobName}
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobQuantity.toLocaleString()
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
@@ -33,7 +34,7 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
-              td(class="py-4 px-8 border-b border-grey-light")
+              td(class="py-4 px-8 border-b border-grey-light text-center")
                 a(href=`/shipping/${job.jobSlug}`) 
                   button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Shipping
                 a(href=`/job/${job.jobSlug}/`)
@@ -63,7 +64,8 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center") 
-                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+                a(href=`/job/${job.jobSlug}`) 
+                  strong #{job.jobName}
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobQuantity.toLocaleString()
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
@@ -74,7 +76,7 @@ block content
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
               td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/shipping/${job.jobSlug}`) 
-                  button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Shipping
+                  button(class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded m-1") Shipping
                 a(href=`/job/${job.jobSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 
                 a(href=`/jobs/${job._id}/edit`) 
@@ -101,7 +103,8 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center") 
-                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+                a(href=`/job/${job.jobSlug}`) 
+                  strong #{job.jobName}
               - let quantity = job.jobQuantity;
               - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
               td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()

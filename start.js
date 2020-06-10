@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });

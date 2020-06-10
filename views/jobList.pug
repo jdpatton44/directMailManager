@@ -24,7 +24,8 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center") 
-                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+                a(href=`/job/${job.jobSlug}`) 
+                  strong #{job.jobName}
               - let quantity = job.jobQuantity;
               - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
               td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()

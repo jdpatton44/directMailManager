@@ -15,7 +15,8 @@ block content
           each agency, i in agencies
             tr(class="hover:bg-blue-200")   
               td(class="py-4 px-6 border-b border-grey-light text-center")
-                a(href=`/agency/${agency.agencySlug}`) #{agency.agencyName}
+                a(href=`/agency/${agency.agencySlug}`) 
+                  strong #{agency.agencyName}
               td(class="py-4 px-6 border-b border-grey-light text-center")= h.formatPhoneNumber(agency.agencyPhoneNumber)
               td(class="py-4 px-6 border-b border-grey-light text-center")= agency.agencyAddress
               if agency.agencyCity 

@@ -17,7 +17,8 @@ block content
           each rep, i in reps
             tr(class="hover:bg-blue-200")  
               td(class="py-4 px-6 border-b border-grey-light")
-                a(href=`/rep/${rep.repSlug}`) #{rep.repName} 
+                a(href=`/rep/${rep.repSlug}`) 
+                  strong #{rep.repName} 
               if rep.repAgency
                 td(class="py-4 px-6 border-b border-grey-light")= rep.repAgency.agencyName
               else

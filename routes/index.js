@@ -22,9 +22,11 @@ router.get('/repJobList/:repSlug', catchErrors(jobController.jobsByRep));
 router.get('/addJob', jobController.addJob);
 router.post('/addJob', catchErrors(jobController.createJob));
 router.post('/addJob/:id', catchErrors(jobController.updateJob));
+router.post('/updateNotes/:id', catchErrors(jobController.updateJobNotes));
 router.get('/job/:jobSlug', catchErrors(jobController.getJobBySlug));
 router.get('/jobs/:id/edit', catchErrors(jobController.editJob));
 router.get('/deleteJob/:id', jobController.deleteJob);
+
 
 // Package Routes
 router.get('/addPackage/:id', catchErrors(jobController.addPackage));

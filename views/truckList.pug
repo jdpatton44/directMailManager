@@ -10,14 +10,14 @@ block content
       div(class="bg-white shadow-xl rounded my-2")
         table(class="text-left w-full border-collapse")
           thead
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Truck Number
-            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Created Date
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Truck ID
+            th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Created At
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") # of Skids 
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") 
-          each truck, i in trucks
+          each truck in trucks
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-3 border-b border-grey-light text-center")= i + 1
-              td(class="py-4 px-3 border-b border-grey-light text-center")= h.moment(truck.truckCreatedDate).format("MM-DD-YY")
+              td(class="py-4 px-3 border-b border-grey-light text-center")= truck.id
+              td(class="py-4 px-3 border-b border-grey-light text-center")= h.moment(truck.truckCreatedDate).format("MM-DD-YY h:mm a")
               td(class="py-4 px-3 border-b border-grey-light text-center")=truck.truckSkids.length 
               td(class="py-2 px-2 border-b border-grey-light items-center" )
                 a(href=`/truck/viewTruck/${truck._id}`) 
