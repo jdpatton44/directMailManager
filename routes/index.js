@@ -14,96 +14,97 @@ const { catchErrors } = require('../handlers/errorHandlers');
 const router = express.Router();
 
 // Job Routes
-router.get('/', catchErrors(jobController.currentJobs));
-router.get('/jobList', catchErrors(jobController.jobList));
-router.get('/clientJobList/:clientSlug', catchErrors(jobController.jobsByClient));
-router.get('/agencyJobList/:agencySlug', catchErrors(jobController.jobsByAgency));
-router.get('/repJobList/:repSlug', catchErrors(jobController.jobsByRep));
-router.get('/addJob', jobController.addJob);
-router.post('/addJob', catchErrors(jobController.createJob));
-router.post('/addJob/:id', catchErrors(jobController.updateJob));
-router.post('/updateNotes/:id', catchErrors(jobController.updateJobNotes));
-router.get('/job/:jobSlug', catchErrors(jobController.getJobBySlug));
-router.get('/jobs/:id/edit', catchErrors(jobController.editJob));
-router.get('/deleteJob/:id', jobController.deleteJob);
+router.get('/currentJobs', catchErrors(jobController.currentJobs));
+router.get('/jobList', authController.isLoggedIn, catchErrors(jobController.jobList));
+router.get('/clientJobList/:clientSlug', authController.isLoggedIn, catchErrors(jobController.jobsByClient));
+router.get('/agencyJobList/:agencySlug', authController.isLoggedIn, catchErrors(jobController.jobsByAgency));
+router.get('/repJobList/:repSlug', authController.isLoggedIn, catchErrors(jobController.jobsByRep));
+router.get('/addJob', authController.isLoggedIn, jobController.addJob);
+router.post('/addJob', authController.isLoggedIn, catchErrors(jobController.createJob));
+router.post('/addJob/:id', authController.isLoggedIn, catchErrors(jobController.updateJob));
+router.post('/updateNotes/:id', authController.isLoggedIn, catchErrors(jobController.updateJobNotes));
+router.get('/job/:jobSlug', authController.isLoggedIn, catchErrors(jobController.getJobBySlug));
+router.get('/jobs/:id/edit', authController.isLoggedIn, catchErrors(jobController.editJob));
+router.get('/deleteJob/:id', authController.isLoggedIn, jobController.deleteJob);
 
 
 // Package Routes
-router.get('/addPackage/:id', catchErrors(jobController.addPackage));
-router.post('/createPackage/:id', catchErrors(jobController.createPackage));
-router.get('/editPackage/:slug/:id', catchErrors(jobController.editPackage));
-router.post('/updatePackage/:slug/:id', catchErrors(jobController.updatePackage));
-router.get('/deletePackage/:slug/:id', jobController.deletePackage);
+router.get('/addPackage/:id', authController.isLoggedIn, catchErrors(jobController.addPackage));
+router.post('/createPackage/:id', authController.isLoggedIn, catchErrors(jobController.createPackage));
+router.get('/editPackage/:slug/:id', authController.isLoggedIn, catchErrors(jobController.editPackage));
+router.post('/updatePackage/:slug/:id', authController.isLoggedIn, catchErrors(jobController.updatePackage));
+router.get('/deletePackage/:slug/:id', authController.isLoggedIn, authController.isLoggedIn, jobController.deletePackage);
 
 // Client Routes
-router.get('/clientList', catchErrors(clientController.clientList));
-router.get('/addClient', clientController.addClient);
+router.get('/clientList', authController.isLoggedIn, catchErrors(clientController.clientList));
+router.get('/addClient', authController.isLoggedIn, clientController.addClient);
 router.post(
-  '/addClient',
+  '/addClient', authController.isLoggedIn,
   clientController.upload,
   catchErrors(clientController.resize),
   catchErrors(clientController.createClient)
 );
-router.get('/client/:clientSlug', catchErrors(clientController.getClientBySlug));
-router.get('/clients/:id/edit', catchErrors(clientController.editClient));
+router.get('/client/:clientSlug', authController.isLoggedIn, catchErrors(clientController.getClientBySlug));
+router.get('/clients/:id/edit', authController.isLoggedIn, catchErrors(clientController.editClient));
 router.post(
-  '/addClient/:id',
+  '/addClient/:id', authController.isLoggedIn,
   clientController.upload,
   catchErrors(clientController.resize),
   catchErrors(clientController.updateClient)
 );
 
 // Rep Routes
-router.get('/repList', catchErrors(repController.repList));
-router.get('/addRep', repController.addRep);
-router.post('/addRep', catchErrors(repController.createRep));
-router.get('/rep/:repSlug', catchErrors(repController.getRepBySlug));
+router.get('/repList', authController.isLoggedIn, catchErrors(repController.repList));
+router.get('/addRep', authController.isLoggedIn, repController.addRep);
+router.post('/addRep', authController.isLoggedIn, catchErrors(repController.createRep));
+router.get('/rep/:repSlug', authController.isLoggedIn, catchErrors(repController.getRepBySlug));
 
 // Agency Routes
-router.get('/agencyList', catchErrors(agencyController.agencyList));
-router.get('/addAgency', agencyController.addAgency);
-router.post('/addAgency', catchErrors(agencyController.createAgency));
-router.get('/agency/:agencySlug', catchErrors(agencyController.getAgencyBySlug));
-router.get('/agency/:id/edit', catchErrors(agencyController.editAgency));
-router.post('/addAgency/:id', catchErrors(agencyController.updateAgency));
+router.get('/agencyList', authController.isLoggedIn, catchErrors(agencyController.agencyList));
+router.get('/addAgency', authController.isLoggedIn, agencyController.addAgency);
+router.post('/addAgency', authController.isLoggedIn, catchErrors(agencyController.createAgency));
+router.get('/agency/:agencySlug', authController.isLoggedIn, catchErrors(agencyController.getAgencyBySlug));
+router.get('/agency/:id/edit', authController.isLoggedIn, catchErrors(agencyController.editAgency));
+router.post('/addAgency/:id', authController.isLoggedIn, catchErrors(agencyController.updateAgency));
 
 // Rate Routes
-router.get('/rateList', catchErrors(rateController.rateList));
-router.get('/addRate', rateController.addRate);
-router.post('/addRate', catchErrors(rateController.createRate));
-router.get('/rate/:id/edit', catchErrors(rateController.editRate));
-router.post('/addRate/:id', catchErrors(rateController.updateRate));
-router.get('/setAgencyRate/', catchErrors(rateController.editAgencyRate));
-router.post('/updateAgencyRate/', catchErrors(rateController.updateAgencyRate));
-router.get('/editClientRate/:slug', rateController.editClientRate);
-router.post('/updateClientRate/:id', rateController.updateClientRate);
+router.get('/rateList', authController.isLoggedIn, catchErrors(rateController.rateList));
+router.get('/addRate', authController.isLoggedIn, rateController.addRate);
+router.post('/addRate', authController.isLoggedIn, catchErrors(rateController.createRate));
+router.get('/rate/:id/edit', authController.isLoggedIn, catchErrors(rateController.editRate));
+router.post('/addRate/:id', authController.isLoggedIn, catchErrors(rateController.updateRate));
+router.get('/setAgencyRate/', authController.isLoggedIn, catchErrors(rateController.editAgencyRate));
+router.post('/updateAgencyRate/', authController.isLoggedIn, catchErrors(rateController.updateAgencyRate));
+router.get('/editClientRate/:slug', authController.isLoggedIn, rateController.editClientRate);
+router.post('/updateClientRate/:id', authController.isLoggedIn, rateController.updateClientRate);
 
 // Commingle Routes
-router.get('/commingle/:slug', catchErrors(commingleController.createCommingleSheet));
-router.post('/commingle/:slug', catchErrors(commingleController.recalculateCommingleSheet));
-router.post('/updateCommingle/:id', catchErrors(commingleController.updateCommingleSheet));
+router.get('/commingle/:slug', authController.isLoggedIn, catchErrors(commingleController.createCommingleSheet));
+router.post('/commingle/:slug', authController.isLoggedIn, catchErrors(commingleController.recalculateCommingleSheet));
+router.post('/updateCommingle/:id', authController.isLoggedIn, catchErrors(commingleController.updateCommingleSheet));
 
 // Skid Routes
-router.get('/shipping/:slug', catchErrors(skidController.jobShipping));
-router.get('/addSkid/:id/:count', catchErrors(skidController.addSkid));
-router.post('/addSkid/', catchErrors(skidController.createSkid));
-router.get('/editSkid/:id', catchErrors(skidController.editSkid));
-router.post('/addSkid/:id', catchErrors(skidController.updateSkid));
-router.get('/deleteSkid/:slug/:id', catchErrors(skidController.deleteSkid));
-router.get('/shippingToday/:date', catchErrors(skidController.daysShipping));
-router.post('/shippingByDate/', catchErrors(skidController.daysShipping));
+router.get('/shipping/:slug', authController.isLoggedIn, catchErrors(skidController.jobShipping));
+router.get('/addSkid/:id/:count', authController.isLoggedIn, catchErrors(skidController.addSkid)); authController.isLoggedIn, authController.isLoggedIn,
+router.post('/addSkid/', authController.isLoggedIn, catchErrors(skidController.createSkid));
+router.get('/editSkid/:id', authController.isLoggedIn, catchErrors(skidController.editSkid));
+router.post('/addSkid/:id', authController.isLoggedIn, catchErrors(skidController.updateSkid));
+router.get('/deleteSkid/:slug/:id', authController.isLoggedIn, catchErrors(skidController.deleteSkid));
+router.get('/shippingToday/:date', authController.isLoggedIn, catchErrors(skidController.daysShipping));
+router.post('/shippingByDate/', authController.isLoggedIn, catchErrors(skidController.daysShipping));
 
 // Truck Routes
-router.get('/truck/viewTruck/:id', catchErrors(truckController.viewTruck));
-router.get('/truck/viewTrucks/truckList', catchErrors(truckController.truckList));
-router.get('/truck/newTruck/', catchErrors(truckController.newTruck));
-router.post('/truck/createTruck/', catchErrors(truckController.addTruck));
+router.get('/truck/viewTruck/:id', authController.isLoggedIn, catchErrors(truckController.viewTruck));
+router.get('/truck/viewTrucks/truckList', authController.isLoggedIn, catchErrors(truckController.truckList));
+router.get('/truck/newTruck/', authController.isLoggedIn, catchErrors(truckController.newTruck));
+router.post('/truck/createTruck/', authController.isLoggedIn, catchErrors(truckController.addTruck));
 
 // router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
 // router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))
 
 // User / Auth routes
 router.get('/login', userController.loginForm);
+router.get('/', userController.loginForm);
 router.post('/login', authController.login);
 router.get('/register', userController.registerForm);
 router.post('/register',
@@ -115,7 +116,7 @@ router.post('/register',
 router.get('/logout', authController.logout);
 
 router.get('/account', authController.isLoggedIn, userController.account);
-router.post('/account', catchErrors(userController.updateAccount));
+router.post('/account',  authController.isLoggedIn, catchErrors(userController.updateAccount));
 router.post('/account/forgot', catchErrors(authController.forgot));
 router.get('/account/reset/:token', catchErrors(authController.reset));
 router.post('/account/reset/:token',
