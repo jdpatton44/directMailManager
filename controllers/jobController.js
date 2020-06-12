@@ -297,3 +297,54 @@ exports.deletePackage = async (req, res, next) => {
 
 
 }
+
+
+exports.calendarView = async (req, res, next) => {
+        // get the year from the url if available otherwise get current year
+        const year = req.params.year || helpers.moment(new Date).format('YYYY');
+        // get the month from the url if available otherwise get current month, if the month number is not valid default to current month
+        let requestedMonth = req.params.month || helpers.moment(new Date).format('M');
+        if(requestedMonth > 13 || requestedMonth < 1) {
+                requestedMonth = helpers.moment(new Date).format('M');
+        }
+        const viewMonth = helpers.moment(requestedMonth, 'M').format('MMMM');
+        console.log('viewMonth - ', viewMonth)
+        // get the first day of the month
+        const firstDayOfViewMonth = helpers.moment().set({'year': year, 'month': parseInt(requestedMonth) + 1, 'day': 1}).format('YYYY-MM-DD')
+        console.log('firstDayOfViewMonth - ', firstDayOfViewMonth)
+        // get what day of the week the first day of the month is
+        const firstDayDayOfWeek = helpers.moment(firstDayOfViewMonth).day()
+        console.log('firstDayDayOfWeek -', firstDayDayOfWeek)
+        // calculate the first day on the calendar
+        const firstDayOnCalendar = helpers.moment(firstDayOfViewMonth).subtract(firstDayDayOfWeek, 'days').format('MM-DD-YYYY');
+        console.log('firstDayOnCalendar - ', firstDayOnCalendar)
+        // get all jobs that mail in the calendar days being viewed
+        const jobs = await Job.find({ jobMailDate: { $gte: firstDayOnCalendar, $lt: helpers.moment(firstDayOnCalendar).add(42, 'days').format("MM-DD-YYYY") } })
+        .sort({
+                jobMailDate: 'asc',
+        });
+        // get first week jobs and total pieces 
+        
+        // const firstWeekJobsTotal = jobs.filter( (j) => 
+        //         h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") >= h.moment(firstDayOnCalendar).format("YYYY-MM-DD") &&
+        //         h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") <= h.moment(firstDayOnCalendar).add(6, 'days').format("YYYY-MM-DD")
+        //         )
+        //  .map(j => j.jobQuantity)
+        //  .reduce(((j, total) => j + total), 0)
+        //  console.log(firstWeekJobsTotal)
+        // get second week jobs and total pieces 
+        // get third week jobs and total pieces 
+        // get fourth week jobs and total pieces 
+        // get fifth week jobs and total pieces 
+        // get sixth week jobs and total pieces 
+        res.render('calendarView', {
+                year,
+                requestedMonth,
+                viewMonth,
+                firstDayOfViewMonth,
+                firstDayDayOfWeek,
+                firstDayOnCalendar,
+                jobs,
+                title: `Mailings in ${viewMonth}`,
+        });
+}
