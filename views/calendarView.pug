@@ -1,0 +1,31 @@
+extends layout
+
+block content
+    div(class="container mx-auto")
+        div.flex.flex-row.justify-between.py-4
+            -const prevButton = (requestedMonth == 1 ? `${parseInt(year) - 1}/12` : `${year}/${parseInt(requestedMonth) - 1}`)
+            a(href=`/jobCalendar/${prevButton}`)
+                button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded h-1/2") <
+            h2.text-center.text-6xl #{viewMonth} #{year}
+            -const nextButton = (requestedMonth == 12 ? `${parseInt(year) + 1}/1` : `${year}/${parseInt(requestedMonth) + 1}`)
+            a(href=`/jobCalendar/${nextButton}`)
+                button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") >
+        div.container
+            ul(class="flex flex-row bg-gray-200 justify-center")
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Sunday 
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Monday
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Tuesday 
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Wednesday 
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Thursday
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Friday
+                li(class="text-white text-center bg-orange-400 px-4 py-2 m-2" style="flex: 1 0 13%") Saturday
+            ul(class="flex flex-row flex-wrap bg-gray-200 justify-center")
+                each _, i in Array(42)
+                    li(class="text-gray-700 bg-gray-400 px-4 py-2 m-2" style="flex: 1 0 13%")
+                        div= h.moment(firstDayOnCalendar).add(i, 'days').format("D")
+                            ul
+                                -const dayJobs = jobs.filter(j => h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") === h.moment(firstDayOnCalendar).add(i, 'days').format("YYYY-MM-DD") )
+                                each j in dayJobs
+                                    li.text-md 
+                                        a(href=`/job/${j.jobSlug}`) 
+                                            strong #{j.jobName}

@@ -26,7 +26,7 @@ router.post('/updateNotes/:id', authController.isLoggedIn, catchErrors(jobContro
 router.get('/job/:jobSlug', authController.isLoggedIn, catchErrors(jobController.getJobBySlug));
 router.get('/jobs/:id/edit', authController.isLoggedIn, catchErrors(jobController.editJob));
 router.get('/deleteJob/:id', authController.isLoggedIn, jobController.deleteJob);
-
+router.get('/jobCalendar/:year?/:month?', jobController.calendarView);
 
 // Package Routes
 router.get('/addPackage/:id', authController.isLoggedIn, catchErrors(jobController.addPackage));
