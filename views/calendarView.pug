@@ -1,7 +1,7 @@
 extends layout
 
 block content
-    div(class="container mx-auto")
+    div(class="container mx-auto bottom-8")
         div.flex.flex-row.justify-between.py-4
             -const prevButton = (requestedMonth == 1 ? `${parseInt(year) - 1}/12` : `${year}/${parseInt(requestedMonth) - 1}`)
             a(href=`/jobCalendar/${prevButton}`)
@@ -29,3 +29,21 @@ block content
                                     li.text-md 
                                         a(href=`/job/${j.jobSlug}`) 
                                             strong #{j.jobName}
+                                if i === 6
+                                    li.text-md Pieces this week: 
+                                    strong #{firstWeekJobsTotal.toLocaleString()}  
+                                if i === 13
+                                    li.text-md Pieces this week: 
+                                    strong #{secondWeekJobsTotal.toLocaleString()}  
+                                if i === 20
+                                    li.text-md Pieces this week: 
+                                    strong #{thirdWeekJobsTotal.toLocaleString()}  
+                                if i === 27
+                                    li.text-md Pieces this week: 
+                                    strong #{fourthWeekJobsTotal.toLocaleString()}  
+                                if i === 34
+                                    li.text-md Pieces this week: 
+                                    strong #{fifthWeekJobsTotal.toLocaleString()}  
+                                if i === 41
+                                    li.text-md Pieces this week: 
+                                    strong #{sixthWeekJobsTotal.toLocaleString()}  

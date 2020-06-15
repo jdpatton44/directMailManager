@@ -303,40 +303,35 @@ exports.calendarView = async (req, res, next) => {
         // get the year from the url if available otherwise get current year
         const year = req.params.year || helpers.moment(new Date).format('YYYY');
         // get the month from the url if available otherwise get current month, if the month number is not valid default to current month
-        let requestedMonth = req.params.month || helpers.moment(new Date).format('M');
+        let requestedMonth = req.params.month || helpers.moment(new Date).format('MM');
+        requestedMonth.length < 2 ? requestedMonth = '0' + requestedMonth : requestedMonth;
         if(requestedMonth > 13 || requestedMonth < 1) {
-                requestedMonth = helpers.moment(new Date).format('M');
+                requestedMonth = helpers.moment(new Date).format('MM');
         }
         const viewMonth = helpers.moment(requestedMonth, 'M').format('MMMM');
-        console.log('viewMonth - ', viewMonth)
         // get the first day of the month
-        const firstDayOfViewMonth = helpers.moment().set({'year': year, 'month': parseInt(requestedMonth) + 1, 'day': 1}).format('YYYY-MM-DD')
-        console.log('firstDayOfViewMonth - ', firstDayOfViewMonth)
+        const firstDayOfViewMonth = helpers.moment(`${year}-${requestedMonth}-01`).format('YYYY-MM-01')
         // get what day of the week the first day of the month is
         const firstDayDayOfWeek = helpers.moment(firstDayOfViewMonth).day()
-        console.log('firstDayDayOfWeek -', firstDayDayOfWeek)
         // calculate the first day on the calendar
-        const firstDayOnCalendar = helpers.moment(firstDayOfViewMonth).subtract(firstDayDayOfWeek, 'days').format('MM-DD-YYYY');
-        console.log('firstDayOnCalendar - ', firstDayOnCalendar)
+        const firstDayOnCalendar = helpers.moment(firstDayOfViewMonth).subtract(firstDayDayOfWeek, 'days').format('YYYY-MM-DD');
         // get all jobs that mail in the calendar days being viewed
         const jobs = await Job.find({ jobMailDate: { $gte: firstDayOnCalendar, $lt: helpers.moment(firstDayOnCalendar).add(42, 'days').format("MM-DD-YYYY") } })
         .sort({
                 jobMailDate: 'asc',
         });
         // get first week jobs and total pieces 
-        
-        // const firstWeekJobsTotal = jobs.filter( (j) => 
-        //         h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") >= h.moment(firstDayOnCalendar).format("YYYY-MM-DD") &&
-        //         h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") <= h.moment(firstDayOnCalendar).add(6, 'days').format("YYYY-MM-DD")
-        //         )
-        //  .map(j => j.jobQuantity)
-        //  .reduce(((j, total) => j + total), 0)
-        //  console.log(firstWeekJobsTotal)
+        const firstWeekJobsTotal = getJobPiecesTotal(firstDayOnCalendar, helpers.moment(firstDayOnCalendar).add(6, 'days').format("YYYY-MM-DD"), jobs)
         // get second week jobs and total pieces 
+        const secondWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(7, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(13, 'days').format("YYYY-MM-DD"), jobs)
         // get third week jobs and total pieces 
+        const thirdWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(14, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(20, 'days').format("YYYY-MM-DD"), jobs)
         // get fourth week jobs and total pieces 
+        const fourthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(21, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(27, 'days').format("YYYY-MM-DD"), jobs)
         // get fifth week jobs and total pieces 
+        const fifthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(28, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(34, 'days').format("YYYY-MM-DD"), jobs)
         // get sixth week jobs and total pieces 
+        const sixthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(35, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(41, 'days').format("YYYY-MM-DD"), jobs)
         res.render('calendarView', {
                 year,
                 requestedMonth,
@@ -345,6 +340,26 @@ exports.calendarView = async (req, res, next) => {
                 firstDayDayOfWeek,
                 firstDayOnCalendar,
                 jobs,
+                firstWeekJobsTotal,
+                secondWeekJobsTotal,
+                thirdWeekJobsTotal,
+                fourthWeekJobsTotal,
+                fifthWeekJobsTotal,
+                sixthWeekJobsTotal,
                 title: `Mailings in ${viewMonth}`,
         });
+}
+
+// get the piece count for all jobs between two dates
+function getJobPiecesTotal(startDay, endDay, jobs) {
+        return jobs.filter( (j) => 
+                helpers.moment(j.jobMailDate).format("YYYY-MM-DD") >= helpers.moment(startDay).format("YYYY-MM-DD") &&
+                helpers.moment(j.jobMailDate).format("YYYY-MM-DD") <= helpers.moment(endDay).format("YYYY-MM-DD")
+                )
+         .map((j) => {
+                let quantity = 0;
+                // if the package quantities are available total them with reduce and use that otherwise use the job quantity that was originally input
+                j.packages[0] ?  quantity = j.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity = j.jobQuantity
+                return quantity;})
+         .reduce(((j, total) => j + total), 0)
 }
