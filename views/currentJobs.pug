@@ -2,6 +2,9 @@ extends layout
 
 block content
   .inner
+    div(class='flex flex-row justify-end py-2')
+      a(href=`/jobCalendar`) 
+        button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Calendar View
     h1.text-6xl.py-4 📩 This Week - #{thisWeekTotal.toLocaleString()} pieces
     div(class="mx-auto ")
       div(class="bg-white shadow-xl rounded my-6")
