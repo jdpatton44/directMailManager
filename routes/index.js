@@ -16,6 +16,7 @@ const router = express.Router();
 // Job Routes
 router.get('/currentJobs', catchErrors(jobController.currentJobs));
 router.get('/jobList', authController.isLoggedIn, catchErrors(jobController.jobList));
+router.get('/jobList/page/:page', authController.isLoggedIn, catchErrors(jobController.jobList));
 router.get('/clientJobList/:clientSlug', authController.isLoggedIn, catchErrors(jobController.jobsByClient));
 router.get('/agencyJobList/:agencySlug', authController.isLoggedIn, catchErrors(jobController.jobsByAgency));
 router.get('/repJobList/:repSlug', authController.isLoggedIn, catchErrors(jobController.jobsByRep));
@@ -58,6 +59,8 @@ router.get('/repList', authController.isLoggedIn, catchErrors(repController.repL
 router.get('/addRep', authController.isLoggedIn, repController.addRep);
 router.post('/addRep', authController.isLoggedIn, catchErrors(repController.createRep));
 router.get('/rep/:repSlug', authController.isLoggedIn, catchErrors(repController.getRepBySlug));
+router.get('/rep/:id/edit', authController.isLoggedIn, catchErrors(repController.editRep));
+router.post('/addRep/:id', authController.isLoggedIn, catchErrors(repController.updateRep));
 
 // Agency Routes
 router.get('/agencyList', authController.isLoggedIn, catchErrors(agencyController.agencyList));

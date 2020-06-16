@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const _ = require('lodash');
+const helpers = require('../helpers');
 
 const Job = mongoose.model('Job');
 const Skid = mongoose.model('Skid');
@@ -38,8 +39,16 @@ exports.newTruck = async (req, res, next) => {
 exports.addTruck = async (req, res, next) => {
   let numSkids = 0;
   // if only 1 skid is on the truck trcukSkids comes as the _id in a string
+  if(!req.body.truckSkids) {
+    req.flash('error', `There were no skids selected for the truck. Cannot create truck without skids.`);
+    res.redirect(`/truck/viewTrucks/truckList`);
+  }
+  // Create Truck
+  const truck = await new Truck(req.body);
+  truck.save()
+  // if there is only 1 skid update it
   if (typeof(req.body.truckSkids) === 'string') { 
-    const truckskids = await Skid.findByIdAndUpdate(req.body.truckSkids, {shipped: true } );
+    const truckskids = await Skid.findByIdAndUpdate(req.body.truckSkids, {shipped: true, skidTruckDate: helpers.moment(),skidTruck: truck._id } );
   }
   // if there are multiple skids truckSkids is an array
   else {
@@ -47,14 +56,12 @@ exports.addTruck = async (req, res, next) => {
     // Update skids to shipped
     const skids = await Skid.updateMany(
       { _id: { $in: truckSkids } },
-      { shipped: true }
+      { shipped: true, skidTruckDate: helpers.moment(),skidTruck: truck._id }
     );
     numSkids = truckSkids.length 
   }
-  // Create Truck
-  const truck = await new Truck(req.body).save();
   req.flash('success', `Successfully loaded a truck with ${numSkids < 2 ? '1 Skid' : numSkids + ' skids'}.`);
-  res.redirect(`/truck/viewTruck/${truck._id}`);
+  res.redirect(`/truck/viewTrucks/truckList`);
 };
 
 // exports.editTruck = async (req, res, next) => {

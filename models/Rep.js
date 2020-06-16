@@ -42,8 +42,6 @@ const repSchema = new mongoose.Schema(
     repZipcode: {
       type: String,
       trim: true,
-      minlength: 5,
-      maxlength: 10,
     },
     repPhoneNumber: {
       type: String,

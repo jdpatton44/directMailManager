@@ -21,6 +21,8 @@ mixin skidForm(skid = {}, job)
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="number" name="skidCount" value=(skid.skidCount ? skid.skidCount : '') )        
     label(for="skidNotes") Tare 
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="number" name="skidTare" value=(skid.skidTare ? skid.skidTare : 16) )        
+    label(for="destination") Destination
+    input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="destination" value=(skid.destination ? skid.destination : '') )        
     label(for="skidNotes") Initials  
     input(class="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:shadow-outline focus:bg-white shadow-lx" type="text" name="skidInitials" value=(skid.skidInitials ? skid.skidInitials : '') )        
     div(class="ml-auto") 

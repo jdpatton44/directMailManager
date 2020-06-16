@@ -29,7 +29,7 @@ exports.jobList = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
         }
-        res.render('jobList', { jobs, pages, page, title: 'Current Mailings' });
+        res.render('jobList', { jobs, pages, page, count, title: 'Current Mailings' });
 };
 
 // new job form 
@@ -363,3 +363,8 @@ function getJobPiecesTotal(startDay, endDay, jobs) {
                 return quantity;})
          .reduce(((j, total) => j + total), 0)
 }
+
+// exports.copyJob = async (req, res, next) => {
+
+// }
+

@@ -51,6 +51,16 @@ const skidSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    skidTruckDate: {
+      type: Date,
+    },
+    skidTruck: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Truck',
+    },
+    destination: {
+      type: String
+    }
   },
   {
     toJSON: { virtuals: true },
