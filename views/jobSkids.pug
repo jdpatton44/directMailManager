@@ -22,9 +22,9 @@ block content
             div(class="w-1/2 ") #{quantity ? quantity.toLocaleString() : ''} Pieces in #{job.packages.length > 1 ? job.packages.length + " packages" : "1 package"}
             div(class="w-1/2 flex justify-end") #{job.jobMailingMethod}
 
-    div(class="flex flex-row justify-center")
+    div(class="flex flex-row justify-center h-full")
       each p in job.packages
-        div(class="rounded h-full flex flex-row justify-center items-center p-4 bg-gray-200")
+        div(class="rounded flex flex-row p-4 bg-gray-200 flex-stretch")
           div(class="rounded bg-white shadow-md p-6 flex flex-col justify-around")
             div
               p(class="text-2xl text-orange-600")=p.packageName
@@ -44,19 +44,19 @@ block content
               
     
 
-    div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
+    div(class="flex flex-col w-full bg-white rounded shadow-lg bg-white")
       div(class="flex flex-row justify-between")
         h1.text-5xl.py-2.m-2 🚚 Skids 🚚 
         a(class="w-1/5 px-2 mx-2" href=`/addSkid/${job._id}/${skids.length + 1}`) 
           button(class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-4 px-6 border-b-4 border-blue-700 hover:border-blue-500 rounded m-6 w-3/4") Add a Skid
-      div(class="flex flex-col w-full md:flex-row")
-        table(class="text-left w-full border-collapse")
+      div(class="flex flex-col w-full md:flex-row ")
+        table(class="text-left w-full border-collapse bg-white")
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Skid Number 
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Pick Up Date
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Destination
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Package Name
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Weight
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") # of Trays
-          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Tare
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Count
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Initials
           th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Status
@@ -66,13 +66,14 @@ block content
               tr(class="hover:bg-blue-200") 
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidNumber
                 td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).add(9,"hours").format("MM-DD-YY") 
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.destination
                 td(class="py-4 px-6 border-b border-grey-light text-center")= job.packages.find(p => p._id.equals(s.skidPackage)).packageName
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidWeight
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidTrays
-                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidTare
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidCount
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidInitials
-                td(class="py-4 px-6 border-b border-grey-light text-center text-green-600")= s.shipped ? 'Shipped' : ''
+                td(class="py-4 px-6 border-b border-grey-light text-center text-green-600")
+                  a(href=`/truck/viewTruck/${s.skidTruck}`)= s.shipped ? h.moment(s.skidTruckDate).format("MM-DD-YY") : 'Waiting'
                 td(class="py-4 px-6 border-b border-grey-light text-center") 
                   a(href=`/editskid/${s._id}`)
                     button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit

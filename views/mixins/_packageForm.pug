@@ -25,9 +25,9 @@ mixin packageForm(p = {})
                         option(value=option2 ) #{option2}
                   label(for="packageSize") Package Size
                   input(type="text" value=p.packageSize name="packageSize" placeholder=job.jobSize )
-                  .flex.flex-row
-                    label(for="packageScitex") Scitex
-                      input(type="checkbox" id="packageScitex" name="packageScitex" value=p.packageScitex )
+                  .flex.flex-row.items-center
+                    label(for="packageScitex") Scitex 
+                    input( type="checkbox" id="packageScitex" name="packageScitex" value=p.packageScitex )
                   label(for="packageNotes") Notes
                   textarea(name="packageNotes" value=p.packageNotes)
                   div(class="ml-auto")

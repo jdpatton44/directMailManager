@@ -43,3 +43,21 @@ exports.getRepBySlug = async (req, res, next) => {
         if (!rep) return next();
         res.render('rep', { rep, repJobs, title: rep.repName });
 };
+
+exports.editRep = async (req, res, next) => {
+        const rep = await Rep.findOne({ _id: req.params.id });
+        if (!rep) return next();
+        res.render('editRep', { rep, title: `Edit ${rep.repName}` });
+};
+
+exports.updateRep = async (req, res, next) => {
+        const rep = await Rep.findOneAndUpdate({ _id: req.params.id }, req.body, {
+                new: true,
+                runValidators: true,
+        }).exec();
+        req.flash(
+                'success',
+                `Successfully updated <strong>${rep.repName}</strong>.`
+        );
+        res.redirect(`/rep/${rep.repSlug}`);
+};

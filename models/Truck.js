@@ -10,6 +10,9 @@ const truckSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  truckType: {
+    type: String,
+  },
   truckSkids: { type: [String], default: [], required: false },
 
 });

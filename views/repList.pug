@@ -15,7 +15,7 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black") City, ST Zip
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black") Jobs
           each rep, i in reps
-            tr(class="hover:bg-blue-200")  
+            tr(class="hover:bg-blue-200 bg-white")  
               td(class="py-4 px-6 border-b border-grey-light")
                 a(href=`/rep/${rep.repSlug}`) 
                   strong #{rep.repName} 
@@ -32,6 +32,7 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light")
               td(class="py-4 px-6 border-b border-grey-light") 
+                a(href=`/rep/${rep._id}/edit`) 
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit
                 a(href=`/repJobList/${rep.repSlug}`) 
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") #{rep.repName}'s Jobs
-

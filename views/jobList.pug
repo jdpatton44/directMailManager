@@ -1,5 +1,7 @@
 extends layout
 
+include mixins/_pagination
+
 block content
   .inner
     div(class='flex flex-row justify-end py-2')
@@ -45,3 +47,4 @@ block content
                 a(href=`/job/${job.jobSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") View
 
+    +pagination(page, pages, count)

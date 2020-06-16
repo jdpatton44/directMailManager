@@ -21,7 +21,6 @@ const agencySchema = new mongoose.Schema({
   agencyState: {
     type: String,
     trim: true,
-    maxlength: 2,
   },
   agencyCity: {
     type: String,
@@ -30,8 +29,6 @@ const agencySchema = new mongoose.Schema({
   agencyZipcode: {
     type: String,
     trim: true,
-    minlength: 5,
-    maxlength: 10,
   },
   agencyPhoneNumber: {
     type: String,
