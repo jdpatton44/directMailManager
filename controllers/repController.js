@@ -13,7 +13,7 @@ exports.repList = async (req, res) => {
                 .skip(skip)
                 .limit(limit)
                 .populate('repAgency')
-                .sort({ repMailDate: 'desc' });
+                .sort({ repName: 'asc' });
         const countPromise = Rep.count();
         const [reps, count] = await Promise.all([repsPromise, countPromise]);
         const pages = Math.ceil(count / limit);
@@ -46,8 +46,9 @@ exports.getRepBySlug = async (req, res, next) => {
 
 exports.editRep = async (req, res, next) => {
         const rep = await Rep.findOne({ _id: req.params.id });
+        const agencies = await Agency.find();
         if (!rep) return next();
-        res.render('editRep', { rep, title: `Edit ${rep.repName}` });
+        res.render('editRep', { rep, agencies, title: `Edit ${rep.repName}` });
 };
 
 exports.updateRep = async (req, res, next) => {
