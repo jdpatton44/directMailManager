@@ -1,12 +1,11 @@
 mixin packageForm(p = {})
-    p=p._id
     form(action=(p._id ? `/updatePackage/${job.jobSlug}/${p._id}` : `../createPackage/${job._id}`) method="POST")
                   label(for="packageName") Package Name
                   input(type="text" name="packageName" value=p.packageName)
                   label(for="packageQuantity") Quantity
                   input(type="number" name="packageQuantity" value=p.packageQuantity )
                   label(for="packageMaildate") Mail Date
-                  input(type="date" name="packageMaildate" value=(p.packageMaildate ? h.moment(p.packageMaildate).add(1,"days").format("YYYY-MM-DD") : h.moment(job.jobMailDate).add(1,"days").format("YYYY-MM-DD") )) 
+                  input(type="date" name="packageMaildate" value=(p.packageMaildate ? h.moment(p.packageMaildate).add(8, 'hours').format("YYYY-MM-DD") : h.moment(job.jobMailDate).add(8, 'hours').format("YYYY-MM-DD") )) 
                   label(for="packageMailingMethod") Mailing Method
                   select(name="packageMailingMethod" id="packageMailingMethod" )
                     <option value="" selected>Select a Mailing Method</option>
@@ -27,7 +26,7 @@ mixin packageForm(p = {})
                   input(type="text" value=p.packageSize name="packageSize" placeholder=job.jobSize )
                   .flex.flex-row.items-center
                     label(for="packageScitex") Scitex 
-                    input( type="checkbox" id="packageScitex" name="packageScitex" value=p.packageScitex )
+                    input( type="checkbox" id="packageScitex" name="packageScitex" checked=(p.packageScitex ? "checked" : undefined) )
                   label(for="packageNotes") Notes
                   textarea(name="packageNotes" value=p.packageNotes)
                   div(class="ml-auto")

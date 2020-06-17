@@ -28,7 +28,7 @@ block content
                                 each j in dayJobs
                                     li.text-md 
                                         a(href=`/job/${j.jobSlug}`) 
-                                            strong #{j.jobName}
+                                            strong.__jobName #{j.jobName}
                                 if i === 6
                                     li.text-md Pieces this week: 
                                     strong #{firstWeekJobsTotal.toLocaleString()}  
