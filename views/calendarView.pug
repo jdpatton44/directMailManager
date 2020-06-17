@@ -23,7 +23,7 @@ block content
                 each _, i in Array(42)
                     li(class="text-gray-700 bg-gray-400 px-4 py-2 m-2" style="flex: 1 0 13%")
                         div= h.moment(firstDayOnCalendar).add(i, 'days').format("D")
-                            ul
+                            ul.__jobList
                                 -const dayJobs = jobs.filter(j => h.moment(j.jobMailDate).add(9, "hours").format("YYYY-MM-DD") === h.moment(firstDayOnCalendar).add(i, 'days').format("YYYY-MM-DD") )
                                 each j in dayJobs
                                     li.text-md 
