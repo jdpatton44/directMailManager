@@ -23,7 +23,7 @@ mixin packageForm(p = {})
                       else
                         option(value=option2 ) #{option2}
                   label(for="packageSize") Package Size
-                  input(type="text" value=p.packageSize name="packageSize" placeholder=job.jobSize )
+                  input(type="text" value=(p.packageSize ? p.packageSize : "#10") name="packageSize" placeholder=job.jobSize )
                   .flex.flex-row.items-center
                     label(for="packageScitex") Scitex 
                     input( type="checkbox" id="packageScitex" name="packageScitex" checked=(p.packageScitex ? "checked" : undefined) )
