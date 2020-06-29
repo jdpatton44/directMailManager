@@ -47,3 +47,8 @@ block content
                                 if i === 41
                                     li.text-md Pieces this week: 
                                     strong #{sixthWeekJobsTotal.toLocaleString()}  
+        div.flex.flex-row.justify-between.py-4
+            a(href=`/jobCalendar/${prevButton}`)
+                button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded h-1/2") <
+            a(href=`/jobCalendar/${nextButton}`)
+                button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") >
