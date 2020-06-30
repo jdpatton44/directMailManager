@@ -51,6 +51,10 @@ const packageSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    packageNotes: {
+      type: String,
+      trim: true,
+    },
     commingleQuantity: {
       type: Number,
       default: 0,
