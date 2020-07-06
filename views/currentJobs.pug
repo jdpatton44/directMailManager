@@ -30,7 +30,7 @@ block content
                 a(href=`/job/${job.jobSlug}`) 
                   strong #{job.jobName}
               - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
-              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity ? quantity.toLocaleString() : 0
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
                 td(class="py-4 px-6 border-b border-grey-light text-center")
@@ -71,7 +71,7 @@ block content
                 a(href=`/job/${job.jobSlug}`) 
                   strong #{job.jobName}
               - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
-              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity ? quantity.toLocaleString() : 0
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
                 td(class="py-4 px-6 border-b border-grey-light text-center")
@@ -112,7 +112,7 @@ block content
                   strong #{job.jobName}
               - let quantity = job.jobQuantity;
               - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
-              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()
+              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity ? quantity.toLocaleString() : 0
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
                 td(class="py-4 px-6 border-b border-grey-light text-center")
