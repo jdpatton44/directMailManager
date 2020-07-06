@@ -2,4 +2,5 @@
 
 Manage all your Mailshop Needs!
 
-## Sample Data
+A node project using Express and Pug templates to manage workflow for a mailshop.
+
