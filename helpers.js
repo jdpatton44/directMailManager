@@ -70,6 +70,7 @@ const today = moment(new Date()).format('YYYY-MM-DD');
 
 // Create the items in the nav bar 
 exports.menu = [
+        { slug: '/jobCalendar', title: 'Calendar', icon: 'calendar'},
         { slug: '/jobList', title: 'All Jobs', icon: 'mailbox' },
         { slug: '/addJob', title: 'Add Job', icon: 'newJob' },
         { slug: '/clientList', title: 'Clients', icon: 'client' },
