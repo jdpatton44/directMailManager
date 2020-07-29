@@ -101,6 +101,7 @@ router.get('/truck/viewTruck/:id', authController.isLoggedIn, catchErrors(truckC
 router.get('/truck/viewTrucks/truckList', authController.isLoggedIn, catchErrors(truckController.truckList));
 router.get('/truck/newTruck/', authController.isLoggedIn, catchErrors(truckController.newTruck));
 router.post('/truck/createTruck/', authController.isLoggedIn, catchErrors(truckController.addTruck));
+router.get('/truck/deleteTruck/:id', authController.isLoggedIn, catchErrors(truckController.deleteTruck));
 
 // router.get('/truck/editTruck/:id', catchErrors(truckController.editTruck))
 // router.post('/truck/updateTruck/:id', catchErrors(truckController.updateTruck))

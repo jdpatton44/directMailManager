@@ -39,7 +39,7 @@ exports.newTruck = async (req, res, next) => {
 exports.addTruck = async (req, res, next) => {
   let numSkids = 0;
   // if only 1 skid is on the truck trcukSkids comes as the _id in a string
-  if(!req.body.truckSkids) {
+  if(!req.body.truckSkids || req.body.truckSkids === []) {
     req.flash('error', `There were no skids selected for the truck. Cannot create truck without skids.`);
     res.redirect(`/truck/viewTrucks/truckList`);
   }
@@ -74,3 +74,16 @@ exports.addTruck = async (req, res, next) => {
 //     req.flash('success', `Successfully updated truck.`);
 //     res.redirect(`/truck/${truck._id}`);
 // };
+
+// delete a truck
+exports.deleteTruck = async (req, res, next) => {
+  const truck = await Truck.findOne({ _id: req.params.id });
+  // check to see if truck has any skids on it
+  if (truck.truckSkids[0]) {
+    req.flash('error', `This truck still has skids on it.  Please unload the truck to delete it.`);
+    res.redirect(`/truck/viewTrucks/truckList`);
+  }
+  const truckToDelete = await Job.findByIdAndDelete(truck._id);
+  req.flash('success', `Successfully deleted truck ${truck.id}.`);
+  res.redirect(`/truck/viewTrucks/truckList`);
+};
