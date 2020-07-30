@@ -298,6 +298,26 @@ exports.deletePackage = async (req, res, next) => {
 
 }
 
+// copy a job
+exports.copyJob = async (req, res, next ) => {
+        // get the job to copy
+        const job = await Job.findOne({ _id: req.params.id });
+        const newJob = {};
+        newJob.jobName = job.jobName + " MULTI";
+        newJob.jobClient = job.jobClient;
+        newJob.jobRep = job.jobRep;
+        newJob.jobMailingMethod = job.jobMailingMethod;
+        newJob.jobSize = job.jobSize;
+        newJob.jobTags = job.jobTags;
+        newJob.jobMatch = job.jobMatch;
+        newJob.jobNotes = job.jobNotes;
+        newJob.jobMailDate = helpers.moment(job.jobMailDate) + 12096e5;
+        newJob.jobQuantity = 0;
+        console.log(newJob)
+        const newSavedJob = await new Job(newJob).save();
+        req.flash('success', `Successfully Created ${newJob.jobName}. The maildate is ${helpers.moment(newJob.jobMailDate).add(9,"hours").format("MM-DD-YY")}. Please update if this is not correct.`);
+        res.redirect(`/job/${newSavedJob.jobSlug}`);
+}
 
 exports.calendarView = async (req, res, next) => {
         // get the year from the url if available otherwise get current year
@@ -363,8 +383,4 @@ function getJobPiecesTotal(startDay, endDay, jobs) {
                 return quantity;})
          .reduce(((j, total) => j + total), 0)
 }
-
-// exports.copyJob = async (req, res, next) => {
-
-// }
 
