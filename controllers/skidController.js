@@ -79,7 +79,7 @@ exports.daysShipping = async (req, res, next) => {
   shipDate = helpers.moment(shipDate).add(1, 'days');
   const packageSkids = _.groupBy(skids, 'skidPackage');
   const ps = Object.keys(packageSkids);
-  res.render('shipping', {
+  res.render('trucks/shipping', {
     ps,
     packageSkids,
     skids,

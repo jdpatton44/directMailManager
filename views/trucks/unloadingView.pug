@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  .inner.py-8
+    div(class='flex flex-row justify-end py-2')
+        a(href=`/truck/unloadSkid/${truck._id}/all` class="px-2") 
+            button(class="bg-orange-600 hover:bg-orange-800 text-white font-bold p-2 rounded") Remove All
+    h1(class="text-6xl") 🚚 Unload Truck #{truck.id}
+    div(class="flex flex-col w-full bg-white rounded shadow-lg bg-white")
+      div(class="flex flex-col w-full md:flex-row ")
+        table(class="text-left w-full border-collapse bg-white")
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Job Name 
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Skid Number 
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Pick Up Date
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Destination
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Weight
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") # of Trays
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Count
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Initials
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Status
+          th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
+          if (skids)
+            each s in skids  
+              tr(class="hover:bg-blue-200") 
+                td(class="py-4 px-6 border-b border-grey-light text-center")= jobs.find(j => j._id.equals(s.skidJob)).jobName
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidNumber
+                td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).add(9,"hours").format("MM-DD-YY") 
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.destination
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidWeight
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidTrays
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidCount
+                td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidInitials
+                td(class="py-4 px-6 border-b border-grey-light text-center text-green-600")
+                  a(href=`/truck/viewTruck/${s.skidTruck}`)= s.shipped ? h.moment(s.skidTruckDate).format("MM-DD-YY") : 'Waiting'
+                td(class="py-4 px-6 border-b border-grey-light text-center") 
+                  a(href=`/truck/unloadSkid/${truck._id}/${s._id}`)
+                    button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Remove

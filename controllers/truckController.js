@@ -16,13 +16,13 @@ exports.viewTruck = async (req, res, next) => {
   const jobSkids = skids.map(skid => skid.skidJob);
   const jobs = await Job.find({ _id: { $in: jobSkids.map(j => mongoose.Types.ObjectId(j)) } });
 
-  res.render('viewTruck', { truck, jobs, skids, skidsByGroup, title: 'View Truck' });
+  res.render('trucks/viewTruck', { truck, jobs, skids, skidsByGroup, title: 'View Truck' });
 };
 
 exports.truckList = async (req, res, next) => {
   // get all trucks, sort by created date, descending
   const trucks = await Truck.find().sort({truckCreatedDate: 'desc'})
-  res.render('truckList', {trucks, title: 'Trucks'})
+  res.render('trucks/truckList', {trucks, title: 'Trucks'})
 }
 
 exports.newTruck = async (req, res, next) => {
@@ -33,7 +33,7 @@ exports.newTruck = async (req, res, next) => {
   const jobIds = Object.keys(jobSkids);
   // get all the jobs that have skids that have not been shipped yet
   const jobs = await Job.find({ _id: { $in: jobIds.map(j => mongoose.Types.ObjectId(j)) } });
-  res.render('createTruck', { jobSkids, skids, jobs, title: 'Loading Truck...' });
+  res.render('trucks/createTruck', { jobSkids, skids, jobs, title: 'Loading Truck...' });
 };
 
 exports.addTruck = async (req, res, next) => {
@@ -64,16 +64,32 @@ exports.addTruck = async (req, res, next) => {
   res.redirect(`/truck/viewTrucks/truckList`);
 };
 
-// exports.editTruck = async (req, res, next) => {
-//     const truck = await Truck.findOne( { _id: req.params.id });
-//     res.render('updateTruck', { truck, title: 'Edit Truck'});
-// };
+// unload truck view
+exports.unloadTruck = async (req, res, next) => {
+  const truck = await Truck.findOne( {_id: req.params.id} );
+  const skids = await Skid.find( {skidTruck: truck._id} );
+  const skidJobs = skids.map(s => s.skidJob)
+  const jobs = await Job.find( { '_id': { $in: skidJobs} });
+  res.render('trucks/unloadingView', {skids, jobs, truck})
+  // req.flash('success', `Successfully unloaded ${SKIDS} from truck ${truck.id}.`);
+  // res.redirect(`/truck/viewTrucks/truckList`);
+};
 
-// exports.updateTruck = async (req, res, next) => {
-
-//     req.flash('success', `Successfully updated truck.`);
-//     res.redirect(`/truck/${truck._id}`);
-// };
+// unload skids and redirect
+exports.removeSkid = async (req, res) => {
+  const truck = await Truck.findOne({ _id: req.params.truckId });
+  // if the request is to remove all skids, do this
+  if(req.params.skidId === 'all') {
+    const skids = truck.truckSkids;
+    const updatedTruck = await Truck.findOneAndUpdate( {_id: truck._id}, { truckSkids: [] } );
+    const updatedSkids = await Skid.updateMany( { _id: {$in: skids}}, {"$set":{ shipped: false, skidTruck: null, skidTruckDate: null }}, {"multi": true}, (error) => {});
+    res.redirect(`/truck/viewTruck/${truck._id}`);
+  }
+  // do this for only 1 skid.
+  const skid = await Skid.findOneAndUpdate({ _id: req.params.skidId }, { shipped: false, skidTruck: null, skidTruckDate: null });
+  const updatedTruck = await Truck.findOneAndUpdate( {_id: truck._id}, { $pullAll: { truckSkids: [skid._id] }  } );
+  res.redirect(`/truck/unload/${updatedTruck._id}`);
+};
 
 // delete a truck
 exports.deleteTruck = async (req, res, next) => {
@@ -83,7 +99,16 @@ exports.deleteTruck = async (req, res, next) => {
     req.flash('error', `This truck still has skids on it.  Please unload the truck to delete it.`);
     res.redirect(`/truck/viewTrucks/truckList`);
   }
-  const truckToDelete = await Job.findByIdAndDelete(truck._id);
+  const truckToDelete = await Job.findByIdAndDelete(req.params.id, function (err, docs) { 
+    if (err){ 
+        console.log(err) 
+    } 
+    else{ 
+        console.log("Deleted : ", docs); 
+    } 
+  });
+  console.log(truckToDelete);
   req.flash('success', `Successfully deleted truck ${truck.id}.`);
   res.redirect(`/truck/viewTrucks/truckList`);
 };
+
