@@ -12,9 +12,11 @@ const checkWeight = () => {
     .reduce((acc, w) => acc + parseInt(w), 0);
 
   const totalWeightEl = document.getElementById('totalWeight');
-
-  totalWeightEl.innerHTML = total;
+  if(totalWeightEl) {
+    totalWeightEl.innerHTML = total;
+  }
 };
+
 checkWeight();
 const boxes = document.getElementById('truck__boxes');
 boxes.addEventListener('change', checkWeight);

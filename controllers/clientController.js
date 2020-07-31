@@ -23,7 +23,7 @@ const multerOptions = {
 exports.upload = multer(multerOptions).single('photo');
 // resize file middleware
 exports.resize = async (req, res, next) => {
-        console.log('starting resize');
+        // console.log('starting resize');
         console.log(req.body.file);
         // check if new file to resize
         if (!req.file) {

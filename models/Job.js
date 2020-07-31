@@ -119,6 +119,10 @@ const jobSchema = new mongoose.Schema(
       type: [packageSchema],
       default: [],
     },
+    hasMultis: {
+      type: [String],
+      default: [],
+    }
   },
   {
     toJSON: { virtuals: true },
