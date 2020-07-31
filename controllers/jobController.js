@@ -42,7 +42,9 @@ exports.addJob = async (req, res) => {
 
 // create a new job
 exports.createJob = async (req, res) => {
+
         const job = await new Job(req.body).save();
+        console.table(job);
         req.flash('success', `Successfully Created ${job.jobName}.`);
         res.redirect(`/job/${job.jobSlug}`);
 };
@@ -315,6 +317,7 @@ exports.copyJob = async (req, res, next ) => {
         newJob.jobQuantity = 0;
         console.log(newJob)
         const newSavedJob = await new Job(newJob).save();
+        const updatedOriginalJob = await Job.findByIdAndUpdate(req.params.id, {$push: {hasMultis: newSavedJob.jobSlug}});
         req.flash('success', `Successfully Created ${newJob.jobName}. The maildate is ${helpers.moment(newJob.jobMailDate).add(9,"hours").format("MM-DD-YY")}. Please update if this is not correct.`);
         res.redirect(`/job/${newSavedJob.jobSlug}`);
 }
