@@ -3,10 +3,14 @@ extends layout
 block content
   .inner.py-2
     div(class='flex flex-row justify-end py-2')
+      if(job.isMulti)
+        a(href=`/job/id/${job.isMulti}` class="px-2") 
+            button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Go to Original Job
       if(job.hasMultis[0])
-          a(href=`/job/${job.hasMultis[0]}` class="px-2") 
-            button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Go to Multi
-      else
+        each j, index in job.hasMultis
+          a(href=`/job/id/${j}` class="px-2") 
+            button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Go to Multi ##{index + 1}
+      if(job.isMulti === null)
         a(href=`/createMulti/${job._id}` class="px-2") 
           button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Create Multi
       a(href=`/jobs/${job._id}/edit` class="px-2") 

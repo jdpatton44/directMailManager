@@ -44,7 +44,7 @@ exports.addJob = async (req, res) => {
 exports.createJob = async (req, res) => {
 
         const job = await new Job(req.body).save();
-        console.table(job);
+        console.log(job);
         req.flash('success', `Successfully Created ${job.jobName}.`);
         res.redirect(`/job/${job.jobSlug}`);
 };
@@ -60,6 +60,13 @@ exports.getJobBySlug = async (req, res, next) => {
         }
         res.render('job', { job, quantity, title: job.jobName });
 };
+
+// get job by id and redirect to job by slug
+exports.getJobById = async (req, res, next) => {
+        const job = await Job.findById(req.params.id);
+        if (!job) return next();
+        res.redirect(`/job/${job.jobSlug}`);
+}
 
 // edit an existing job
 exports.editJob = async (req, res, next) => {
@@ -300,8 +307,8 @@ exports.deletePackage = async (req, res, next) => {
 
 }
 
-// copy a job
-exports.copyJob = async (req, res, next ) => {
+// copy a job to make a multi 
+exports.createMulti = async (req, res, next ) => {
         // get the job to copy
         const job = await Job.findOne({ _id: req.params.id });
         const newJob = {};
@@ -315,9 +322,11 @@ exports.copyJob = async (req, res, next ) => {
         newJob.jobNotes = job.jobNotes;
         newJob.jobMailDate = helpers.moment(job.jobMailDate) + 12096e5;
         newJob.jobQuantity = 0;
+        newJob.isMulti = job._id;
         console.log(newJob)
         const newSavedJob = await new Job(newJob).save();
-        const updatedOriginalJob = await Job.findByIdAndUpdate(req.params.id, {$push: {hasMultis: newSavedJob.jobSlug}});
+        // update the original job to link to the multi 
+        const updatedOriginalJob = await Job.findByIdAndUpdate(req.params.id, {$push: {hasMultis: newSavedJob._id}});
         req.flash('success', `Successfully Created ${newJob.jobName}. The maildate is ${helpers.moment(newJob.jobMailDate).add(9,"hours").format("MM-DD-YY")}. Please update if this is not correct.`);
         res.redirect(`/job/${newSavedJob.jobSlug}`);
 }
