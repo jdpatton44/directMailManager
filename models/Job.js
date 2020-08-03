@@ -122,6 +122,11 @@ const jobSchema = new mongoose.Schema(
     hasMultis: {
       type: [String],
       default: [],
+    },
+    isMulti: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Job',
+      default: null,
     }
   },
   {

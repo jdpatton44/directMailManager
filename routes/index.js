@@ -25,10 +25,11 @@ router.post('/addJob', authController.isLoggedIn, catchErrors(jobController.crea
 router.post('/addJob/:id', authController.isLoggedIn, catchErrors(jobController.updateJob));
 router.post('/updateNotes/:id', authController.isLoggedIn, catchErrors(jobController.updateJobNotes));
 router.get('/job/:jobSlug', authController.isLoggedIn, catchErrors(jobController.getJobBySlug));
+router.get('/job/id/:id', authController.isLoggedIn, catchErrors(jobController.getJobById));
 router.get('/jobs/:id/edit', authController.isLoggedIn, catchErrors(jobController.editJob));
 router.get('/deleteJob/:id', authController.isLoggedIn, jobController.deleteJob);
 router.get('/jobCalendar/:year?/:month?', jobController.calendarView);
-router.get('/createMulti/:id', authController.isLoggedIn, jobController.copyJob);
+router.get('/createMulti/:id', authController.isLoggedIn, jobController.createMulti);
 
 // Package Routes
 router.get('/addPackage/:id', authController.isLoggedIn, catchErrors(jobController.addPackage));

@@ -2659,9 +2659,11 @@ var checkWeight = function checkWeight() {
   }, 0);
 
   var totalWeightEl = document.getElementById('totalWeight');
-
-  totalWeightEl.innerHTML = total;
+  if (totalWeightEl) {
+    totalWeightEl.innerHTML = total;
+  }
 };
+
 checkWeight();
 var boxes = document.getElementById('truck__boxes');
 boxes.addEventListener('change', checkWeight);
