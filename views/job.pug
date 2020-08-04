@@ -18,9 +18,9 @@ block content
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
       div(class="flex flex-col w-full md:flex-row")
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
-          div(class="md:text-5xl") #{h.moment(job.jobMailDate).add(9,"hours").format("MMMM")}
-          div(class="md:text-6xl") #{h.moment(job.jobMailDate).add(9,"hours").format("DD")}
-          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate).add(9,"hours").format("dddd")}
+          div(class="md:text-5xl") #{h.moment(job.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("MMMM")}
+          div(class="md:text-6xl") #{h.moment(job.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("DD")}
+          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("dddd")}
           
         div(class="p-4 font-normal text-gray-800 md:w-3/4")
           p(class="leading-normal font-bold text-3xl") #{job.jobName}
@@ -57,7 +57,7 @@ block content
               each p in job.packages  
                 tr(class="hover:bg-blue-200") 
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageName ? p.packageName : ''
-                  td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMaildate ? h.moment(p.packageMaildate).add(1,"days").format("MM-DD-YY") : ''
+                  td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMaildate ? h.moment(job.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("MM-DD-YY") : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageQuantity ? p.packageQuantity.toLocaleString('en') : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMailingMethod ? p.packageMailingMethod : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage ? p.packagePostage : ''

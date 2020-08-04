@@ -24,7 +24,7 @@ block content
               tr(class="hover:bg-blue-200") 
                 td(class="py-4 px-6 border-b border-grey-light text-center")= jobs.find(j => j._id.equals(s.skidJob)).jobName
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidNumber
-                td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).add(9,"hours").format("MM-DD-YY") 
+                td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).utc().format("MM-DD-YY") 
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.destination
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidWeight
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidTrays
