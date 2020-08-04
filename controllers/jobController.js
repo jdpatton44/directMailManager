@@ -312,7 +312,7 @@ exports.createMulti = async (req, res, next ) => {
         // get the job to copy
         const job = await Job.findOne({ _id: req.params.id });
         const newJob = {};
-        newJob.jobName = job.jobName + " MULTI";
+        newJob.jobName = job.jobName + " MULTI x" + (job.hasMultis.length + 1);
         newJob.jobClient = job.jobClient;
         newJob.jobRep = job.jobRep;
         newJob.jobMailingMethod = job.jobMailingMethod;
