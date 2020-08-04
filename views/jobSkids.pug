@@ -5,9 +5,9 @@ block content
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
       div(class="flex flex-col w-full md:flex-row")
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
-          div(class="md:text-5xl") #{h.moment(job.jobMailDate).add(9,"hours").format("MMMM")}
-          div(class="md:text-6xl") #{h.moment(job.jobMailDate).add(9,"hours").format("DD")}
-          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate).add(9,"hours").format("dddd")}
+          div(class="md:text-5xl") #{h.moment(job.jobMailDate).utc().format("MMMM")}
+          div(class="md:text-6xl") #{h.moment(job.jobMailDate).utc().format("DD")}
+          div(class="md:text-4xl py-2") #{h.moment(job.jobMailDate).utc().format("dddd")}
           
         div(class="p-4 font-normal text-gray-800 md:w-3/4")
           div(class="flex flex-row items-center mt-4 text-black justify-between")
@@ -65,7 +65,7 @@ block content
             each s in skids  
               tr(class="hover:bg-blue-200") 
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidNumber
-                td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).add(9,"hours").format("MM-DD-YY") 
+                td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment(s.skidShipDate).utc().format("MM-DD-YY") 
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.destination
                 td(class="py-4 px-6 border-b border-grey-light text-center")= job.packages.find(p => p._id.equals(s.skidPackage)).packageName
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidWeight
@@ -73,7 +73,7 @@ block content
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidCount
                 td(class="py-4 px-6 border-b border-grey-light text-center")= s.skidInitials
                 td(class="py-4 px-6 border-b border-grey-light text-center text-green-600")
-                  a(href=`/truck/viewTruck/${s.skidTruck}`)= s.shipped ? h.moment(s.skidTruckDate).format("MM-DD-YY") : 'Waiting'
+                  a(href=`/truck/viewTruck/${s.skidTruck}`)= s.shipped ? h.moment(s.skidTruckDate).utc().format("MM-DD-YY") : 'Waiting'
                 td(class="py-4 px-6 border-b border-grey-light text-center") 
                   a(href=`/editskid/${s._id}`)
                     button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit

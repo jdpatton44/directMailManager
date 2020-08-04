@@ -327,7 +327,7 @@ exports.createMulti = async (req, res, next ) => {
         const newSavedJob = await new Job(newJob).save();
         // update the original job to link to the multi 
         const updatedOriginalJob = await Job.findByIdAndUpdate(req.params.id, {$push: {hasMultis: newSavedJob._id}});
-        req.flash('success', `Successfully Created ${newJob.jobName}. The maildate is ${helpers.moment(newJob.jobMailDate).add(9,"hours").format("MM-DD-YY")}. Please update if this is not correct.`);
+        req.flash('success', `Successfully Created ${newJob.jobName}. The maildate is ${helpers.moment(newJob.jobMailDate).utc().format("MM-DD-YY")}. Please update if this is not correct.`);
         res.redirect(`/job/${newSavedJob.jobSlug}`);
 }
 
@@ -346,24 +346,24 @@ exports.calendarView = async (req, res, next) => {
         // get what day of the week the first day of the month is
         const firstDayDayOfWeek = helpers.moment(firstDayOfViewMonth).day()
         // calculate the first day on the calendar
-        const firstDayOnCalendar = helpers.moment(firstDayOfViewMonth).subtract(firstDayDayOfWeek, 'days').format('YYYY-MM-DD');
+        const firstDayOnCalendar = helpers.moment(firstDayOfViewMonth, 'YYYY-MM-DD').subtract(firstDayDayOfWeek, 'days');
         // get all jobs that mail in the calendar days being viewed
-        const jobs = await Job.find({ jobMailDate: { $gte: firstDayOnCalendar, $lt: helpers.moment(firstDayOnCalendar).add(42, 'days').format("MM-DD-YYYY") } })
+        const jobs = await Job.find({ jobMailDate: { $gte: firstDayOnCalendar, $lt: helpers.moment(firstDayOnCalendar, "MM-DD-YYYY").add(42, 'days') } })
         .sort({
                 jobMailDate: 'asc',
         });
         // get first week jobs and total pieces 
         const firstWeekJobsTotal = getJobPiecesTotal(firstDayOnCalendar, helpers.moment(firstDayOnCalendar).add(6, 'days').format("YYYY-MM-DD"), jobs)
         // get second week jobs and total pieces 
-        const secondWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(7, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(13, 'days').format("YYYY-MM-DD"), jobs)
+        const secondWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(7, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(13, 'days'), jobs)
         // get third week jobs and total pieces 
-        const thirdWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(14, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(20, 'days').format("YYYY-MM-DD"), jobs)
+        const thirdWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(14, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(20, 'days'), jobs)
         // get fourth week jobs and total pieces 
-        const fourthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(21, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(27, 'days').format("YYYY-MM-DD"), jobs)
+        const fourthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(21, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(27, 'days'), jobs)
         // get fifth week jobs and total pieces 
-        const fifthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(28, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(34, 'days').format("YYYY-MM-DD"), jobs)
+        const fifthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(28, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(34, 'days'), jobs)
         // get sixth week jobs and total pieces 
-        const sixthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar).add(35, 'days').format("YYYY-MM-DD"), helpers.moment(firstDayOnCalendar).add(41, 'days').format("YYYY-MM-DD"), jobs)
+        const sixthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(35, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(41, 'days'), jobs)
         res.render('calendarView', {
                 year,
                 requestedMonth,
