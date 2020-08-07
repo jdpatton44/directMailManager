@@ -2,7 +2,7 @@ extends layout
 
 block content
     .inner
-        h1.text-5xl.py-4 #{job.jobName} - 🚚 First Pickup - #{h.moment(job.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("MM-DD-YY")} 
+        h1.text-5xl.py-4 #{job.jobName} - 🚚 First Pickup - #{h.moment.utc(job.jobMailDate.toISOString())).format("MM-DD-YY")} 
         div(class="mx-auto ")
           form(action=`/updateCommingle/${job._id}` method="POST")
                 div
@@ -28,7 +28,7 @@ block content
                                             input(type="number" name="commingleQuantity" value=p.commingleQuantity)
                                         td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage
                                         td(class="py-4 px-6 border-b border-grey-light text-center") 
-                                            input(type="date" name="packagePickupDate" value=h.moment(p.packagePickupDate).utc().format("YYYY-MM-DD"))
+                                            input(type="date" name="packagePickupDate" value=h.moment.utc(p.packagePickupDate.toISOString()).format("YYYY-MM-DD"))
                                         td(class="py-4 px-6 border-b border-grey-light text-center")  #{h.formatCurrency(p.comminglePostageDue)}
                 div(class="flex flex-row justify-between")
                   button(type="submit" class="pacakge__add bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5 m-4") Update

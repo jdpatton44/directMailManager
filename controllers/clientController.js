@@ -77,7 +77,7 @@ exports.getClientBySlug = async (req, res, next) => {
         const client = await Client.findOne({ clientSlug: req.params.clientSlug });
         const agency = await Agency.findOne({ _id: client.clientAgency });
         if (!client) return next();
-        const clientJobs = await Job.find({ jobClient: client._id }).populate('jobClient jobRep');
+        const clientJobs = await Job.find({ jobClient: client._id }).sort({jobMailDate: 'desc',}).populate('jobClient jobRep');
         res.render('client', { client, agency, clientJobs, title: client.clientName });
 };
 

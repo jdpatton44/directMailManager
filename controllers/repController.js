@@ -39,7 +39,7 @@ exports.createRep = async (req, res) => {
 
 exports.getRepBySlug = async (req, res, next) => {
         const rep = await Rep.findOne({ repSlug: req.params.repSlug }).populate('repAgency');
-        const repJobs = await Job.find({ jobRep: rep._id }).populate('jobClient jobRep');
+        const repJobs = await Job.find({ jobRep: rep._id }).sort({jobMailDate: 'desc'}).populate('jobClient jobRep');
         if (!rep) return next();
         res.render('rep', { rep, repJobs, title: rep.repName });
 };

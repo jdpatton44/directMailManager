@@ -5,7 +5,7 @@ mixin packageForm(p = {})
                   label(for="packageQuantity") Quantity
                   input(type="number" name="packageQuantity" value=p.packageQuantity )
                   label(for="packageMaildate") Mail Date
-                  input(type="date" name="packageMaildate" value=(p.packageMaildate ? h.moment(p.packageMaildate).utc().format("YYYY-MM-DD") : h.moment(job.jobMailDate).utc().format("YYYY-MM-DD") )) 
+                  input(type="date" name="packageMaildate" value=(p.packageMaildate ? h.moment.utc(p.packageMaildate.toISOString()).format("YYYY-MM-DD") : h.moment.utc(job.jobMailDate.toISOString()).format("YYYY-MM-DD"))) 
                   label(for="packageMailingMethod") Mailing Method
                   select(name="packageMailingMethod" id="packageMailingMethod" )
                     <option value="" selected>Select a Mailing Method</option>

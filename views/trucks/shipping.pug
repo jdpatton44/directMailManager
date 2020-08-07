@@ -4,9 +4,9 @@ block content
   .inner.py-8
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 p-4")
       div(class="flex flex-row justify-between")
-        h1.text-5xl.py-2.m-2 🚚 Shipping out #{h.moment(shipDate).format("MMM DD")} 📦
+        h1.text-5xl.py-2.m-2 🚚 Shipping out #{h.moment.utc(shipDate.toISOString()).format("MMM DD")} 📦
         form(action=`/shippingByDate/` method="POST" class="flex flex-column")
-          input(class="bg-transparent border-b m-auto block border-gray-500 w-full mb-6 text-gray-700 pb-1" type="date" name="shippingDate" value=h.moment(shipDate).format("YYYY-MM-DD"))
+          input(class="bg-transparent border-b m-auto block border-gray-500 w-full mb-6 text-gray-700 pb-1" type="date" name="shippingDate" value=h.moment.utc(shipDate.toISOString()).format("YYYY-MM-DD"))
           button(id="__shipDate" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-2/5 m-4" type="submit") Change Date
       div(class="flex flex-col w-full md:flex-row")
         table(class="text-left w-full border-collapse")
