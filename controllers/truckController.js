@@ -93,25 +93,9 @@ exports.removeSkid = async (req, res) => {
 
 // delete a truck
 exports.deleteTruck = async (req, res, next) => {
-  const truck = await Truck.findById(req.params.id);
+  const truck = await Truck.findByIdAndDelete(req.params.id);
   console.log('Truck: ',truck)
-  // check to see if truck has any skids on it
-  if (truck.truckSkids[0]) {
-    req.flash('error', `This truck still has skids on it.  Please unload the truck to delete it.`);
-    res.redirect(`/truck/viewTrucks/truckList`);
-  } else {
-    const truckToDelete = await Job.findOneAndDelete( {_id: req.params.id}, {truckSkids: []}, function (err, docs) { 
-      if (err){ 
-          console.log('Error: ', err) 
-      } 
-      else{ 
-          console.log("Deleted : ", docs); 
-      } 
-    });
-    console.log('second truck');
-    req.flash('success', `Successfully deleted truck ${truckToDelete.id}.`);
-    res.redirect(`/truck/viewTrucks/truckList`);
-  }
-  
+  req.flash('success', `Successfully deleted truck ${truck.id}.`);
+  res.redirect(`/truck/viewTrucks/truckList`);
 };
 

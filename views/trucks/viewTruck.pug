@@ -5,8 +5,9 @@ block content
     div(class='flex flex-row justify-end py-2')
       a(href=`/truck/unload/${truck._id}` class="px-2") 
         button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Unload Truck
-      a(href=`/truck/deleteTruck/${truck._id}` class="px-2") 
-        button(class="bg-red-500 hover:bg-red-700 text-white font-bold p-2 rounded") Delete Truck
+      if(truck.truckSkids.length === 0) 
+        a(href=`/truck/deleteTruck/${truck._id}` class="px-2") 
+          button(class="bg-red-500 hover:bg-red-700 text-white font-bold p-2 rounded") Delete Truck
     div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
       div(class="flex flex-col w-full md:flex-row")
         div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
@@ -17,7 +18,7 @@ block content
         div(class="p-4 font-normal text-gray-800 md:w-3/4")
           div(class="flex flex-row items-center mt-4 text-black justify-between")
             p(class="leading-normal font-bold text-3xl justify-start") Loaded #{h.moment(truck.truckCreatedDate).format("MMM D YYYY [at] h:mm a")} 
-          p(class="leading-normal") #{skids.length > 1 ? skids.length + ' Skids' : '1 Skid'}
+          p(class="leading-normal") #{skids.length !== 1 ? skids.length + ' Skids' : '1 Skid'}
           p(class="leading-normal") #{skids.map(s => s.skidTrays).reduce((total, count) => total + count, 0).toLocaleString()} Trays 
           p(class="leading-normal") #{skids.map(s => s.skidCount).reduce((total, count) => total + count, 0).toLocaleString()} Pieces 
           p(class="leading-normal") #{skids.map(s => s.skidWeight).reduce((total, count) => total + count, 0).toLocaleString()} Lbs 

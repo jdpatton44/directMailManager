@@ -59,7 +59,7 @@ exports.clientList = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/clients/page/${pages}`);
         }
-        res.render('clientList', { clients, pages, page, title: 'Clients' });
+        res.render('clients/clientList', { clients, pages, page, title: 'Clients' });
 };
 
 exports.addClient = async (req, res) => {
@@ -78,7 +78,7 @@ exports.getClientBySlug = async (req, res, next) => {
         const agency = await Agency.findOne({ _id: client.clientAgency });
         if (!client) return next();
         const clientJobs = await Job.find({ jobClient: client._id }).sort({jobMailDate: 'desc',}).populate('jobClient jobRep');
-        res.render('client', { client, agency, clientJobs, title: client.clientName });
+        res.render('clients/client', { client, agency, clientJobs, title: client.clientName });
 };
 
 exports.editClient = async (req, res, next) => {

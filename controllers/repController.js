@@ -21,7 +21,7 @@ exports.repList = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/reps/page/${pages}`);
         }
-        res.render('repList', { reps, pages, page, title: 'Reps' });
+        res.render('reps/repList', { reps, pages, page, title: 'Reps' });
 };
 
 exports.addRep = async (req, res) => {
@@ -41,7 +41,7 @@ exports.getRepBySlug = async (req, res, next) => {
         const rep = await Rep.findOne({ repSlug: req.params.repSlug }).populate('repAgency');
         const repJobs = await Job.find({ jobRep: rep._id }).sort({jobMailDate: 'desc'}).populate('jobClient jobRep');
         if (!rep) return next();
-        res.render('rep', { rep, repJobs, title: rep.repName });
+        res.render('reps/rep', { rep, repJobs, title: rep.repName });
 };
 
 exports.editRep = async (req, res, next) => {
