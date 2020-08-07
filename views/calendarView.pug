@@ -24,7 +24,7 @@ block content
                     li(class="text-gray-700 bg-gray-400 px-4 py-2 m-2" style="flex: 1 0 13%")
                         div= h.moment(firstDayOnCalendar).add(i, 'days').format("D")
                             ul.__jobList
-                                -const dayJobs = jobs.filter(j => h.moment(j.jobMailDate.toLocaleString('en-us', {timeZone:"UTC"})).format("YYYY-MM-DD") === h.moment(firstDayOnCalendar).add(i, 'days').format("YYYY-MM-DD") )
+                                -const dayJobs = jobs.filter(j => h.moment.utc(j.jobMailDate.toISOString()).format("YYYY-MM-DD") === h.moment(firstDayOnCalendar).add(i, 'days').format("YYYY-MM-DD") )
                                 each j in dayJobs
                                     li.text-md 
                                         a(href=`/job/${j.jobSlug}`) 
