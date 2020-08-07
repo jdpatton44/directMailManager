@@ -91,7 +91,7 @@ exports.removeSkid = async (req, res) => {
   res.redirect(`/truck/unload/${updatedTruck._id}`);
 };
 
-// delete a truck
+// delete a truck only allowed if there are no skids on the truck.
 exports.deleteTruck = async (req, res, next) => {
   const truck = await Truck.findByIdAndDelete(req.params.id);
   console.log('Truck: ',truck)
