@@ -20,11 +20,12 @@ exports.agencyList = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/agencies/page/${pages}`);
         }
-        res.render('agencyList', { agencies, pages, page, title: 'Agencies' });
+        const type = 'agencyList';
+        res.render('agencies/agencyList', { agencies, pages, page, type, count, title: 'Agencies' });
 };
 
 exports.addAgency = (req, res) => {
-        res.render('editAgency', { title: 'Add Agency' });
+        res.render('agencies/editAgency', { title: 'Add Agency' });
 };
 
 exports.createAgency = async (req, res) => {
@@ -54,13 +55,13 @@ exports.getAgencyBySlug = async (req, res, next) => {
                 .sort({ jobMailDate: 'desc' });
         const countPromise = Job.count();
         const [agencyJobs, count] = await Promise.all([jobsPromise, countPromise]);
-        res.render('agency', { agency, agencyJobs, title: agency.agencyName });
+        res.render('agencies/agency', { agency, agencyJobs, title: agency.agencyName });
 };
 
 exports.editAgency = async (req, res, next) => {
         const agency = await Agency.findOne({ _id: req.params.id });
         if (!agency) return next();
-        res.render('editAgency', { agency, title: `Edit ${agency.agencyName}` });
+        res.render('agencies/editAgency', { agency, title: `Edit ${agency.agencyName}` });
 };
 
 exports.updateAgency = async (req, res, next) => {

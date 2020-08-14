@@ -33,7 +33,7 @@ exports.formatCurrency = n =>
                 currency: 'USD',
         }).format(n);
 
-// Maiiling options
+// Mailing options for dropdown
 exports.mailingOptions = [
         'Straight 1st',
         '1st Presort',
@@ -44,6 +44,7 @@ exports.mailingOptions = [
         'PSI Commingle',
 ];
 
+// Postage options for dropdown
 exports.postageOptions = [
         'NP Indicia',
         'NP Stamp',

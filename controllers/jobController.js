@@ -29,7 +29,8 @@ exports.jobList = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
         }
-        res.render('jobList', { jobs, pages, page, count, title: 'Current Mailings' });
+        const type = 'jobList';
+        res.render('jobs/jobList', { jobs, pages, page, count, type, title: 'Current Mailings' });
 };
 
 // new job form 
@@ -37,7 +38,7 @@ exports.addJob = async (req, res) => {
         // get reps and clients for drop downs
         const reps = await Rep.find().sort({ repName: 'desc' });
         const clients = await Client.find().sort({ clientName: 'desc' });
-        res.render('editJob', { clients, reps, title: 'Create Mailing' });
+        res.render('jobs/editJob', { clients, reps, title: 'Create Mailing' });
 };
 
 // create a new job
@@ -58,7 +59,7 @@ exports.getJobBySlug = async (req, res, next) => {
         if (job.packages !== []) {
                 quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0);
         }
-        res.render('job', { job, quantity, title: job.jobName });
+        res.render('jobs/job', { job, quantity, title: job.jobName });
 };
 
 // get job by id and redirect to job by slug
@@ -76,7 +77,7 @@ exports.editJob = async (req, res, next) => {
         const clients = await Client.find().sort({ clientName: 'asc' });
         // get all reps for the drop down
         const reps = await Rep.find().sort({ repName: 'asc' });
-        res.render('editJob', { title: `Edit ${job.jobName}`, job, clients, reps });
+        res.render('jobs/editJob', { title: `Edit ${job.jobName}`, job, clients, reps });
 };
 
 // process edits and redirect to job page 
@@ -125,7 +126,7 @@ exports.jobsByClient = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
         }
-        res.render('jobList', { jobs, pages, page, title: `Mailings for ${client}` });
+        res.render('jobs/jobList', { jobs, pages, page, title: `Mailings for ${client}` });
 };
 
 // get a list of jobs for a certain agency
@@ -153,7 +154,7 @@ exports.jobsByAgency = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
         }
-        res.render('jobList', { repIds, jobs, pages, page, title: `Mailings for ${agency.AgencyName}` });
+        res.render('jobs/jobList', { repIds, jobs, pages, page, title: `Mailings for ${agency.AgencyName}` });
 };
 
 // get a list of jobs for a certain rep
@@ -176,7 +177,7 @@ exports.jobsByRep = async (req, res) => {
                 req.flash('info', `Hey You asked for page ${page}. But that doesn't exist.  Here is page ${pages}`);
                 res.redirect(`/jobs/page/${pages}`);
         }
-        res.render('jobList', { jobs, pages, page, title: `Mailings for ${rep.repName}` });
+        res.render('jobs/jobList', { jobs, pages, page, title: `Mailings for ${rep.repName}` });
 };
 
 // search for a job by job name
@@ -232,7 +233,7 @@ exports.currentJobs = async (req, res) => {
         const lastTwoWeeksTotal = Object.values(lastTwoWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
         const nextWeekTotal = Object.values(nextWeeksJobs).reduce((t, { jobQuantity }) => t + jobQuantity, 0);
 
-        res.render('currentJobs', {
+        res.render('jobs/currentJobs', {
                 thisWeeksJobs,
                 thisWeekTotal,
                 lastTwoWeeksJobs,
@@ -246,7 +247,7 @@ exports.currentJobs = async (req, res) => {
 // form to add a package to a job
 exports.addPackage = async (req, res, next) => {
         const job = await Job.findOne({ _id: req.params.id });
-        res.render('editPackage', { job, title: `Add a Package to ${job.jobName}` });
+        res.render('jobs/editPackage', { job, title: `Add a Package to ${job.jobName}` });
 };
 
 // add a new package to a job
@@ -364,7 +365,7 @@ exports.calendarView = async (req, res, next) => {
         const fifthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(28, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(34, 'days'), jobs)
         // get sixth week jobs and total pieces 
         const sixthWeekJobsTotal = getJobPiecesTotal(helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(35, 'days'), helpers.moment(firstDayOnCalendar, "YYYY-MM-DD").add(41, 'days'), jobs)
-        res.render('calendarView', {
+        res.render('jobs/calendarView', {
                 year,
                 requestedMonth,
                 viewMonth,
