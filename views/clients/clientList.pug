@@ -1,5 +1,7 @@
 extends ../layout
 
+include ../mixins/_pagination
+
 block content
   .inner
     h1.text-6xl.py-4 Clients
@@ -35,3 +37,4 @@ block content
                 a(href=`/client/${client.clientSlug}/`)
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") View
 
+    +pagination(page, pages, count, type)

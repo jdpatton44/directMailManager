@@ -40,6 +40,7 @@ router.get('/deletePackage/:slug/:id', authController.isLoggedIn, authController
 
 // Client Routes
 router.get('/clientList', authController.isLoggedIn, catchErrors(clientController.clientList));
+router.get('/clientList/page/:page', authController.isLoggedIn, catchErrors(clientController.clientList));
 router.get('/addClient', authController.isLoggedIn, clientController.addClient);
 router.post(
   '/addClient', authController.isLoggedIn,

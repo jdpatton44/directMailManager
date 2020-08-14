@@ -1,15 +1,31 @@
-extends layout
-
-include mixins/_pagination
+extends ../layout
 
 block content
-  .inner
+  
+block content
+  .inner.py-2
     div(class='flex flex-row justify-end py-2')
-      a(href=`/jobCalendar`) 
-        button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Calendar View
-    h1.text-6xl.py-2 Mailings 
-    div(class="mx-auto ")
-      div(class="bg-white shadow-xl rounded my-2")
+      a(href=`/agency/${agency._id}/edit`) 
+        button(class="bg-orange-500 hover:bg-orange-700 text-white font-bold p-2 rounded") Edit Agency
+    div(class="flex flex-col w-full bg-white rounded shadow-lg m-6")
+      div(class="flex flex-col w-full md:flex-row")
+        div(class="flex flex-row justify-around p-4 font-bold leading-none text-white uppercase bg-blue-400 rounded md:flex-col md:items-center md:justify-center md:w-1/4")
+          div(class="md:text-5xl") #{agency.agencyName}
+          
+        div(class="p-4 font-normal text-gray-800 w-full")
+          p(class="leading-normal font-bold") #{agency.agencyName}
+          p(class="leading-normal") Phone Number - #{agency.agencyPhoneNumber}
+          p(class="leading-normal") #{agency.agencyAddress ? agency.agencyAddress : ' '}
+          p(class="leading-normal") #{agency.agencyCity + ", " + agency.agencyState + " " + (agency.agencyZipcode ? agency.agencyZipcode : '') }
+          div(class="flex flex-row items-center mt-4 text-black")
+            div(class="w-1/2 ") 
+            div(class="w-1/2 flex justify-end") 
+    div(class="flex flex-col w-full bg-white rounded shadow-lg m-6 md:flex-row")            
+      h2.m-6.text-4xl Notes 📝 
+      textarea.m-6.border-4.border-green-700.rounded-lg.shadow-lg(name="Notes", cols="20", rows="3" disabled) #{agency.agencyNotes}
+
+    div(class="mx-auto")
+      div(class="bg-white shadow-xl w-full rounded m-6")
         table(class="text-left w-full border-collapse")
           thead
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mail Date
@@ -20,20 +36,17 @@ block content
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Rep
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Mailing Method
             th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
-          each job, i in jobs
+          each job in agencyJobs
             tr(class="hover:bg-blue-200") 
-              td(class="py-4 px-3 border-b border-grey-light")= h.moment.utc(job.jobMailDate.toISOString()).format("MM-DD-YY")
+              td(class="py-4 px-6 border-b border-grey-light text-center")= h.moment.utc(job.jobMailDate.toISOString()).format("MM-DD-YY")
               if job.jobClient
                 td(class="py-4 px-6 border-b border-grey-light text-center")
                   a(href=`/client/${job.jobClient.clientSlug}`) #{job.jobClient.clientName}
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center") 
-                a(href=`/job/${job.jobSlug}`) 
-                  strong #{job.jobName}
-              - let quantity = job.jobQuantity;
-              - (job.packages[0]) ? quantity = job.packages.reduce((t, { packageQuantity }) => t + packageQuantity, 0) :  quantity;
-              td(class="py-4 px-6 border-b border-grey-light text-center")= quantity.toLocaleString()
+                a(href=`/job/${job.jobSlug}`) #{job.jobName}
+              td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobQuantity.toLocaleString()
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobSize
               if job.jobRep
                 td(class="py-4 px-6 border-b border-grey-light text-center")
@@ -41,10 +54,8 @@ block content
               else
                 td(class="py-4 px-6 border-b border-grey-light text-center")
               td(class="py-4 px-6 border-b border-grey-light text-center")= job.jobMailingMethod
-              td(class="py-2 px-2 border-b border-grey-light" style='width: 4em')
+              td(class="py-4 px-6 border-b border-grey-light text-center")
                 a(href=`/jobs/${job._id}/edit`) 
-                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") Edit
+                  button(class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") Edit
                 a(href=`/job/${job.jobSlug}/`)
-                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-4/5") View
-
-    +pagination(page, pages, count)
+                  button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-3/4") View 

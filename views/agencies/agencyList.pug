@@ -1,4 +1,6 @@
-extends layout
+extends ../layout
+
+include ../mixins/_pagination
 
 block content
   .inner
@@ -27,3 +29,4 @@ block content
                 a(href=`/agency/${agency._id}/edit`)  
                   button(class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded m-1 w-full") Edit
 
+    +pagination(page, pages, count, type)

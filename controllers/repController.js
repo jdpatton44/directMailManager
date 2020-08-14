@@ -27,7 +27,7 @@ exports.repList = async (req, res) => {
 exports.addRep = async (req, res) => {
         console.log(req.body);
         agencies = await Agency.find();
-        res.render('editRep', { agencies, title: 'Add Rep' });
+        res.render('reps/editRep', { agencies, title: 'Add Rep' });
 };
 
 exports.createRep = async (req, res) => {
@@ -48,7 +48,7 @@ exports.editRep = async (req, res, next) => {
         const rep = await Rep.findOne({ _id: req.params.id });
         const agencies = await Agency.find();
         if (!rep) return next();
-        res.render('editRep', { rep, agencies, title: `Edit ${rep.repName}` });
+        res.render('reps/editRep', { rep, agencies, title: `Edit ${rep.repName}` });
 };
 
 exports.updateRep = async (req, res, next) => {
