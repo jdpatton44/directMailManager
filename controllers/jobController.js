@@ -183,7 +183,7 @@ exports.jobsByRep = async (req, res) => {
 // search for a job by job name
 exports.searchJobs = async (req, res) => {
         const jobs = await Job
-                // find stores that match using index
+                // find jobs that match using index
                 .find(
                         {
                                 $text: {
@@ -196,12 +196,12 @@ exports.searchJobs = async (req, res) => {
                                 },
                         }
                 )
-                // sort the stores using meta data score
+                // sort the jobs using meta data score
                 .sort({
                         score: { $meta: 'textScore' },
                 })
-                // return 5 stores at a time
-                .limit(5);
+                // return 10 jobs at a time
+                .limit(10);
         res.json(jobs);
 };
 
