@@ -268,7 +268,7 @@ exports.createPackage = async (req, res) => {
 exports.editPackage = async (req, res, next) => {
         const job = await Job.findOne({ jobSlug: req.params.slug });
         const p = job.packages.id(req.params.id);
-        res.render('editPackage', { title: `Edit ${job.jobName} - ${p.packageName}`, p, job });
+        res.render('jobs/editPackage', { title: `Edit ${job.jobName} - ${p.packageName}`, p, job });
 };
 
 // update an existing package in a job
