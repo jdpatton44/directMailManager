@@ -42,6 +42,7 @@ exports.mailingOptions = [
         'Non Profit',
         'Midwest Commingle',
         'PSI Commingle',
+        'Foriegn',
 ];
 
 // Postage options for dropdown
@@ -53,6 +54,7 @@ exports.postageOptions = [
         'Standard Meter',
         'Standard Indicia',
         '1st Class Stamp',
+        'Foriegn',
 ];
 
 // Format phone numbers
