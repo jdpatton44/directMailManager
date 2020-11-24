@@ -15,6 +15,11 @@ const packageSchema = new mongoose.Schema(
       type: Number,
       required: 'Please enter the quantity for this package.',
     },
+    packageMatch: {
+      type: Number,
+      default: 0,
+      required: 'Is this package a match?',
+    },
     packageMailingMethod: {
       type: String,
       enum: ['1st Class Presort', 'Midwest Commingle', 'PSI Commingle', 'Standard', 'SCF'],
