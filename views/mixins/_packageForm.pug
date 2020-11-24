@@ -24,9 +24,13 @@ mixin packageForm(p = {})
                         option(value=option2 ) #{option2}
                   label(for="packageSize") Package Size
                   input(type="text" value=(p.packageSize ? p.packageSize : "#10") name="packageSize" placeholder=job.jobSize )
-                  .flex.flex-row.items-center
-                    label(for="packageScitex") Scitex 
-                    input( type="checkbox" id="packageScitex" name="packageScitex" checked=(p.packageScitex ? "checked" : undefined) )
+                  .grid.grid-cols-6.gap-4
+                    .col-start-1.col-end-3
+                      label(for="packageScitex") Scitex 
+                    .col-end-5.mt-auto
+                        input( type="checkbox" id="packageScitex" name="packageScitex" checked=(p.packageScitex ? "checked" : undefined) )
+                  label(for="packageMatch") Match
+                  input(type="number" value=(p.packageMatch ? p.packageMatch : "0") name="packageMatch" placeholder=p.packageMatch)
                   label(for="packageNotes") Notes
                   textarea(name="packageNotes" value=p.packageNotes)
                   div(class="ml-auto")

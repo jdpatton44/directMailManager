@@ -52,6 +52,7 @@ block content
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Postage
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Size
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Scitex
+              th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Match
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Notes
               th(class="py-4 px-6 bg-green-500 font-bold uppercase text-xl text-grey-dark border-b border-black text-center") Actions
               each p in job.packages  
@@ -63,6 +64,7 @@ block content
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packagePostage ? p.packagePostage : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageSize ? p.packageSize : ''
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageScitex ? '☑' : ''
+                  td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageMatch > 1 ? p.packageMatch + '-way' : 'No Match'
                   td(class="py-4 px-6 border-b border-grey-light text-center")= p.packageNotes
                   td(class="py-4 px-6 border-b border-grey-light text-center") 
                     a(href=`/editPackage/${job.jobSlug}/${p._id}`)

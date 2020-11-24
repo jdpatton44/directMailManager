@@ -13,8 +13,7 @@ mongoose.connection.on('error', err => {
   console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
 
-
-// READY?! Let's go!
+//add models
 require('./models/Job');
 require('./models/Client');
 require('./models/Agency');
